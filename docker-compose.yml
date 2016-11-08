@@ -7,7 +7,7 @@ server:
     - 8080:8080
 
 node:
-  image: node:4.1.2
+  image: node:7.0
   volumes:
     - .:/app
   working_dir: /app
