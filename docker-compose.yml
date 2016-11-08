@@ -1,11 +1,3 @@
-server:
-  image: cannin/nodejs-http-server
-  volumes:
-    - ./src/frontend:/public
-  working_dir: /public
-  ports:
-    - 8080:8080
-
 node:
   image: node:4.3
   volumes:
@@ -27,7 +19,26 @@ serverless-offline:
     file: ./docker-compose.yml
     service: node
   environment:
-    - SLS_DEBUG=true
+      SLS_DEBUG: true
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: tobaccobot
+      POSTGRES_HOST: postgres
+  links:
+    - postgres
   ports:
     - 3000:3000
   command: node_modules/serverless/bin/serverless offline -P 3000 -o 0.0.0.0
+
+postgres:
+    image: postgres:9.5
+    volumes:
+        - ./backups:/backups
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: secret
+        POSTGRES_DB: tobaccobot
+        PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+        - ./backups:/backups
+        - ./pgdata:/var/lib/postgresql/data/pgdata
