@@ -18,7 +18,8 @@
   "homepage": "https://github.com/marmelab/tobaccobot#readme",
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
-    "serverless": "^1.1.0"
+    "serverless": "^1.1.0",
+    "serverless-runtime-babel": "^0.0.6"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",

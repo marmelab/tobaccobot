@@ -7,12 +7,12 @@ server:
     - 8080:8080
 
 node:
-  image: node:7.0
+  image: node:4.3
   volumes:
     - .:/app
   working_dir: /app
 
-devserver:
+webpack-dev-server:
   extends:
     file: ./docker-compose.yml
     service: node
@@ -21,3 +21,13 @@ devserver:
   ports:
     - 3001:3001
   command: node node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 3001 --host 0.0.0.0
+
+serverless-offline:
+  extends:
+    file: ./docker-compose.yml
+    service: node
+  environment:
+    - SLS_DEBUG=true
+  ports:
+    - 3000:3000
+  command: node_modules/serverless/bin/serverless offline -P 3000 -o 0.0.0.0

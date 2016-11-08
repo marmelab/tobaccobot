@@ -1,0 +1,7 @@
+/* event.json */
+{
+    "repos": [
+        "serverless/serverless",
+        "serverless/serverless-runtime-babel"
+    ]
+}

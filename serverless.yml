@@ -48,7 +48,7 @@ provider:
 
 functions:
   hello:
-    handler: src/serverless/index.handler
+    handler: src/serverless/index.default
     events:
       - http: GET /
 
@@ -77,3 +77,9 @@ functions:
 #       Value: "Some output value"
 plugins:
   - serverless-offline
+custom:
+  serverless-offline:
+    babelOptions:
+      presets: ["stage-2"]
+      plugins:
+        - ["babel-plugin-transform-es2015-modules-commonjs"]

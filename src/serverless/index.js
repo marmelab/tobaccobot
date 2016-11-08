@@ -1,13 +1,13 @@
-exports.handler = function(event, context, callback) {
+export default (event, context, callback) => {
 
-    console.log(event, context); // Contains incoming request data (e.g., query params, headers and more)
+    console.log({ event, context });
 
     const response = {
-      statusCode: 200,
-      headers: {
-        "x-custom-header" : "My Header Value"
-      },
-      body: JSON.stringify({ "message": "Hello World!" })
+        statusCode: 200,
+        headers: {
+            'x-custom-header' : 'My Header Value'
+        },
+        body: JSON.stringify({ message: 'Hello World!' })
     };
 
     callback(null, response);
