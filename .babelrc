@@ -1,0 +1,11 @@
+{
+    "env": {
+        "browser": {
+            "presets": ["es2016"],
+            "plugins": [
+                "add-module-exports",
+                "transform-runtime"
+            ]
+        }
+    }
+}

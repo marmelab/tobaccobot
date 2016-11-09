@@ -1,0 +1,14 @@
+{
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+        "mocha": true,
+    },
+    "rules": {
+        "max-len": "off",
+        "func-names": "off",
+        "indent": [2, 4],
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4],
+    },
+}
