@@ -680,7 +680,7 @@ babel-plugin-transform-es2015-shorthand-properties@^6.18.0:
     babel-runtime "^6.0.0"
     babel-types "^6.18.0"
 
-babel-plugin-transform-es2015-spread@^6.3.13:
+babel-plugin-transform-es2015-spread, babel-plugin-transform-es2015-spread@^6.3.13:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-spread/-/babel-plugin-transform-es2015-spread-6.8.0.tgz#0217f737e3b821fa5a669f187c6ed59205f05e9c"
   dependencies:
@@ -1280,16 +1280,16 @@ clone@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.2.tgz#260b7a99ebb1edfe247538175f783243cb19d149"
 
+co, co@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
+
 co-postgres-queries@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/co-postgres-queries/-/co-postgres-queries-0.1.0.tgz#1a9f01a82a6e470a9c0de1478212def9d2ab4111"
   dependencies:
     configurable.js "0.1.1"
     pg "6.1.0"
-
-co@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
 
 code-point-at@^1.0.0:
   version "1.1.0"
