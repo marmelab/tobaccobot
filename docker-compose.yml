@@ -14,12 +14,11 @@ webpack-dev-server:
     - 3001:3001
   command: node node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 3001 --host 0.0.0.0
 
-serverless-offline:
+serverless-dev-server:
   extends:
     file: ./docker-compose.yml
     service: node
   environment:
-      SLS_DEBUG: 'true'
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: tobaccobot
@@ -27,8 +26,8 @@ serverless-offline:
   links:
     - postgres
   ports:
-    - 3000:3000
-  command: node_modules/serverless/bin/serverless offline -P 3000 -o 0.0.0.0
+    - 8000:8000
+  command: node_modules/serverless/bin/serverless webpack serve
 
 postgres:
     image: postgres:9.5

@@ -50,8 +50,10 @@ functions:
   subscribe:
     handler: src/serverless/index.subscribe
     events:
-      - http: GET /
-
+      - http:
+          method: POST
+          path: subscribe
+          cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -76,8 +78,6 @@ functions:
 #       Description: "Description for the output"
 #       Value: "Some output value"
 plugins:
-  - serverless-offline
+  - serverless-webpack
 custom:
-  serverless-offline:
-    babelOptions:
-      presets: ["es2015-node4", "es2016"]
+  webpack: ./webpack.config.serverless.js

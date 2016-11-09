@@ -1,14 +1,23 @@
 {
     "env": {
         "browser": {
-            "presets": ["es2016"],
+            "presets": ["es2015", "es2016"],
             "plugins": [
                 "add-module-exports",
                 "transform-runtime"
             ]
         },
         "node": {
-            "presets": ["es2015-node4", "es2016"]
+            "presets": ["es2015-node4", "es2016"],
+            "plugins": [
+                "add-module-exports",
+                "transform-runtime"
+            ]
         }
-    }
+    },
+    "presets": ["es2015-node4", "es2016"],
+    "plugins": [
+        "add-module-exports",
+        "transform-runtime"
+    ]
 }
