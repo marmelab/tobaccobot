@@ -7,16 +7,16 @@ export default (event, context, callback) => {
         password: config.postgres.password,
         host: config.postgres.host,
         port: config.postgres.port,
-        database: config.postgres.database
+        database: config.postgres.database,
     });
     pool.query({ sql: "SELECT 'hello world'" })
     .then((result) => {
         const response = {
             statusCode: 200,
             headers: {
-                'x-custom-header' : 'My Header Value'
+                'x-custom-header': 'My Header Value',
             },
-            body: JSON.stringify({ message: result })
+            body: JSON.stringify({ message: result }),
         };
 
         callback(null, response);

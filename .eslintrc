@@ -1,32 +1,14 @@
 {
-    "parserOptions": {
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "experimentalObjectRestSpread": true,
-            "modules": true
-        }
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+        "mocha": true,
     },
     "rules": {
-        "indent": [
-            2,
-            4
-        ],
-        "quotes": [
-            2,
-            "single"
-        ],
-        "linebreak-style": [
-            2,
-            "unix"
-        ],
-        "semi": [
-            2,
-            "always"
-        ]
+        "max-len": "off",
+        "func-names": "off",
+        "indent": [2, 4],
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4],
     },
-    "env": {
-        "es6": true,
-        "node": true
-    },
-    "extends": "eslint:recommended",
 }
