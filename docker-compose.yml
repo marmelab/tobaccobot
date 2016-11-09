@@ -9,7 +9,7 @@ webpack-dev-server:
     file: ./docker-compose.yml
     service: node
   environment:
-    - BABEL_ENV=browser
+    BABEL_ENV: browser
   ports:
     - 3001:3001
   command: node node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 3001 --host 0.0.0.0
@@ -19,7 +19,7 @@ serverless-offline:
     file: ./docker-compose.yml
     service: node
   environment:
-      SLS_DEBUG: true
+      SLS_DEBUG: 'true'
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: tobaccobot
