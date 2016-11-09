@@ -6,6 +6,9 @@
                 "add-module-exports",
                 "transform-runtime"
             ]
+        },
+        "node": {
+            "presets": ["es2015-node4", "es2016"]
         }
     }
 }

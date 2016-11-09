@@ -1,0 +1,10 @@
+test:
+  extends:
+    file: ./docker-compose.yml
+    service: node
+  environment:
+    BABEL_ENV: node
+    NODE_ENV: test
+  ports:
+    - 3001:3001
+  command: node_modules/.bin/mocha .test/* ./src/**/*.spec.js

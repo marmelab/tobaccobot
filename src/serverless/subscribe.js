@@ -2,7 +2,6 @@ import generatorToCPS from './utils/generatorToCPS';
 
 export function* subscribe(event, context) {
     console.log({ event, context});
-
     return {
         statusCode: 200,
         headers: {

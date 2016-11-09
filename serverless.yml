@@ -80,15 +80,4 @@ plugins:
 custom:
   serverless-offline:
     babelOptions:
-      presets: ["stage-2"]
-      plugins:
-        - ["babel-plugin-transform-es2015-modules-commonjs"]
-        - "babel-plugin-transform-es2015-block-scoping"
-        - "babel-plugin-transform-es2015-destructuring"
-        - "babel-plugin-transform-es2015-function-name"
-        - "babel-plugin-transform-es2015-parameters"
-        - "babel-plugin-transform-es2015-spread"
-        - "babel-plugin-transform-es2015-sticky-regex"
-        - "babel-plugin-transform-es2015-unicode-regex"
-        - "babel-plugin-transform-es2015-generator-return"
-        - "babel-plugin-transform-object-rest-spread"
+      presets: ["es2015-node4", "es2016"]
