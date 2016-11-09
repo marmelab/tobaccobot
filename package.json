@@ -20,6 +20,8 @@
     "co": "4.6.0",
     "co-postgres-queries": "0.1.0",
     "config": "1.24.0",
+    "db-migrate": "^0.10.0-beta.20",
+    "db-migrate-pg": "^0.1.11",
     "isomorphic-fetch": "2.2.1"
   },
   "devDependencies": {
