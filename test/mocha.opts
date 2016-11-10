@@ -2,5 +2,4 @@
 --ui bdd
 --timeout 5000
 --require co-mocha
---require babel-polyfill
 --compilers js:babel-core/register
