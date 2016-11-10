@@ -1,4 +1,5 @@
 import generatorToCPS from './utils/generatorToCPS';
+import smokerTable from './services/smokerTable';
 
 export function* subscribe(event, context) {
     const { name, tel } = event.body;

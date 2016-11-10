@@ -1,10 +1,10 @@
 module.exports = {
-    postgres: {
-        driver: 'pg',
-        user: process.env.POSTGRES_USER,
-        password: process.env.POSTGRES_PASSWORD,
-        database: process.env.POSTGRES_DB,
-        host: process.env.POSTGRES_HOST,
-        port: 5432,
+    aws: {
+        credentials: {
+            endpoint: 'http://dynamodb:8000',
+            accessKeyId: 'akid',
+            secretAccessKey: 'secret',
+            region: 'us-east-1',
+        },
     },
 };

@@ -19,17 +19,18 @@ serverless-dev-server:
     file: ./docker-compose.yml
     service: node
   environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: tobaccobot
-      POSTGRES_HOST: postgres
+    SLS_DEBUG: true
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: secret
+    POSTGRES_DB: tobaccobot
+    POSTGRES_HOST: postgres
   links:
     - dynamodb
   ports:
-    - 8000:8000
-  command: node_modules/serverless/bin/serverless webpack serve
+    - 3000:3000
+  command: node_modules/serverless/bin/serverless webpack serve --port 3000 --host 0.0.0.0
 
 dynamodb:
-  build: ./DynamoDB
+  image: deangiberson/aws-dynamodb-local
   ports:
-    - 8080:8000
+    - 8000:8000
