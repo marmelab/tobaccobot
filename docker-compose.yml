@@ -24,20 +24,12 @@ serverless-dev-server:
       POSTGRES_DB: tobaccobot
       POSTGRES_HOST: postgres
   links:
-    - postgres
+    - dynamodb
   ports:
     - 8000:8000
   command: node_modules/serverless/bin/serverless webpack serve
 
-postgres:
-    image: postgres:9.5
-    volumes:
-        - ./backups:/backups
-    environment:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: secret
-        POSTGRES_DB: tobaccobot
-        PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-        - ./backups:/backups
-        - ./pgdata:/var/lib/postgresql/data/pgdata
+dynamodb:
+  build: ./DynamoDB
+  ports:
+    - 8080:8000
