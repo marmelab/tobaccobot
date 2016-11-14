@@ -1,11 +1,21 @@
 import fetch from 'isomorphic-fetch';
 
-const submit = document.getElementById('form');
+const form = document.getElementById('form');
 const nameInput = document.getElementById('name');
 const phoneInput = document.getElementById('phone');
+const success = document.getElementById('success');
+const error = document.getElementById('error');
+const invalid = document.getElementById('invalid');
 
-submit.addEventListener('submit', () => {
-    fetch('http://localhost:8000/subscribe', {
+form.addEventListener('submit', () => {
+    error.classList.add('hidden');
+    const name = nameInput.value;
+    const phone = phoneInput.value;
+    if (!name || !phone || !phone.match(/[0-9]{10}/)) {
+        invalid.classList.remove('hidden');
+        return;
+    }
+    fetch('http://localhost:3000/subscribe', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -17,10 +27,17 @@ submit.addEventListener('submit', () => {
             phone: phoneInput.value,
         }),
     })
-    .then((result) => {
-        console.log(result);
+    .then(response => response.text())
+    .then(response => Promise.resolve(JSON.parse(response)))
+    .then((response) => {
+        if (response.statusCode >= 200 && response.statusCode < 300) {
+            success.classList.remove('hidden');
+            form.classList.add('hidden');
+            return;
+        }
+        error.classList.remove('hidden');
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        console.log(err);
     });
 });

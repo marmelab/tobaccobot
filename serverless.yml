@@ -52,6 +52,7 @@ functions:
     events:
       - http:
           method: POST
+          integration: lambda
           path: subscribe
           cors: true
   setupSmokerTable:

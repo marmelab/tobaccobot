@@ -3,15 +3,47 @@
     <head>
         <meta charset="utf-8">
         <title>Tobacco Bot</title>
+        <style>
+        .hidden {
+            display: none;
+        }
+        </style>
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous"
+        >
     </head>
     <body>
-        <h1>Tobacco Bot</h1>
-        <form id="form" onsubmit="return false">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text"></input>
-            <label for="phone">Phone Number</label>
-            <input id="phone" name="phone" type="text"></input>
-            <input type="submit"></input>
-        </form>
+        <div class="panel panel-default">
+            <div class="panel-heading"><h1>Tobacco Bot</h1></div>
+            <div class="panel-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In iaculis massa eget ante sodales, id efficitur eros imperdiet. Pellentesque et auctor nunc, vitae condimentum lorem. Duis id consectetur lorem. Pellentesque id lectus volutpat, molestie sem vestibulum, cursus risus. Integer sit amet nibh sed arcu viverra pretium eu id leo. Curabitur iaculis orci nulla, sit amet hendrerit velit posuere eu. Aenean bibendum ligula tempus lorem varius, at auctor libero fermentum. Mauris aliquam felis ligula, in fringilla eros aliquam a. Sed sed posuere sem. Mauris tincidunt ultricies orci hendrerit vehicula. Curabitur felis eros, lacinia quis viverra posuere, bibendum ac ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam gravida ornare velit non volutpat.</p>
+                <div id="invalid" class="hidden alert alert-warning">
+                    <p>Invalid information</p>
+                    <p>Please provide us with a valid phone number and your name.</p>
+                </div>
+                <div id="success" class="hidden alert alert-success">
+                    <p>Subscribe success.</p>
+                    <p>We will contact you shortly.</p>
+                </div>
+                <div id="error" class="hidden alert alert-danger">
+                    <p>Subscribe Error.</p>
+                    <p>Something went wrong please retry later.</p>
+                </div>
+                <form id="form" class="form-signin" onsubmit="return false">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" class="form-control" name="name" type="text"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input id="phone" class="form-control" name="phone" type="text"></input>
+                    </div>
+                    <input class="btn btn-primary" type="submit"></input>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
