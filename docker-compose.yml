@@ -19,7 +19,7 @@ serverless-dev-server:
     file: ./docker-compose.yml
     service: node
   environment:
-    SLS_DEBUG: true
+    SLS_DEBUG: OK
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: secret
     POSTGRES_DB: tobaccobot
