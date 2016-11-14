@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 
 const submit = document.getElementById('form');
 const nameInput = document.getElementById('name');
-const telInput = document.getElementById('tel');
+const phoneInput = document.getElementById('phone');
 
 submit.addEventListener('submit', () => {
     fetch('http://localhost:8000/subscribe', {
@@ -11,9 +11,16 @@ submit.addEventListener('submit', () => {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
+        mode: 'cors',
         body: JSON.stringify({
             name: nameInput.value,
-            tel: telInput.value,
+            phone: phoneInput.value,
         }),
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((error) => {
+        console.log(error);
     });
 });

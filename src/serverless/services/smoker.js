@@ -18,7 +18,14 @@ const createTable = () => dynamoDB.createTable(params);
 
 const save = data => dynamoDB.putItem({
     TableName: 'smoker',
-    Item: data,
+    Item: {
+        name: {
+            S: data.name,
+        },
+        phone: {
+            S: data.phone,
+        },
+    },
 });
 export default {
     createTable,
