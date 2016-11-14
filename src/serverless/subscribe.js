@@ -1,7 +1,8 @@
 import generatorToCPS from './utils/generatorToCPS';
 import smoker from './services/smoker';
 
-export function* subscribe(event, context) {
+export function* subscribe(event) {
+    console.log({ event });
     try {
         const result = yield smoker.save(event.body);
 

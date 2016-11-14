@@ -9,4 +9,5 @@ const dynamoDB = new AWS.DynamoDB();
 export default {
     createTable: cpsToPromise(dynamoDB.createTable, dynamoDB),
     putItem: cpsToPromise(dynamoDB.putItem, dynamoDB),
+    getItem: cpsToPromise(dynamoDB.getItem, dynamoDB),
 };

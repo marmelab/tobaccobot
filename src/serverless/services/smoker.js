@@ -27,6 +27,7 @@ const save = data => dynamoDB.putItem({
         },
     },
 });
+
 export default {
     createTable,
     save,
