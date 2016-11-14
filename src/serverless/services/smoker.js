@@ -1,4 +1,5 @@
 import dynamoDB from './dynamoDB';
+import expect from 'expect';
 
 const params = {
     TableName: 'smoker',
@@ -28,7 +29,16 @@ const save = data => dynamoDB.putItem({
     },
 });
 
+const check = (smoker) => {
+    expect(smoker).toMatch({
+        name: /\S+/,
+        phone: /[0-9]{10}/,
+    });
+    return true;
+};
+
 export default {
     createTable,
     save,
+    check,
 };

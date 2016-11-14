@@ -3,6 +3,7 @@ import smoker from './services/smoker';
 
 export function* subscribe(event) {
     try {
+        smoker.check(event.body);
         const result = yield smoker.save(event.body);
 
         return {

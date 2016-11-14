@@ -33,7 +33,7 @@ form.addEventListener('submit', () => {
         if (response.statusCode >= 200 && response.statusCode < 300) {
             success.classList.remove('hidden');
             form.classList.add('hidden');
-            return;
+            throw new Error(response.body);
         }
         error.classList.remove('hidden');
     })
