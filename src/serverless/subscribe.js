@@ -3,8 +3,12 @@ import smoker from './services/smoker';
 
 export function* subscribe(event) {
     try {
-        smoker.check(event.body);
-        const result = yield smoker.save(event.body);
+        const smokerData = {
+            ...event.body,
+            state: 'subscribed',
+        };
+        smoker.check(smokerData);
+        const result = yield smoker.save(smokerData);
 
         return {
             statusCode: 200,

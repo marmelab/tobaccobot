@@ -1,5 +1,7 @@
-import dynamoDB from './dynamoDB';
 import expect from 'expect';
+
+import dynamoDB from './dynamoDB';
+import dynamoFormatToLiteral from './dynamoFormatToLiteral';
 
 const params = {
     TableName: 'smoker',
@@ -17,21 +19,29 @@ const params = {
 
 const createTable = () => dynamoDB.createTable(params);
 
-const save = data => dynamoDB.putItem({
-    TableName: 'smoker',
-    Item: {
-        name: {
-            S: data.name,
+const save = (data) => {
+    const result = dynamoDB.putItem({
+        TableName: 'smoker',
+        Item: {
+            name: {
+                S: data.name,
+            },
+            phone: {
+                S: data.phone,
+            },
+            state: {
+                S: data.state,
+            },
         },
-        phone: {
-            S: data.phone,
-        },
-    },
-});
+    });
+
+    return dynamoFormatToLiteral(result);
+};
 
 const check = (smoker) => {
     expect(smoker).toMatch({
         name: /\S+/,
+        state: /\S+/,
         phone: /[0-9]{10}/,
     });
     return true;

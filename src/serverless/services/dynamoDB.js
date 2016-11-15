@@ -1,5 +1,6 @@
 /* global config */
 import AWS from 'aws-sdk';
+
 import cpsToPromise from '../utils/cpsToPromise';
 
 AWS.config.update(config.aws.credentials);

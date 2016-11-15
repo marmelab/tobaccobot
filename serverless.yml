@@ -55,6 +55,8 @@ functions:
           integration: lambda
           path: subscribe
           cors: true
+  welcome:
+    handler: src/serverless/index.welcome
   setupSmokerTable:
     handler: src/serverless/index.setupSmokerTable
 #    The following are a few example events you can configure

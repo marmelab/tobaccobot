@@ -10,7 +10,8 @@ describe('subscribe handler', () => {
     });
 
     it('should save event.body as new smoker', function* () {
-        yield subscribe({ body: { name: 'john', phone: '0614786356' } });
+        const response = yield subscribe({ body: { name: 'john', phone: '0614786356' } });
+        expect(response.statusCode).toBe(200);
         const { Item } = yield dynamoDB.getItem({
             TableName: 'smoker',
             Key: {
@@ -23,6 +24,7 @@ describe('subscribe handler', () => {
         expect(Item).toEqual({
             name: { S: 'john' },
             phone: { S: '0614786356' },
+            state: { S: 'subscribed' },
         });
     });
 
@@ -30,7 +32,7 @@ describe('subscribe handler', () => {
         const smoker = { name: 'johnny', phone: '06147' };
         const response = yield subscribe({ body: smoker });
         expect(response.statusCode).toBe(500);
-        expect(response.body).toEqual(`Expected { name: 'johnny', phone: '06147' } to match { name: /\\S+/, phone: /[0-9]{10}/ }`);
+        expect(response.body).toEqual('Expected { name: \'johnny\', phone: \'06147\', state: \'subscribed\' } to match { name: /\\S+/, phone: /[0-9]{10}/, state: /\\S+/ }');
         const { Item } = yield dynamoDB.getItem({
             TableName: 'smoker',
             Key: {
