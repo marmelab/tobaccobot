@@ -1,5 +1,6 @@
 import generatorToCPS from './utils/generatorToCPS';
 import smoker from './services/smoker';
+import welcome from './welcome';
 
 export function* subscribe(event) {
     try {
@@ -9,6 +10,7 @@ export function* subscribe(event) {
         };
         smoker.check(smokerData);
         const result = yield smoker.save(smokerData);
+        yield welcome(smokerData);
 
         return {
             statusCode: 200,
