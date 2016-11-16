@@ -1,4 +1,5 @@
 import smoker from './services/smoker';
+import { console } from './services/botKit';
 
 const welcomeMsg = name => (
 `Hi ${name}, and thanks for joining the tobaccobot program!
@@ -8,10 +9,11 @@ And to begin with, how many cigarettes did you smoke yesterday ?`
 );
 
 export default function* welcome(smokerData) {
-    // @TODO use botkit consoleBot then slack/octopush
-    console.log(welcomeMsg(smokerData.name));
+    // @TODO use botkit console then slack/octopush
+    const bot = console.spawn();
+    bot.send({ text: welcomeMsg(smokerData.name) });
     yield smoker.save({
         ...smokerData,
-        status: 'welcomed',
+        state: 'welcomed',
     });
 }
