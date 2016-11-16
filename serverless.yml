@@ -47,11 +47,18 @@ provider:
 #  artifact: my-service-code.zip
 
 functions:
-  hello:
-    handler: src/serverless/index.default
+  subscribe:
+    handler: src/serverless/index.subscribe
     events:
-      - http: GET /
-
+      - http:
+          method: POST
+          integration: lambda
+          path: subscribe
+          cors: true
+  welcome:
+    handler: src/serverless/index.welcome
+  setupSmokerTable:
+    handler: src/serverless/index.setupSmokerTable
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -76,10 +83,6 @@ functions:
 #       Description: "Description for the output"
 #       Value: "Some output value"
 plugins:
-  - serverless-offline
+  - serverless-webpack
 custom:
-  serverless-offline:
-    babelOptions:
-      presets: ["stage-2"]
-      plugins:
-        - ["babel-plugin-transform-es2015-modules-commonjs"]
+  webpack: ./webpack.config.serverless.js

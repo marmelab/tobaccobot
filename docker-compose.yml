@@ -14,31 +14,23 @@ webpack-dev-server:
     - 3001:3001
   command: node node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 3001 --host 0.0.0.0
 
-serverless-offline:
+serverless-dev-server:
   extends:
     file: ./docker-compose.yml
     service: node
   environment:
-      SLS_DEBUG: 'true'
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: tobaccobot
-      POSTGRES_HOST: postgres
+    SLS_DEBUG: OK
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: secret
+    POSTGRES_DB: tobaccobot
+    POSTGRES_HOST: postgres
   links:
-    - postgres
+    - dynamodb
   ports:
     - 3000:3000
-  command: node_modules/serverless/bin/serverless offline -P 3000 -o 0.0.0.0
+  command: node_modules/serverless/bin/serverless webpack serve --port 3000 --host 0.0.0.0
 
-postgres:
-    image: postgres:9.5
-    volumes:
-        - ./backups:/backups
-    environment:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: secret
-        POSTGRES_DB: tobaccobot
-        PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-        - ./backups:/backups
-        - ./pgdata:/var/lib/postgresql/data/pgdata
+dynamodb:
+  image: deangiberson/aws-dynamodb-local
+  ports:
+    - 8000:8000
