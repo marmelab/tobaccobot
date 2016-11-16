@@ -19,8 +19,8 @@ const params = {
 
 const createTable = () => dynamoDB.createTable(params);
 
-const save = (data) => {
-    const result = dynamoDB.putItem({
+const save = function* (data) {
+    const result = yield dynamoDB.putItem({
         TableName: 'smoker',
         Item: {
             name: {
@@ -33,9 +33,61 @@ const save = (data) => {
                 S: data.state,
             },
         },
+        ReturnValues: 'ALL_OLD',
+    });
+    if (!result) {
+        return result;
+    }
+
+    return dynamoFormatToLiteral(result.Item);
+};
+
+const getPhoneQuery = phone => ({
+    TableName: 'smoker',
+    Key: {
+        phone: {
+            S: phone,
+        },
+    },
+});
+
+const get = function* (phone) {
+    const result = yield dynamoDB.getItem(getPhoneQuery(phone));
+    if (!result) {
+        return result;
+    }
+
+    return dynamoFormatToLiteral(result.Item);
+};
+
+const erase = function* (phone) {
+    const result = yield dynamoDB.deleteItem({
+        TableName: 'smoker',
+        Key: {
+            phone: {
+                S: phone,
+            },
+        },
+        ReturnValues: 'ALL_OLD',
+    });
+    if (!result) {
+        return result;
+    }
+
+    return dynamoFormatToLiteral(result.Item);
+};
+
+const all = function* () {
+    const result = yield dynamoDB.scan({
+        TableName: 'smoker',
+        ProjectionExpression: 'phone, name, state',
     });
 
-    return dynamoFormatToLiteral(result);
+    if (!result) {
+        return result;
+    }
+
+    return result.Items.map(dynamoFormatToLiteral);
 };
 
 const check = (smoker) => {
@@ -48,7 +100,10 @@ const check = (smoker) => {
 };
 
 export default {
-    createTable,
-    save,
+    all,
     check,
+    createTable,
+    delete: erase,
+    get,
+    save,
 };
