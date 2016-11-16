@@ -74,13 +74,12 @@ const erase = function* (phone) {
         return result;
     }
 
-    return dynamoFormatToLiteral(result.Item);
+    return dynamoFormatToLiteral(result.Attributes);
 };
 
 const all = function* () {
     const result = yield dynamoDB.scan({
         TableName: 'smoker',
-        ProjectionExpression: 'phone, name, state',
     });
 
     if (!result) {
