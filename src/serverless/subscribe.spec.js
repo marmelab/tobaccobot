@@ -1,12 +1,12 @@
-/* global dynamoDB */
 import expect from 'expect';
 
-describe('subscribe handler', () => {
-    let subscribe;
+import dynamoDB from './services/dynamoDB';
+import { subscribe } from './subscribe';
+import { setupSmokerTable } from './setupSmokerTable';
 
+describe('subscribe handler', () => {
     before(function* () {
-        subscribe = require('./subscribe').subscribe;
-        yield require('./setupSmokerTable').setupSmokerTable();
+        yield setupSmokerTable();
     });
 
     it('should save event.body as new smoker', function* () {
@@ -24,7 +24,7 @@ describe('subscribe handler', () => {
         expect(Item).toEqual({
             name: { S: 'john' },
             phone: { S: '0614786356' },
-            state: { S: 'subscribed' },
+            state: { S: 'welcomed' },
         });
     });
 
