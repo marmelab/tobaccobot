@@ -5,7 +5,6 @@ import bot from './services/botkit';
 export default function botConversation(message) {
     try {
         bot.controller.trigger('message_received', [bot, message]);
-
         return {
             statusCode: 200,
             headers: {

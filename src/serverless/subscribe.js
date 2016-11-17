@@ -11,6 +11,9 @@ export function* subscribe(event) {
         smoker.check(smokerData);
         const result = yield smoker.save(smokerData);
         yield welcome(smokerData);
+        setTimeout(() => {
+            process.exit(0);
+        }, 3000);
 
         return {
             statusCode: 200,
@@ -20,6 +23,10 @@ export function* subscribe(event) {
             body: result,
         };
     } catch (error) {
+        setTimeout(() => {
+            process.exit(1);
+        }, 3000);
+
         return {
             statusCode: 500,
             headers: {

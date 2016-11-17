@@ -11,14 +11,20 @@ const controller = botkit.consolebot({
 
 controller.on('message_received', (bot, message) => {
     co(function* () {
-        const user = yield controller.storage.users.get(message.user);
-        if (user && user.state === 'welcomed') {
-            yield qualifyUser(bot, user, message);
-            bot.send({ text: `I heard ${message.text}` });
+        try {
+            const user = yield controller.storage.users.get(message.user);
+            if (user && user.state === 'welcomed') {
+                yield qualifyUser(bot, user, message);
+            }
+            setTimeout(() => {
+                process.exit();
+            }, 3000);
+        } catch (error) {
+            console.error(error);
+            setTimeout(() => {
+                process.exit(1);
+            }, 3000);
         }
-        setTimeout(() => {
-            process.exit();
-        }, 3000);
     });
 });
 
