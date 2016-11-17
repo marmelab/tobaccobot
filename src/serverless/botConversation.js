@@ -1,9 +1,10 @@
 import generatorToCPS from './utils/generatorToCPS';
 
-import bot from './services/botkit';
+import botFactory from './services/botkit';
 
 export default function botConversation(message) {
     try {
+        const bot = botFactory();
         bot.controller.trigger('message_received', [bot, message]);
         return {
             statusCode: 200,

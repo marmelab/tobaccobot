@@ -1,11 +1,11 @@
 import smoker from './services/smoker';
-import bot from './services/botkit';
+import botFactory from './services/botkit';
 import welcomeMsg from './messages/welcome';
-
 
 export default function* welcome(smokerData) {
     try {
         // @TODO use botkit console then slack/octopush
+        const bot = botFactory();
         bot.send({ text: welcomeMsg(smokerData.name) });
 
         yield smoker.save({

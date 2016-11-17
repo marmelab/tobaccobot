@@ -3,7 +3,7 @@ import smoker from './smoker';
 import { setupSmokerTable } from '../setupSmokerTable';
 import dynamoDB from './dynamoDB';
 
-describe.only('smoker', () => {
+describe('smoker', () => {
     beforeEach(function* () {
         yield setupSmokerTable();
     });
