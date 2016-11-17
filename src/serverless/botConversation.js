@@ -1,11 +1,10 @@
 import generatorToCPS from './utils/generatorToCPS';
 
-import { consoleController } from './services/botkit';
+import bot from './services/botkit';
 
 export function* botConversation({ message }) {
     try {
-        const bot = consoleController.spawn();
-        consoleController.trigger('message_received', [bot, message]);
+        bot.controller.trigger('message_received', [bot, message]);
 
         return {
             statusCode: 200,
@@ -14,6 +13,9 @@ export function* botConversation({ message }) {
             body: 'Ok',
         };
     } catch (error) {
+        setTimeout(() => {
+            process.exit(1);
+        }, 3000);
         return {
             statusCode: 500,
             headers: {
