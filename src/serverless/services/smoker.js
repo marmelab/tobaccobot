@@ -20,65 +20,13 @@ const params = {
 const createTable = () => dynamoDB.createTable(params);
 
 const save = data =>
-    dynamoDB.putItem({
-        TableName: 'smoker',
-        Item: {
-            name: {
-                S: data.name,
-            },
-            phone: {
-                S: data.phone,
-            },
-            state: {
-                S: data.state,
-            },
-        },
-        ReturnValues: 'ALL_OLD',
-    })
-    .then((result) => {
-        if (!result) {
-            return result;
-        }
-
-        return dynamoFormatToLiteral(result.Item);
-    });
-
-const getPhoneQuery = phone => ({
-    TableName: 'smoker',
-    Key: {
-        phone: {
-            S: phone,
-        },
-    },
-});
+    dynamoDB.putItem('smoker', data);
 
 const get = phone =>
-    dynamoDB.getItem(getPhoneQuery(phone))
-    .then((result) => {
-        if (!result) {
-            return result;
-        }
-
-        return dynamoFormatToLiteral(result.Item);
-    });
+    dynamoDB.getItem('smoker', 'phone', phone);
 
 const erase = phone =>
-    dynamoDB.deleteItem({
-        TableName: 'smoker',
-        Key: {
-            phone: {
-                S: phone,
-            },
-        },
-        ReturnValues: 'ALL_OLD',
-    })
-    .then((result) => {
-        if (!result) {
-            return result;
-        }
-
-        return dynamoFormatToLiteral(result.Attributes);
-    });
+    dynamoDB.deleteItem('smoker', 'phone', phone);
 
 const all = () =>
     dynamoDB.scan({

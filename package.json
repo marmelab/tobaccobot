@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/marmelab/tobaccobot#readme",
   "dependencies": {
+    "aws-dynamodb": "^0.1.59",
     "aws-sdk": "^2.6.15",
     "botkit": "^0.4.1",
     "co": "4.6.0",
