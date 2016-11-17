@@ -2,7 +2,7 @@ import generatorToCPS from './utils/generatorToCPS';
 
 import bot from './services/botkit';
 
-export function* botConversation({ message }) {
+export default function botConversation(message) {
     try {
         bot.controller.trigger('message_received', [bot, message]);
 
@@ -24,5 +24,3 @@ export function* botConversation({ message }) {
         };
     }
 }
-
-export default generatorToCPS(botConversation);

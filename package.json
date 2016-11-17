@@ -20,10 +20,7 @@
     "aws-dynamodb": "^0.1.59",
     "aws-sdk": "^2.6.15",
     "botkit": "^0.4.1",
-    "co": "4.6.0",
-    "co-postgres-queries": "0.1.0",
-    "db-migrate": "^0.10.0-beta.20",
-    "db-migrate-pg": "^0.1.11",
+    "co": "^4.6.0",
     "expect": "1.20.2",
     "isomorphic-fetch": "2.2.1",
     "webpack-config-plugin": "^0.5.0"
