@@ -19,8 +19,8 @@ const params = {
 
 const createTable = () => dynamoDB.createTable(params);
 
-const save = function* (data) {
-    const result = yield dynamoDB.putItem({
+const save = data =>
+    dynamoDB.putItem({
         TableName: 'smoker',
         Item: {
             name: {
@@ -34,13 +34,14 @@ const save = function* (data) {
             },
         },
         ReturnValues: 'ALL_OLD',
-    });
-    if (!result) {
-        return result;
-    }
+    })
+    .then((result) => {
+        if (!result) {
+            return result;
+        }
 
-    return dynamoFormatToLiteral(result.Item);
-};
+        return dynamoFormatToLiteral(result.Item);
+    });
 
 const getPhoneQuery = phone => ({
     TableName: 'smoker',
@@ -51,17 +52,18 @@ const getPhoneQuery = phone => ({
     },
 });
 
-const get = function* (phone) {
-    const result = yield dynamoDB.getItem(getPhoneQuery(phone));
-    if (!result) {
-        return result;
-    }
+const get = phone =>
+    dynamoDB.getItem(getPhoneQuery(phone))
+    .then((result) => {
+        if (!result) {
+            return result;
+        }
 
-    return dynamoFormatToLiteral(result.Item);
-};
+        return dynamoFormatToLiteral(result.Item);
+    });
 
-const erase = function* (phone) {
-    const result = yield dynamoDB.deleteItem({
+const erase = phone =>
+    dynamoDB.deleteItem({
         TableName: 'smoker',
         Key: {
             phone: {
@@ -69,25 +71,25 @@ const erase = function* (phone) {
             },
         },
         ReturnValues: 'ALL_OLD',
+    })
+    .then((result) => {
+        if (!result) {
+            return result;
+        }
+
+        return dynamoFormatToLiteral(result.Attributes);
     });
-    if (!result) {
-        return result;
-    }
 
-    return dynamoFormatToLiteral(result.Attributes);
-};
-
-const all = function* () {
-    const result = yield dynamoDB.scan({
+const all = () =>
+    dynamoDB.scan({
         TableName: 'smoker',
+    }).then((result) => {
+        if (!result) {
+            return result;
+        }
+
+        return result.Items.map(dynamoFormatToLiteral);
     });
-
-    if (!result) {
-        return result;
-    }
-
-    return result.Items.map(dynamoFormatToLiteral);
-};
 
 const check = (smoker) => {
     expect(smoker).toMatch({
