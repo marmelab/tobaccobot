@@ -1,15 +1,34 @@
-/* global config */
+import config from 'config';
 import AWS from 'aws-sdk';
+import dynamoDBWrapper from 'aws-dynamodb';
 
 import cpsToPromise from '../utils/cpsToPromise';
 
 AWS.config.update(config.aws.credentials);
 
-const dynamoDB = new AWS.DynamoDB();
-
+const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
+const documentClient = new AWS.DynamoDB.DocumentClient();
+dynamoDB.on('error', (operation, error, payload) => console.log({ operation, error, payload }));
 export default {
-    createTable: cpsToPromise(dynamoDB.createTable, dynamoDB),
-    deleteTable: cpsToPromise(dynamoDB.deleteTable, dynamoDB),
-    putItem: cpsToPromise(dynamoDB.putItem, dynamoDB),
-    getItem: cpsToPromise(dynamoDB.getItem, dynamoDB),
+    createTable:
+    cpsToPromise(dynamoDB.client.createTable, dynamoDB.client),
+    deleteTable: cpsToPromise(dynamoDB.client.deleteTable, dynamoDB.client),
+    putItem: cpsToPromise((table, item, cb) =>
+        dynamoDB
+        .table(table)
+        .return(dynamoDB.ALL_OLD)
+        .insert_or_replace(item, cb)),
+    // cpsToPromise(dynamoDB.putItem, dynamoDB),
+    getItem: cpsToPromise((table, attr, value, cb) =>
+        dynamoDB
+        .table(table)
+        .where(attr).eq(value)
+        .get(cb)),
+    deleteItem: cpsToPromise((table, attr, value, cb) =>
+        dynamoDB
+        .table(table)
+        .where(attr).eq(value)
+        .return(dynamoDB.ALL_OLD)
+        .delete(cb)),
+    scan: cpsToPromise(documentClient.scan, documentClient),
 };

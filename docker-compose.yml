@@ -20,10 +20,6 @@ serverless-dev-server:
     service: node
   environment:
     SLS_DEBUG: OK
-    POSTGRES_USER: postgres
-    POSTGRES_PASSWORD: secret
-    POSTGRES_DB: tobaccobot
-    POSTGRES_HOST: postgres
   links:
     - dynamodb
   ports:

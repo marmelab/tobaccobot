@@ -17,14 +17,13 @@
   },
   "homepage": "https://github.com/marmelab/tobaccobot#readme",
   "dependencies": {
+    "aws-dynamodb": "^0.1.59",
     "aws-sdk": "^2.6.15",
-    "co": "4.6.0",
-    "co-postgres-queries": "0.1.0",
-    "config": "1.24.0",
-    "db-migrate": "^0.10.0-beta.20",
-    "db-migrate-pg": "^0.1.11",
+    "botkit": "^0.4.1",
+    "co": "^4.6.0",
     "expect": "1.20.2",
-    "isomorphic-fetch": "2.2.1"
+    "isomorphic-fetch": "2.2.1",
+    "webpack-config-plugin": "^0.5.0"
   },
   "devDependencies": {
     "babel-core": "6.18.2",
@@ -38,6 +37,7 @@
     "babel-preset-stage-2": "6.18.0",
     "babel-runtime": "6.18.0",
     "co-mocha": "1.1.3",
+    "config": "1.24.0",
     "eslint": "3.8.1",
     "eslint-config-airbnb": "12.0.0",
     "eslint-plugin-import": "1.16.0",

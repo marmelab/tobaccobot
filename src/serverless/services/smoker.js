@@ -19,24 +19,25 @@ const params = {
 
 const createTable = () => dynamoDB.createTable(params);
 
-const save = (data) => {
-    const result = dynamoDB.putItem({
-        TableName: 'smoker',
-        Item: {
-            name: {
-                S: data.name,
-            },
-            phone: {
-                S: data.phone,
-            },
-            state: {
-                S: data.state,
-            },
-        },
-    });
+const save = data =>
+    dynamoDB.putItem('smoker', data);
 
-    return dynamoFormatToLiteral(result);
-};
+const get = phone =>
+    dynamoDB.getItem('smoker', 'phone', phone);
+
+const erase = phone =>
+    dynamoDB.deleteItem('smoker', 'phone', phone);
+
+const all = () =>
+    dynamoDB.scan({
+        TableName: 'smoker',
+    }).then((result) => {
+        if (!result) {
+            return result;
+        }
+
+        return result.Items.map(dynamoFormatToLiteral);
+    });
 
 const check = (smoker) => {
     expect(smoker).toMatch({
@@ -48,7 +49,10 @@ const check = (smoker) => {
 };
 
 export default {
-    createTable,
-    save,
+    all,
     check,
+    createTable,
+    delete: erase,
+    get,
+    save,
 };

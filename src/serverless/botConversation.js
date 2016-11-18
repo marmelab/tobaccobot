@@ -1,16 +1,21 @@
 import generatorToCPS from './utils/generatorToCPS';
-import smoker from './services/smoker';
 
-export function* setupSmokerTable() {
+import botFactory from './services/botkit';
+
+export default function botConversation(message) {
     try {
-        const result = yield smoker.createTable();
+        const bot = botFactory();
+        bot.controller.trigger('message_received', [bot, message]);
         return {
             statusCode: 200,
             headers: {
             },
-            body: result,
+            body: 'Ok',
         };
     } catch (error) {
+        setTimeout(() => {
+            process.exit(1);
+        }, 3000);
         return {
             statusCode: 500,
             headers: {
@@ -19,5 +24,3 @@ export function* setupSmokerTable() {
         };
     }
 }
-
-export default generatorToCPS(setupSmokerTable);

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
-const config = require('config');
+const ConfigPlugin = require('webpack-config-plugin');
+const path = require('path');
 
 module.exports = {
     entry: './src/serverless/index.js',
@@ -15,6 +16,6 @@ module.exports = {
         ],
     },
     plugins: [
-        new webpack.DefinePlugin({ config: JSON.stringify(config) }),
+        new ConfigPlugin({ dir: path.join(__dirname, 'config') }),
     ],
 };
