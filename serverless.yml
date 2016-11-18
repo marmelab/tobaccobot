@@ -55,10 +55,17 @@ functions:
           integration: lambda
           path: subscribe
           cors: true
-  setupSmokerTable:
-    handler: src/serverless/index.setupSmokerTable
   botConversation:
     handler: src/serverless/index.botConversation
+    events:
+      - http:
+          method: POST
+          integration: lambda
+          path: bot_conversation
+          cors: true
+  setupSmokerTable:
+    handler: src/serverless/index.setupSmokerTable
+
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
