@@ -35,3 +35,6 @@ run-webpack-dev-server:
 
 run-serverless-dev-server:
 	SLS_DEBUG=true node_modules/serverless/bin/serverless webpack serve --port 3000 --host 0.0.0.0
+
+test:
+	docker-compose -f docker-compose.test.yml run test

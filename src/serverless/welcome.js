@@ -8,7 +8,7 @@ export default function* welcome(smokerData) {
         const bot = botFactory();
         bot.send({ text: welcomeMsg(smokerData.name) });
 
-        yield smoker.save({
+        yield bot.controller.storage.users.save({
             ...smokerData,
             state: 'welcomed',
         });

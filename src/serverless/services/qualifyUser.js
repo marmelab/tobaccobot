@@ -1,6 +1,5 @@
 import dubiousMessage from '../messages/dubious';
 import qualifiedMessage from '../messages/qualified';
-import smoker from './smoker';
 
 const computeTargetConsumption = nbCigarettes =>
     Math.floor(nbCigarettes / 4) * 3;
@@ -8,7 +7,7 @@ const computeTargetConsumption = nbCigarettes =>
 export default function* qualifyUser(bot, user, message) {
     const nbCigarettes = parseInt(message.text, 10);
     if (isNaN(nbCigarettes)) {
-        yield smoker.save({
+        yield bot.controller.storage.users.save({
             ...user,
             state: 'dubious',
         });
@@ -17,7 +16,7 @@ export default function* qualifyUser(bot, user, message) {
     }
     const targetConsumption = computeTargetConsumption(nbCigarettes);
 
-    yield smoker.save({
+    yield bot.controller.storage.users.save({
         ...user,
         state: 'qualified',
         targetConsumption,
