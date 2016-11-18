@@ -20,7 +20,6 @@ export default () => {
                 }
                 exit(0);
             } catch (error) {
-                console.error(error);
                 exit(1);
             }
         });

@@ -1,4 +1,6 @@
 {
-    "user": "0123456789",
-    "text": "I do not know"
+    "body": {
+        "user": "0123456789",
+        "text": "I do not know"
+    }
 }
