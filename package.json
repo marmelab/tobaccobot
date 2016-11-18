@@ -17,13 +17,13 @@
   },
   "homepage": "https://github.com/marmelab/tobaccobot#readme",
   "dependencies": {
-    "aws-dynamodb": "^0.1.59",
-    "aws-sdk": "^2.6.15",
-    "botkit": "^0.4.1",
-    "co": "^4.6.0",
+    "aws-dynamodb": "0.1.59",
+    "aws-sdk": "2.6.15",
+    "botkit": "0.4.1",
+    "co": "4.6.0",
     "expect": "1.20.2",
     "isomorphic-fetch": "2.2.1",
-    "webpack-config-plugin": "^0.5.0"
+    "webpack-config-plugin": "0.5.0"
   },
   "devDependencies": {
     "babel-core": "6.18.2",
@@ -47,10 +47,10 @@
     "extract-text-webpack-plugin": "1.0.1",
     "html-loader": "0.4.4",
     "html-webpack-plugin": "2.24.1",
-    "json-loader": "^0.5.4",
+    "json-loader": "0.5.4",
     "mocha": "3.1.2",
     "serverless": "1.1.0",
-    "serverless-webpack": "^1.0.0-rc.2",
+    "serverless-webpack": "1.0.0-rc.2",
     "webpack": "1.13.3",
     "webpack-dev-server": "1.16.2"
   }

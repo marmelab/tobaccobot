@@ -5,7 +5,7 @@ language: node_js
 node_js:
   - "4.3"
 script:
-  - docker-compose -f docker-compose.test.yml run test
+  - make test
 cache:
   directories:
   - node_modules
