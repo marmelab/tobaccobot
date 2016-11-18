@@ -3,3 +3,21 @@ npm:
         file: ./docker-compose.yml
         service: node
     entrypoint: ['npm']
+
+serverless:
+  extends:
+    file: ./docker-compose.yml
+    service: node
+  environment:
+    SLS_DEBUG: OK
+    SERVERLESS_ENV: invoke
+  links:
+    - dynamodb
+  ports:
+    - 3000:3000
+  entrypoint: ['node_modules/serverless/bin/serverless']
+
+dynamodb:
+  image: deangiberson/aws-dynamodb-local
+  ports:
+    - 8000:8000

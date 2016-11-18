@@ -1,4 +1,4 @@
-import generatorToCPS from './utils/generatorToCPS';
+import exit from './services/exit';
 
 import botFactory from './services/botkit';
 
@@ -13,9 +13,7 @@ export default function botConversation(message) {
             body: 'Ok',
         };
     } catch (error) {
-        setTimeout(() => {
-            process.exit(1);
-        }, 3000);
+        exit(1);
         return {
             statusCode: 500,
             headers: {

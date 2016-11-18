@@ -20,6 +20,7 @@ serverless-dev-server:
     service: node
   environment:
     SLS_DEBUG: OK
+    SERVERLESS_ENV: dev-server
   links:
     - dynamodb
   ports:
