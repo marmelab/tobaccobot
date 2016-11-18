@@ -1,4 +1,5 @@
 module.exports = {
+    serverlessEnv: process.env.SERVERLESS_ENV,
     aws: {
         credentials: {
             endpoint: 'http://dynamodbtest:8000',

@@ -5,6 +5,7 @@ test:
   environment:
     BABEL_ENV: node
     NODE_ENV: test
+    SERVERLESS_ENV: mocha
   links:
     - dynamodbtest
   ports:

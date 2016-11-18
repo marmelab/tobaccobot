@@ -1,11 +1,12 @@
+import exit from './services/exit';
 import generatorToCPS from './utils/generatorToCPS';
 
 import botFactory from './services/botkit';
 
-export default function botConversation(message) {
+export function* botConversation({ body }) {
     try {
         const bot = botFactory();
-        bot.controller.trigger('message_received', [bot, message]);
+        bot.controller.trigger('message_received', [bot, body]);
         return {
             statusCode: 200,
             headers: {
@@ -13,9 +14,7 @@ export default function botConversation(message) {
             body: 'Ok',
         };
     } catch (error) {
-        setTimeout(() => {
-            process.exit(1);
-        }, 3000);
+        exit(1);
         return {
             statusCode: 500,
             headers: {
@@ -24,3 +23,5 @@ export default function botConversation(message) {
         };
     }
 }
+
+export default generatorToCPS(botConversation);

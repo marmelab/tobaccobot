@@ -1,6 +1,6 @@
-import smoker from './services/smoker';
 import botFactory from './services/botkit';
 import welcomeMsg from './messages/welcome';
+import exit from './services/exit';
 
 export default function* welcome(smokerData) {
     try {
@@ -13,13 +13,9 @@ export default function* welcome(smokerData) {
             state: 'welcomed',
         });
 
-        setTimeout(() => {
-            process.exit(0);
-        }, 3000);
+        exit(0);
     } catch (error) {
         console.error(error);
-        setTimeout(() => {
-            process.exit(1);
-        }, 3000);
+        exit(1);
     }
 }

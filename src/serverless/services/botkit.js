@@ -3,6 +3,7 @@ import co from 'co';
 
 import dynamoDBStorage from './dynamoDBStorage';
 import qualifyUser from './qualifyUser';
+import exit from './exit';
 
 export default () => {
     const controller = botkit.consolebot({
@@ -17,14 +18,9 @@ export default () => {
                 if (user && user.state === 'welcomed') {
                     yield qualifyUser(bot, user, message);
                 }
-                setTimeout(() => {
-                    process.exit();
-                }, 3000);
+                exit(0);
             } catch (error) {
-                console.error(error);
-                setTimeout(() => {
-                    process.exit(1);
-                }, 3000);
+                exit(1);
             }
         });
     });
