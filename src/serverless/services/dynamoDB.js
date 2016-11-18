@@ -8,7 +8,7 @@ AWS.config.update(config.aws.credentials);
 
 const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
 const documentClient = new AWS.DynamoDB.DocumentClient();
-dynamoDB.on('error', (operation, error, payload) => console.log({ operation, error, payload }));
+dynamoDB.on('error', (operation, error, payload) => console.error({ operation, error, payload }));
 export default {
     createTable:
     cpsToPromise(dynamoDB.client.createTable, dynamoDB.client),
@@ -18,7 +18,6 @@ export default {
         .table(table)
         .return(dynamoDB.ALL_OLD)
         .insert_or_replace(item, cb)),
-    // cpsToPromise(dynamoDB.putItem, dynamoDB),
     getItem: cpsToPromise((table, attr, value, cb) =>
         dynamoDB
         .table(table)
