@@ -4,7 +4,7 @@ import qualifyUser from './qualifyUser';
 import qualifiedMessage from '../messages/qualified';
 import dubiousMessage from '../messages/dubious';
 
-describe.only('qualifyUser', () => {
+describe('qualifyUser', () => {
     const send = expect.createSpy();
     const save = expect.createSpy().andReturn(Promise.resolve(null));
     const bot = {
