@@ -55,8 +55,6 @@ functions:
           integration: lambda
           path: subscribe
           cors: true
-  welcome:
-    handler: src/serverless/index.welcome
   setupSmokerTable:
     handler: src/serverless/index.setupSmokerTable
   botConversation:
