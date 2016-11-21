@@ -6,7 +6,7 @@ import cpsToPromise from '../utils/cpsToPromise';
 
 AWS.config.update(config.aws.credentials);
 
-const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
+const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB(config.aws.credentials));
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
 dynamoDB.on('error', (operation, error, payload) => console.error({ operation, error, payload }));

@@ -1,12 +1,12 @@
 import exit from './services/exit';
 import generatorToCPS from './utils/generatorToCPS';
 
-import botFactory from './services/botkit';
+import handleAction, { newMessage } from './saga';
 
 export function* botConversation({ body }) {
     try {
-        const bot = botFactory();
-        bot.controller.trigger('message_received', [bot, body]);
+        yield handleAction(newMessage(body));
+
         return {
             statusCode: 200,
             headers: {
@@ -14,6 +14,8 @@ export function* botConversation({ body }) {
             body: 'Ok',
         };
     } catch (error) {
+        console.error({ error });
+
         exit(1);
         return {
             statusCode: 500,

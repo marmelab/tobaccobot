@@ -9,13 +9,24 @@ module.exports = {
         loaders: [
             {
                 test: /\.js$/,
-                loaders: ['babel'],
-                exclude: /node_modules/,
+                loader: 'babel-loader',
+                include: [
+                    path.resolve(__dirname, 'src'),
+                    path.resolve(__dirname, 'node_modules/sg'),
+                ],
+                query: {
+                    babelrc: false,
+                    presets: ['es2015-node4', 'es2016', 'stage-2'],
+                    plugins: [
+                        'add-module-exports',
+                        'transform-runtime',
+                    ],
+                },
             },
             { test: /\.json$/, loader: 'json-loader' },
         ],
     },
     plugins: [
-        new ConfigPlugin({ dir: path.join(__dirname, 'config') }),
+        new ConfigPlugin({ dir: path.resolve(__dirname, 'config') }),
     ],
 };

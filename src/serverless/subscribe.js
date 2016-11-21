@@ -1,25 +1,20 @@
 import generatorToCPS from './utils/generatorToCPS';
-import smoker from './services/smoker';
-import welcome from './welcome';
+import handleAction, { subscribe } from './saga';
 
-export function* subscribe(event) {
+export function* subscribeLambda(event) {
     try {
-        const smokerData = {
-            ...event.body,
-            state: 'subscribed',
-        };
-        smoker.check(smokerData);
-        const result = yield smoker.save(smokerData);
-        yield welcome(smokerData);
+        const user = yield handleAction(subscribe(event.body));
 
         return {
             statusCode: 200,
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
-            body: result,
+            body: user,
         };
     } catch (error) {
+        console.error({ error });
+
         return {
             statusCode: 500,
             headers: {
@@ -30,4 +25,4 @@ export function* subscribe(event) {
     }
 }
 
-export default generatorToCPS(subscribe);
+export default generatorToCPS(subscribeLambda);

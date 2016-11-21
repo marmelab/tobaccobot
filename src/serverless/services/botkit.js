@@ -2,7 +2,7 @@ import botkit from 'botkit';
 import co from 'co';
 
 import dynamoDBStorage from './dynamoDBStorage';
-import qualifyUser from './qualifyUser';
+import qualifyUser from '../effects/qualifyUser';
 import exit from './exit';
 
 export default () => {
