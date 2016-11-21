@@ -1,9 +1,20 @@
 import generatorToCPS from './utils/generatorToCPS';
-import handleAction, { subscribe } from './saga';
+import sg, { call } from 'sg/sg';
 
-export function* subscribeLambda(event) {
+import createUser from './effects/createUser';
+import sendWelcomeMessage from './effects/sendWelcomeMessage';
+import updateUser from './effects/updateUser';
+
+export function* subscribeSaga(userData) {
+    const user = yield call(createUser, userData);
+    yield call(sendWelcomeMessage, user);
+    yield call(updateUser, { ...user, state: 'welcomed' });
+    return user;
+}
+
+export function* subscribeLambda({ body }) {
     try {
-        const user = yield handleAction(subscribe(event.body));
+        const user = yield sg(subscribeSaga)(body);
 
         return {
             statusCode: 200,

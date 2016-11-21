@@ -5,7 +5,7 @@ export default function (userData) {
         ...userData,
         state: 'subscribed',
     };
-    console.log('createUser', { smokerData });
+
     smoker.check(smokerData);
     return smoker.save(smokerData);
 }
