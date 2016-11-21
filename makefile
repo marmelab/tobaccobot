@@ -22,7 +22,7 @@ dk_npm: ## allow to run dockerized npm command eg make dk_npm 'install koa --sav
 	docker-compose -f docker-compose.util.yml run --rm npm $(COMMAND_ARGS)
 
 dk_install:
-	docker-compose -f docker-compose.util.yml run --rm npm
+	docker-compose -f docker-compose.util.yml run --rm npm install
 
 dk_setup_smoker_table: ## run serverless lambda
 	docker-compose -f docker-compose.util.yml run --rm serverless webpack invoke -f setupSmokerTable
