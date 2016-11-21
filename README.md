@@ -24,7 +24,7 @@ Careful make install will not work properly if using node 5 or newer.
 make dk_run
 ```
 will use docker to run
- - webpack-dev-server: webpack server to servefront-end static page (port 3001)
+ - webpack-dev-server: webpack server to serve front-end static page (port 3001)
  - serverless-dev-server: serverless webpack plugin to serve lambda (port 3000)
  - dynamodb (port 8000)
 
