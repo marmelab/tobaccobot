@@ -9,8 +9,10 @@ serverless:
     file: ./docker-compose.yml
     service: node
   environment:
-    SLS_DEBUG: OK
-    SERVERLESS_ENV: invoke
+     - SLS_DEBUG=OK
+     - SERVERLESS_ENV=invoke
+     - AWS_ACCESS_KEY_ID
+     - AWS_SECRET_ACCESS_KEY
   links:
     - dynamodb
   ports:
