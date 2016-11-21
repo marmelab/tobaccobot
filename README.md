@@ -17,7 +17,7 @@ or without docker ()
 ```sh
     make install
 ```
-Careful make install will not work properly if using node 5 or newer.
+Be careful: make install will not work properly if using node 5 or newer.
 
 ##development
 ```sh
