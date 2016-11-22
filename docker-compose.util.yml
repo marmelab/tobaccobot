@@ -23,3 +23,15 @@ dynamodb:
   image: deangiberson/aws-dynamodb-local
   ports:
     - 8000:8000
+
+deploy:
+  extends:
+    file: ./docker-compose.yml
+    service: node
+  environment:
+     - SERVERLESS_ENV=deploy
+     - AWS_ACCESS_KEY_ID
+     - AWS_SECRET_ACCESS_KEY
+  ports:
+    - 3000:3000
+  entrypoint: node_modules/serverless/bin/serverless deploy
