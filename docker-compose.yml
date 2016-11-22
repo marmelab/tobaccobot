@@ -19,8 +19,10 @@ serverless-dev-server:
     file: ./docker-compose.yml
     service: node
   environment:
-    SLS_DEBUG: OK
-    SERVERLESS_ENV: dev-server
+    - SLS_DEBUG=OK
+    - SERVERLESS_ENV=dev-server
+    - AWS_ACCESS_KEY_ID=akid
+    - AWS_SECRET_ACCESS_KEY=secret
   links:
     - dynamodb
   ports:
