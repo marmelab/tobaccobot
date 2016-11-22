@@ -1,5 +1,4 @@
 import sg, { call } from 'sg.js';
-import exit from './services/exit';
 import generatorToCPS from './utils/generatorToCPS';
 
 import getUser from './effects/getUser';
@@ -53,7 +52,6 @@ export function* botConversation({ body }) {
     } catch (error) {
         console.error({ error });
 
-        exit(1);
         return {
             statusCode: 500,
             headers: { },
