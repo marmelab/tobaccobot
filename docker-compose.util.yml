@@ -35,3 +35,12 @@ deploy:
   ports:
     - 3000:3000
   entrypoint: node_modules/serverless/bin/serverless deploy
+
+serve:
+  image: cannin/nodejs-http-server
+  volumes:
+    - ./build:/public
+    - ./node_modules:/public/node_modules
+  working_dir: /public
+  ports:
+    - 8080:8080

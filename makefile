@@ -39,5 +39,11 @@ run-serverless-dev-server:
 test:
 	docker-compose -f docker-compose.test.yml run test
 
-deploy:
+deploy-serverless:
 	docker-compose -f docker-compose.util.yml run --rm deploy
+
+deploy-frontend:
+	aws --region=eu-west-1 s3 sync --delete build/ "s3://tobbaccobot-frontend"
+
+build-front-end:
+	BABEL_ENV=browser ./node_modules/.bin/webpack $(if $(filter production staging test,$(NODE_ENV)),-p -d) -p --progress
