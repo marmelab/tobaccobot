@@ -45,5 +45,7 @@ deploy-serverless:
 deploy-frontend:
 	aws --region=eu-west-1 s3 sync --delete build/ "s3://tobbaccobot-frontend"
 
+deploy: build-front-end deploy-frontend deploy-serverless
+
 build-front-end:
 	BABEL_ENV=browser ./node_modules/.bin/webpack $(if $(filter production staging test,$(NODE_ENV)),-p -d) -p --progress
