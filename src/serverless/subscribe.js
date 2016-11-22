@@ -1,18 +1,20 @@
+import sg, { call } from 'sg.js';
 import generatorToCPS from './utils/generatorToCPS';
-import sg, { call } from 'sg/sg';
 
 import createUser from './effects/createUser';
 import sendWelcomeMessage from './effects/sendWelcomeMessage';
 import updateUser from './effects/updateUser';
 
-export function* subscribeSaga(userData) {
-    const user = yield call(createUser, userData);
-    yield call(sendWelcomeMessage, user);
-    yield call(updateUser, { ...user, state: 'welcomed' });
-    return user;
+export function* subscribeSaga(smokerData) {
+    console.log({ smokerData })
+    let smoker = yield call(createUser, smokerData);
+    console.log({ smoker })
+    yield call(sendWelcomeMessage, smoker);
+    smoker = yield call(updateUser, { ...smoker, state: 'welcomed' });
+    return smoker;
 }
 
-export function* subscribeLambda({ body }) {
+export function* subscribe({ body }) {
     try {
         const user = yield sg(subscribeSaga)(body);
 
@@ -36,4 +38,4 @@ export function* subscribeLambda({ body }) {
     }
 }
 
-export default generatorToCPS(subscribeLambda);
+export default generatorToCPS(subscribe);

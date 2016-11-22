@@ -1,4 +1,4 @@
-import sg, { call } from 'sg/sg';
+import sg, { call } from 'sg.js';
 import exit from './services/exit';
 import generatorToCPS from './utils/generatorToCPS';
 

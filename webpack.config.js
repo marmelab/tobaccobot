@@ -1,6 +1,7 @@
 require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 const loaders = [{
     test: /\.js$/,
@@ -40,7 +41,7 @@ const plugins = [
     new HtmlWebpackPlugin({
         hash: true,
         filename: 'index.html',
-        template: '!!html!' + __dirname + '/src/frontend/index.html'
+        template: '!!html!' + path.resolve(__dirname, './src/frontend/index.html'),
     }),
 ];
 

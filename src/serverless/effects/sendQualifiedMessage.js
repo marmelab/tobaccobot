@@ -1,7 +1,10 @@
 import botFactory from '../services/botkit';
 import qualifiedMessage from '../messages/qualified';
 
-export default function (targetConsumption) {
-    const bot = botFactory();
+export const sendQualifiedMessageFactory = bot => (targetConsumption) => {
     bot.send({ text: qualifiedMessage(targetConsumption) });
+};
+
+export default function () {
+    sendQualifiedMessageFactory(botFactory());
 }
