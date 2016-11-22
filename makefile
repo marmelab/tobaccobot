@@ -34,7 +34,7 @@ run-webpack-dev-server:
 	BABEL_ENV=browser node node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 3001 --host 0.0.0.0
 
 run-serverless-dev-server:
-	SLS_DEBUG=true node_modules/serverless/bin/serverless webpack serve --port 3000 --host 0.0.0.0
+	BABEL_ENV=node SLS_DEBUG=true node_modules/serverless/bin/serverless webpack serve --port 3000 --host 0.0.0.0
 
 test:
 	docker-compose -f docker-compose.test.yml run test

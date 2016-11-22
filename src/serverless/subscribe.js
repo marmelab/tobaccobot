@@ -1,25 +1,31 @@
+import sg, { call } from 'sg.js';
 import generatorToCPS from './utils/generatorToCPS';
-import smoker from './services/smoker';
-import welcome from './welcome';
 
-export function* subscribe(event) {
+import createUser from './effects/createUser';
+import sendWelcomeMessage from './effects/sendWelcomeMessage';
+import updateUser from './effects/updateUser';
+
+export function* subscribeSaga(smokerData) {
+    let smoker = yield call(createUser, smokerData);
+    yield call(sendWelcomeMessage, smoker);
+    smoker = yield call(updateUser, { ...smoker, state: 'welcomed' });
+    return smoker;
+}
+
+export function* subscribe({ body }) {
     try {
-        const smokerData = {
-            ...event.body,
-            state: 'subscribed',
-        };
-        smoker.check(smokerData);
-        const result = yield smoker.save(smokerData);
-        yield welcome(smokerData);
+        const user = yield sg(subscribeSaga)(body);
 
         return {
             statusCode: 200,
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
-            body: result,
+            body: user,
         };
     } catch (error) {
+        console.error({ error });
+
         return {
             statusCode: 500,
             headers: {
