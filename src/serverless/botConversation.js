@@ -13,7 +13,7 @@ export function* botConversationSaga(message) {
     const user = yield call(getUser, message.user);
 
     if (user && user.state === 'welcomed') {
-        const { state, nbCigarettes } = yield call(qualifyUser, user, message);
+        const { state, nbCigarettes } = yield call(qualifyUser, message.text);
 
         switch (state) {
         case 'dubious': {

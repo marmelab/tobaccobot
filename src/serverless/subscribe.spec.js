@@ -1,5 +1,5 @@
 import expect from 'expect';
-import sg, { call } from 'sg.js';
+import { call } from 'sg.js';
 
 import dynamoDB from './services/dynamoDB';
 import { subscribe, subscribeSaga } from './subscribe';
@@ -10,7 +10,7 @@ import sendWelcomeMessage from './effects/sendWelcomeMessage';
 import updateUser from './effects/updateUser';
 
 describe('subscribe', () => {
-    describe.only('subscribe lambda', () => {
+    describe('subscribe lambda', () => {
         before(function* () {
             yield setupSmokerTable();
         });
@@ -49,7 +49,7 @@ describe('subscribe', () => {
         const saga = subscribeSaga(smokerData);
 
         it('should create the user', () => {
-            expect(saga.next(smokerData).value).toEqual(call(createUser, smokerData));
+            expect(saga.next().value).toEqual(call(createUser, smokerData));
         });
 
         it('should send the welcome message', () => {

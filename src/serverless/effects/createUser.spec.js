@@ -6,12 +6,6 @@ import { setupSmokerTable } from '../setupSmokerTable';
 describe('createUser', () => {
     before(function* () {
         yield setupSmokerTable();
-
-        yield dynamoDB.putItem('smoker', {
-            name: 'Frodo',
-            phone: '0102030405',
-            state: 'subscribed',
-        });
     });
 
     it('should create the user', function* () {

@@ -1,11 +1,12 @@
 import smoker from '../services/smoker';
 
-export default function (userData) {
+export default async function (userData) {
     const smokerData = {
         ...userData,
         state: 'subscribed',
     };
 
     smoker.check(smokerData);
-    return smoker.save(smokerData);
+    await smoker.save(smokerData);
+    return smoker.get(smokerData.phone);
 }
