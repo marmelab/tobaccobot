@@ -38,3 +38,6 @@ run-serverless-dev-server:
 
 test:
 	docker-compose -f docker-compose.test.yml run test
+
+deploy:
+	docker-compose -f docker-compose.util.yml run --rm deploy
