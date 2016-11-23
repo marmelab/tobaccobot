@@ -21,4 +21,5 @@ module.exports = {
     plugins: [
         new ConfigPlugin({ dir: path.resolve(__dirname, 'config') }),
     ],
+    externals: ['aws-sdk'],
 };

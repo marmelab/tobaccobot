@@ -5,6 +5,4 @@ export const sendWelcomeMessageFactory = bot => (smoker) => {
     bot.send({ text: welcomeMsg(smoker.name) });
 };
 
-export default function () {
-    sendWelcomeMessageFactory(botFactory());
-}
+export default sendWelcomeMessageFactory(botFactory());

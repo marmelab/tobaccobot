@@ -4,9 +4,11 @@ import dynamoDBWrapper from 'aws-dynamodb';
 
 import cpsToPromise from '../utils/cpsToPromise';
 
-AWS.config.update(config.aws.credentials);
+if (config.serverlessEnv !== 'deploy') {
+    AWS.config.update(config.aws.credentials);
+}
 
-const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB(config.aws.credentials));
+const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
 dynamoDB.on('error', (operation, error, payload) => console.error({ operation, error, payload }));
