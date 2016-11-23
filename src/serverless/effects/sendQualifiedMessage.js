@@ -5,6 +5,4 @@ export const sendQualifiedMessageFactory = bot => (targetConsumption) => {
     bot.send({ text: qualifiedMessage(targetConsumption) });
 };
 
-export default function () {
-    sendQualifiedMessageFactory(botFactory());
-}
+export default sendQualifiedMessageFactory(botFactory());

@@ -5,6 +5,4 @@ export const sendDubiousMessageFactory = bot => () => {
     bot.send({ text: dubiousMessage() });
 };
 
-export default function () {
-    sendDubiousMessageFactory(botFactory());
-}
+export default sendDubiousMessageFactory(botFactory());
