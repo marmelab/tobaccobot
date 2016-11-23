@@ -18,7 +18,7 @@ export function* botConversationSaga(message) {
         case 'dubious': {
             yield call(updateUser, { ...user, state });
 
-            yield call(sendDubiousMessage, user);
+            yield call(sendDubiousMessage, user.phone);
             break;
         }
         case 'qualified': {
@@ -31,7 +31,7 @@ export function* botConversationSaga(message) {
                 targetConsumption,
             });
 
-            yield call(sendQualifiedMessage, targetConsumption);
+            yield call(sendQualifiedMessage, user.phone, targetConsumption);
             break;
         }
         default:

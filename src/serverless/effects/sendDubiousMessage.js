@@ -1,8 +1,7 @@
-import botFactory from '../services/botkit';
+import sendSms from '../services/sendSms';
 import dubiousMessage from '../messages/dubious';
 
-export const sendDubiousMessageFactory = bot => () => {
-    bot.send({ text: dubiousMessage() });
-};
+export const sendDubiousMessageFactory = send => phone =>
+    send(phone, dubiousMessage());
 
-export default sendDubiousMessageFactory(botFactory());
+export default sendDubiousMessageFactory(sendSms);

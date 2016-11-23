@@ -1,8 +1,7 @@
-import botFactory from '../services/botkit';
+import sendSms from '../services/sendSms';
 import welcomeMsg from '../messages/welcome';
 
-export const sendWelcomeMessageFactory = bot => (smoker) => {
-    bot.send({ text: welcomeMsg(smoker.name) });
-};
+export const sendWelcomeMessageFactory = send => (phone, smoker) =>
+    send(phone, welcomeMsg(smoker.name));
 
-export default sendWelcomeMessageFactory(botFactory());
+export default sendWelcomeMessageFactory(sendSms);

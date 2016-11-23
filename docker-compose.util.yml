@@ -13,6 +13,8 @@ serverless:
      - SERVERLESS_ENV=invoke
      - AWS_ACCESS_KEY_ID
      - AWS_SECRET_ACCESS_KEY
+     - OCTOPUSH_USER_LOGIN
+     - OCTOPUSH_API_KEY
   links:
     - dynamodb
   ports:
@@ -32,6 +34,8 @@ deploy:
      - SERVERLESS_ENV=deploy
      - AWS_ACCESS_KEY_ID
      - AWS_SECRET_ACCESS_KEY
+     - OCTOPUSH_USER_LOGIN
+     - OCTOPUSH_API_KEY
   ports:
     - 3000:3000
   entrypoint: node_modules/serverless/bin/serverless deploy

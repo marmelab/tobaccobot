@@ -23,6 +23,9 @@ serverless-dev-server:
     - SERVERLESS_ENV=dev-server
     - AWS_ACCESS_KEY_ID=akid
     - AWS_SECRET_ACCESS_KEY=secret
+    - OCTOPUSH_USER_LOGIN
+    - OCTOPUSH_API_KEY
+    - OCTOPUSH_SIMULATION=ok
   links:
     - dynamodb
   ports:

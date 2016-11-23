@@ -7,7 +7,7 @@ import updateUser from './effects/updateUser';
 
 export function* subscribeSaga(smokerData) {
     let smoker = yield call(createUser, smokerData);
-    yield call(sendWelcomeMessage, smoker);
+    yield call(sendWelcomeMessage, smoker.phone, smoker);
     smoker = yield call(updateUser, { ...smoker, state: 'welcomed' });
     return smoker;
 }

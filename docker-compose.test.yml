@@ -6,11 +6,14 @@ test:
     BABEL_ENV: node
     NODE_ENV: test
     SERVERLESS_ENV: mocha
+    - OCTOPUSH_USER_LOGIN=login
+    - OCTOPUSH_API_KEY=apikey
+    - OCTOPUSH_SIMULATION=ok
   links:
     - dynamodbtest
   ports:
     - 3001:3001
-  command: node_modules/.bin/mocha ./test/setup.js ./src/**/*.spec.js
+  command: node_modules/.bin/mocha ./src/**/*.spec.js
 
 dynamodbtest:
   image: deangiberson/aws-dynamodb-local
