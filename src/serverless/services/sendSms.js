@@ -1,11 +1,8 @@
 import octopush from 'octopush';
 import config from 'config';
 
-export const sendSmsFactory = octopushImpl => (phone, message) => {
-    if (config.octopush.disabled) {
-        return Promise.resolve();
-    }
-    return new Promise((resolve, reject) => {
+export const sendSmsFactory = octopushImpl => (phone, message) =>
+    new Promise((resolve, reject) => {
         try {
             const sms = new octopushImpl.SMS(config.octopush.user_login, config.octopush.api_key);
 
@@ -35,6 +32,5 @@ export const sendSmsFactory = octopushImpl => (phone, message) => {
             reject(error);
         }
     });
-};
 
-export default sendSmsFactory(octopush);
+export default config.octopush.disabled ? () => Promise.resolve() : sendSmsFactory(octopush);

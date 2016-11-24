@@ -2,7 +2,7 @@ import expect from 'expect';
 import { call } from 'sg.js';
 
 import dynamoDB from './services/dynamoDB';
-import { botConversation, botConversationSaga } from './botConversation';
+import botConversation, { botConversationSaga } from './botConversation';
 import { setupSmokerTable } from './setupSmokerTable';
 
 import getUser from './effects/getUser';
@@ -18,14 +18,18 @@ describe('botConversation', () => {
             yield setupSmokerTable();
         });
 
-        it('should return 200 with valid number of cigarettes', function* () {
-            const response = yield botConversation({ body: { message: '42', user: '0614786356' } });
-            expect(response.statusCode).toBe(200);
+        it('should return 200 with valid number of cigarettes', (done) => {
+            botConversation({ message: '42', number: '+33614786356' }, null, (error, result) => {
+                expect(result).toBe(undefined);
+                done(error);
+            });
         });
 
-        it('should return 200 with invalid number of cigarettes', function* () {
-            const response = yield botConversation({ body: { message: 'foo', user: '0614786356' } });
-            expect(response.statusCode).toBe(200);
+        it('should return 200 with invalid number of cigarettes', (done) => {
+            botConversation({ message: 'foo', number: '+33614786356' }, null, (error, result) => {
+                expect(result).toBe(undefined);
+                done(error);
+            });
         });
 
         after(function* () {
@@ -37,12 +41,12 @@ describe('botConversation', () => {
 
     describe('botConversation saga', () => {
         describe('qualified user', () => {
-            const message = { user: '0614786356', text: '42' };
+            const message = { number: '+33614786356', text: '42' };
             const saga = botConversationSaga(message);
             const user = { name: 'johnny', phone: 'foo', state: 'welcomed' };
 
             it('should get the user', () => {
-                expect(saga.next().value).toEqual(call(getUser, message.user));
+                expect(saga.next().value).toEqual(call(getUser, message.number));
             });
 
             it('should qualify the user', () => {
@@ -67,12 +71,12 @@ describe('botConversation', () => {
             });
         });
         describe('dubious user', () => {
-            const message = { user: '0614786356', text: 'foo' };
+            const message = { number: '+33614786356', text: 'foo' };
             const saga = botConversationSaga(message);
             const user = { name: 'johnny', phone: 'foo', state: 'welcomed' };
 
             it('should get the user', () => {
-                expect(saga.next().value).toEqual(call(getUser, message.user));
+                expect(saga.next().value).toEqual(call(getUser, message.number));
             });
 
             it('should qualify the user', () => {

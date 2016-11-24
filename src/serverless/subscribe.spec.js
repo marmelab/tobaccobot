@@ -16,13 +16,13 @@ describe('subscribe', () => {
         });
 
         it('should save event.body as new smoker', function* () {
-            const response = yield subscribe({ body: { name: 'john', phone: '0614786356' } });
+            const response = yield subscribe({ body: { name: 'john', phone: '+33614786356' } });
             expect(response.statusCode).toBe(200);
-            const Item = yield dynamoDB.getItem('smoker', 'phone', '0614786356');
+            const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
             expect(Item).toEqual({
                 name: 'john',
-                phone: '0614786356',
+                phone: '+33614786356',
                 state: 'welcomed',
             });
         });
@@ -31,7 +31,7 @@ describe('subscribe', () => {
             const smoker = { name: 'johnny', phone: '06147' };
             const response = yield subscribe({ body: smoker });
             expect(response.statusCode).toBe(500);
-            expect(response.body).toEqual('Expected { name: \'johnny\', phone: \'06147\', state: \'subscribed\' } to match { name: /\\S+/, phone: /[0-9]{10}/, state: /\\S+/ }');
+            expect(response.body).toEqual('Expected { name: \'johnny\', phone: \'06147\', state: \'subscribed\' } to match { name: /\\S+/, phone: /\\+[0-9]{11}/, state: /\\S+/ }');
             const { Item } = yield dynamoDB.getItem('smoker', 'phone', '06147');
 
             expect(Item).toBe(undefined);
@@ -45,7 +45,7 @@ describe('subscribe', () => {
     });
 
     describe('subscribe saga', () => {
-        const smokerData = { name: 'johnny', phone: '0614786356' };
+        const smokerData = { name: 'johnny', phone: '+33614786356' };
         const saga = subscribeSaga(smokerData);
 
         it('should create the user', () => {
