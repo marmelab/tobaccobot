@@ -1,6 +1,4 @@
 {
-    "body": {
-        "number": "+33123456789",
-        "text": "I do not know"
-    }
+    "number": "+33123456789",
+    "text": "I do not know"
 }
