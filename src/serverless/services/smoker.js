@@ -43,7 +43,7 @@ const check = (smoker) => {
     expect(smoker).toMatch({
         name: /\S+/,
         state: /\S+/,
-        phone: /[0-9]{10}/,
+        phone: /\+[0-9]{11}/,
     });
     return true;
 };
