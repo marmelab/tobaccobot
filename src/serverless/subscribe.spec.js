@@ -53,7 +53,7 @@ describe('subscribe', () => {
         });
 
         it('should send the welcome message', () => {
-            expect(saga.next(smokerData).value).toEqual(call(sendWelcomeMessage, smokerData));
+            expect(saga.next(smokerData).value).toEqual(call(sendWelcomeMessage, smokerData.phone, smokerData.name));
         });
 
         it('should update the user state', () => {

@@ -63,7 +63,7 @@ describe('botConversation', () => {
             });
 
             it('should send the qualified message', () => {
-                expect(saga.next().value).toEqual(call(sendQualifiedMessage, 15));
+                expect(saga.next().value).toEqual(call(sendQualifiedMessage, 'foo', 15));
             });
         });
         describe('dubious user', () => {
@@ -87,7 +87,7 @@ describe('botConversation', () => {
             });
 
             it('should send the dubious message', () => {
-                expect(saga.next().value).toEqual(call(sendDubiousMessage, user));
+                expect(saga.next().value).toEqual(call(sendDubiousMessage, user.phone));
             });
         });
     });

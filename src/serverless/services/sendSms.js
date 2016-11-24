@@ -34,4 +34,4 @@ export const sendSmsFactory = octopushImpl => (phone, message) =>
         }
     });
 
-export default sendSmsFactory(octopush);
+export default config.octopush.disabled ? () => Promise.resolve() : sendSmsFactory(octopush);
