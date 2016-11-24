@@ -3,9 +3,9 @@ test:
     file: ./docker-compose.yml
     service: node
   environment:
-    BABEL_ENV: node
-    NODE_ENV: test
-    SERVERLESS_ENV: mocha
+    - BABEL_ENV=node
+    - NODE_ENV=test
+    - SERVERLESS_ENV=mocha
     - OCTOPUSH_USER_LOGIN=login
     - OCTOPUSH_API_KEY=apikey
     - OCTOPUSH_SIMULATION=ok

@@ -11,7 +11,6 @@ export const sendSmsFactory = octopushImpl => (phone, message) =>
                 sms.set_simulation_mode();
             }
 
-            sms.set_sender_is_msisdn(0);
             sms.set_option_with_replies(1);
             sms.set_option_transactional(1);
             sms.set_sms_text(message);
