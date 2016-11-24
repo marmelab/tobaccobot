@@ -30,7 +30,7 @@ serverless-dev-server:
     - dynamodb
   ports:
     - 3000:3000
-  command: node_modules/serverless/bin/serverless webpack serve --port 3000 --host 0.0.0.0
+  command: node_modules/serverless/bin/serverless offline --port 3000 --host 0.0.0.0
 
 dynamodb:
   image: deangiberson/aws-dynamodb-local

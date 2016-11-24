@@ -15,6 +15,7 @@ serverless:
      - AWS_SECRET_ACCESS_KEY
      - OCTOPUSH_USER_LOGIN
      - OCTOPUSH_API_KEY
+     - OCTOPUSH_SIMULATION=OK
   links:
     - dynamodb
   ports:

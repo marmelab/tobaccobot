@@ -1,5 +1,4 @@
 import sg, { call } from 'sg.js';
-import generatorToCPS from './utils/generatorToCPS';
 
 import getUser from './effects/getUser';
 import qualifyUser from './effects/qualifyUser';
@@ -9,11 +8,10 @@ import sendQualifiedMessage from './effects/sendQualifiedMessage';
 import computeTargetConsumption from './effects/computeTargetConsumption';
 
 export function* botConversationSaga(message) {
-    const user = yield call(getUser, message.user);
+    const user = yield call(getUser, message.number);
 
     if (user && user.state === 'welcomed') {
         const { state, nbCigarettes } = yield call(qualifyUser, message.text);
-
         switch (state) {
         case 'dubious': {
             yield call(updateUser, { ...user, state });
@@ -40,24 +38,14 @@ export function* botConversationSaga(message) {
     }
 }
 
-export function* botConversation({ body }) {
+export default function botConversation(event, ctx, cb) {
     try {
-        yield sg(botConversationSaga)(body);
-
-        return {
-            statusCode: 200,
-            headers: { },
-            body: 'Ok',
-        };
+        sg(botConversationSaga)(event)
+        .catch((error) => {
+            console.error({ error });
+        });
     } catch (error) {
         console.error({ error });
-
-        return {
-            statusCode: 500,
-            headers: { },
-            body: error.message,
-        };
     }
+    return cb();
 }
-
-export default generatorToCPS(botConversation);

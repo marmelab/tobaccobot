@@ -113,6 +113,11 @@ resources:
           - Ref: IamRoleLambdaExecution
 plugins:
   - serverless-webpack
+  - serverless-offline
 provider.cfLogs: true
 custom:
   webpack: ./webpack.config.serverless.js
+  serverless-offline:
+    babelOptions:
+      presets: ["es2015-node4", "es2016"]
+      plugins: ["add-module-exports", "transform-runtime"]
