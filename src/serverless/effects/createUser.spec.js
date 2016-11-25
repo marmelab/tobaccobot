@@ -11,14 +11,14 @@ describe('createUser', () => {
     it('should create the user', function* () {
         yield createUser({
             name: 'Frodo',
-            phone: '0102030405',
+            phone: '+33102030405',
         });
 
-        const user = yield dynamoDB.getItem('smoker', 'phone', '0102030405');
+        const user = yield dynamoDB.getItem('smoker', 'phone', '+33102030405');
 
         expect(user).toEqual({
             name: 'Frodo',
-            phone: '0102030405',
+            phone: '+33102030405',
             state: 'subscribed',
         });
     });
@@ -26,12 +26,12 @@ describe('createUser', () => {
     it('should return the created user', function* () {
         const user = yield createUser({
             name: 'Frodo',
-            phone: '0102030405',
+            phone: '+33102030405',
         });
 
         expect(user).toEqual({
             name: 'Frodo',
-            phone: '0102030405',
+            phone: '+33102030405',
             state: 'subscribed',
         });
     });

@@ -11,7 +11,7 @@ form.addEventListener('submit', () => {
     error.classList.add('hidden');
     const name = nameInput.value;
     const phone = phoneInput.value;
-    if (!name || !phone || !phone.match(/[0-9]{10}/)) {
+    if (!name || !phone || !phone.match(/\+[0-9]{11}/)) {
         invalid.classList.remove('hidden');
         return;
     }

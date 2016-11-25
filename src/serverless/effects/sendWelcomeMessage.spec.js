@@ -4,16 +4,13 @@ import welcomeMsg from '../messages/welcome';
 
 describe('sendWelcomeMessage', () => {
     it('should send the welcome message using the bot', () => {
-        const bot = {
-            send: createSpy(),
-        };
+        const send = createSpy();
 
-        const smoker = {
-            name: 'Frodo',
-        };
+        const name = 'Frodo';
+        const phone = '0123456789';
 
-        sendWelcomeMessageFactory(bot)(smoker);
+        sendWelcomeMessageFactory(send)(phone, name);
 
-        expect(bot.send).toHaveBeenCalledWith({ text: welcomeMsg(smoker.name) });
+        expect(send).toHaveBeenCalledWith(phone, welcomeMsg(name));
     });
 });

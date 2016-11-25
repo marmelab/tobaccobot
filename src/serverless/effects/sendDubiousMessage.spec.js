@@ -4,12 +4,10 @@ import dubiousMessage from '../messages/dubious';
 
 describe('sendDubiousMessage', () => {
     it('should send the dubious message using the bot', () => {
-        const bot = {
-            send: createSpy(),
-        };
+        const send = createSpy();
 
-        sendDubiousMessageFactory(bot)();
+        sendDubiousMessageFactory(send)('phone');
 
-        expect(bot.send).toHaveBeenCalledWith({ text: dubiousMessage() });
+        expect(send).toHaveBeenCalledWith('phone', dubiousMessage());
     });
 });

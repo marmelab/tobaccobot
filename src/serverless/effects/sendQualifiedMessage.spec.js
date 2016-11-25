@@ -4,13 +4,11 @@ import qualifiedMessage from '../messages/qualified';
 
 describe('sendQualifiedMessage', () => {
     it('should send the qualified message using the bot', () => {
-        const bot = {
-            send: createSpy(),
-        };
+        const send = createSpy();
         const targetConsumption = 42;
 
-        sendQualifiedMessageFactory(bot)(targetConsumption);
+        sendQualifiedMessageFactory(send)('phone', targetConsumption);
 
-        expect(bot.send).toHaveBeenCalledWith({ text: qualifiedMessage(targetConsumption) });
+        expect(send).toHaveBeenCalledWith('phone', qualifiedMessage(targetConsumption));
     });
 });
