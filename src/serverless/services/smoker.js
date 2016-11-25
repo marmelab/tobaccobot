@@ -1,7 +1,6 @@
 import expect from 'expect';
 
 import dynamoDB from './dynamoDB';
-import dynamoFormatToLiteral from './dynamoFormatToLiteral';
 
 const params = {
     TableName: 'smoker',
@@ -28,16 +27,8 @@ const get = phone =>
 const erase = phone =>
     dynamoDB.deleteItem('smoker', 'phone', phone);
 
-const all = () =>
-    dynamoDB.scan({
-        TableName: 'smoker',
-    }).then((result) => {
-        if (!result) {
-            return result;
-        }
-
-        return result.Items.map(dynamoFormatToLiteral);
-    });
+const all = (limit, lastKey) =>
+    dynamoDB.scan('smoker', limit, lastKey);
 
 const check = (smoker) => {
     expect(smoker).toMatch({

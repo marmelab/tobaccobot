@@ -9,7 +9,6 @@ if (config.serverlessEnv !== 'deploy') {
 }
 
 const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
-const documentClient = new AWS.DynamoDB.DocumentClient();
 
 dynamoDB.on('error', (operation, error, payload) => console.error({ operation, error, payload }));
 
@@ -33,5 +32,19 @@ export default {
         .where(attr).eq(value)
         .return(dynamoDB.ALL_OLD)
         .delete(cb)),
-    scan: cpsToPromise(documentClient.scan, documentClient),
+    scan: cpsToPromise((table, limit = 10, lastKey, cb) =>
+        dynamoDB
+        .table(table)
+        .limit(limit)
+        .resume(lastKey)
+        .scan(function (error, data) {
+            if (error) {
+                return cb(error);
+            }
+            return cb(null, {
+                items: data,
+                lastKey: this.LastEvaluatedKey,
+            });
+        })
+    ),
 };
