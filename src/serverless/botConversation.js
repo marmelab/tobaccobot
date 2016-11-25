@@ -1,40 +1,21 @@
 import sg, { call } from 'sg.js';
 
 import getUser from './effects/getUser';
-import qualifyUser from './effects/qualifyUser';
-import updateUser from './effects/updateUser';
-import sendDubiousMessage from './effects/sendDubiousMessage';
-import sendQualifiedMessage from './effects/sendQualifiedMessage';
-import computeTargetConsumption from './effects/computeTargetConsumption';
+import handleWelcomedUser from './effects/handleWelcomedUser';
 
 export function* botConversationSaga(message) {
     const user = yield call(getUser, message.number);
+    if (!user) {
+        return;
+    }
 
-    if (user && user.state === 'welcomed') {
-        const { state, nbCigarettes } = yield call(qualifyUser, message.text);
-        switch (state) {
-        case 'dubious': {
-            yield call(updateUser, { ...user, state });
-
-            yield call(sendDubiousMessage, user.phone);
-            break;
-        }
-        case 'qualified': {
-            const targetConsumption = yield call(computeTargetConsumption, nbCigarettes);
-
-            yield call(updateUser, {
-                ...user,
-                remainingDays: 28,
-                state,
-                targetConsumption,
-            });
-
-            yield call(sendQualifiedMessage, user.phone, targetConsumption);
-            break;
-        }
-        default:
-            throw new Error('Invalid user state');
-        }
+    switch (user.state) {
+    case 'welcomed': {
+        yield call(handleWelcomedUser, message, user);
+        return;
+    }
+    default:
+        return;
     }
 }
 
