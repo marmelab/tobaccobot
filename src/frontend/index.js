@@ -3,6 +3,8 @@ import fetch from 'isomorphic-fetch';
 const form = document.getElementById('form');
 const nameInput = document.getElementById('name');
 const phoneInput = document.getElementById('phone');
+const submitButton = document.getElementById('submitButton');
+const spinner = document.getElementById('spinner');
 const success = document.getElementById('success');
 const error = document.getElementById('error');
 const invalid = document.getElementById('invalid');
@@ -15,6 +17,11 @@ form.addEventListener('submit', () => {
         invalid.classList.remove('hidden');
         return;
     }
+
+    submitButton.disabled = true;
+    invalid.classList.add('hidden');
+    spinner.classList.remove('hidden');
+
     fetch('http://localhost:3000/subscribe', {
         method: 'POST',
         headers: {
@@ -36,6 +43,9 @@ form.addEventListener('submit', () => {
             throw new Error(response.body);
         }
         error.classList.remove('hidden');
+        submitButton.disabled = false;
+        spinner.classList.add('hidden');
+
     })
     .catch((err) => {
         console.log(err);
