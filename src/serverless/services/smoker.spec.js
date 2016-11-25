@@ -40,7 +40,7 @@ describe('smoker', () => {
         });
     });
 
-    describe.only('all', () => {
+    describe('all', () => {
         it('should return all smokers', function* () {
             yield dynamoDB.putItem('smoker', {
                 name: 'john',
