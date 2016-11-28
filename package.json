@@ -23,8 +23,7 @@
     "expect": "1.20.2",
     "isomorphic-fetch": "2.2.1",
     "octopush": "1.0.2",
-    "sg.js": "0.0.3",
-    "webpack-config-plugin": "0.5.0"
+    "sg.js": "0.0.3"
   },
   "devDependencies": {
     "babel-core": "6.18.2",
@@ -40,7 +39,6 @@
     "babel-preset-stage-2": "6.18.0",
     "babel-runtime": "6.18.0",
     "co-mocha": "1.1.3",
-    "config": "1.24.0",
     "eslint": "3.8.1",
     "eslint-config-airbnb": "12.0.0",
     "eslint-plugin-import": "1.16.0",

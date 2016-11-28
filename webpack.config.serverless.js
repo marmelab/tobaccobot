@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const ConfigPlugin = require('webpack-config-plugin');
 const path = require('path');
 
 module.exports = {
@@ -18,8 +17,5 @@ module.exports = {
             { test: /\.json$/, loader: 'json-loader' },
         ],
     },
-    plugins: [
-        new ConfigPlugin({ dir: path.resolve(__dirname, 'config') }),
-    ],
     externals: ['aws-sdk'],
 };
