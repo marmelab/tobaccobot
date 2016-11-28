@@ -1,7 +1,7 @@
 import expect from 'expect';
 import { call } from 'sg.js';
 
-import { dailyMessageSaga } from './daylyMessage';
+import { dailyMessageSaga } from './dailyMessage';
 import smoker from './services/smoker';
 import config from '../../config';
 import sortSmokerByState from './effects/sortSmokersByState';
