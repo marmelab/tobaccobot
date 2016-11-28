@@ -20,14 +20,14 @@ describe('botConversation', () => {
 
         it('should return 200 with valid number of cigarettes', (done) => {
             botConversation({ message: '42', number: '+33614786356' }, null, (error, result) => {
-                expect(result).toBe(undefined);
+                expect(result).toBe('');
                 done(error);
             });
         });
 
         it('should return 200 with invalid number of cigarettes', (done) => {
             botConversation({ message: 'foo', number: '+33614786356' }, null, (error, result) => {
-                expect(result).toBe(undefined);
+                expect(result).toBe('');
                 done(error);
             });
         });
