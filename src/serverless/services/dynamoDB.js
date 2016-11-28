@@ -1,4 +1,4 @@
-import config from 'config';
+import config from '../../../config';
 import AWS from 'aws-sdk';
 import dynamoDBWrapper from 'aws-dynamodb';
 

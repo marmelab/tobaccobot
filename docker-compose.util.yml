@@ -1,51 +1,44 @@
-npm:
-    extends:
-        file: ./docker-compose.yml
-        service: node
-    entrypoint: ['npm']
+version: '2'
+services:
+    npm:
+        extends:
+            file: ./docker-compose.yml
+            service: node
+        entrypoint: ['npm']
 
-serverless:
-  extends:
-    file: ./docker-compose.yml
-    service: node
-  environment:
-     - SLS_DEBUG=OK
-     - SERVERLESS_ENV=invoke
-     - AWS_ACCESS_KEY_ID
-     - AWS_SECRET_ACCESS_KEY
-     - OCTOPUSH_USER_LOGIN
-     - OCTOPUSH_API_KEY
-     - OCTOPUSH_SIMULATION=OK
-  links:
-    - dynamodb
-  ports:
-    - 3000:3000
-  entrypoint: ['node_modules/serverless/bin/serverless']
+    serverless:
+        extends:
+            file: ./docker-compose.yml
+            service: node
+        environment:
+            - SLS_DEBUG=OK
+            - SERVERLESS_ENV=invoke
+            - AWS_ACCESS_KEY_ID
+            - AWS_SECRET_ACCESS_KEY
+            - AWS_DYNAMODB_ENDPOINT=http://localhost:8000
+            - OCTOPUSH_USER_LOGIN
+            - OCTOPUSH_API_KEY
+            - OCTOPUSH_SIMULATION=OK
+        network_mode: "host"
+        entrypoint: ['node_modules/serverless/bin/serverless']
 
-dynamodb:
-  image: deangiberson/aws-dynamodb-local
-  ports:
-    - 8000:8000
+    deploy:
+        extends:
+            file: ./docker-compose.yml
+            service: node
+        environment:
+            - SERVERLESS_ENV=deploy
+            - AWS_ACCESS_KEY_ID
+            - AWS_SECRET_ACCESS_KEY
+            - OCTOPUSH_USER_LOGIN
+            - OCTOPUSH_API_KEY
+        entrypoint: node_modules/serverless/bin/serverless deploy
 
-deploy:
-  extends:
-    file: ./docker-compose.yml
-    service: node
-  environment:
-     - SERVERLESS_ENV=deploy
-     - AWS_ACCESS_KEY_ID
-     - AWS_SECRET_ACCESS_KEY
-     - OCTOPUSH_USER_LOGIN
-     - OCTOPUSH_API_KEY
-  ports:
-    - 3000:3000
-  entrypoint: node_modules/serverless/bin/serverless deploy
-
-serve:
-  image: cannin/nodejs-http-server
-  volumes:
-    - ./build:/public
-    - ./node_modules:/public/node_modules
-  working_dir: /public
-  ports:
-    - 8080:8080
+    serve:
+        image: cannin/nodejs-http-server
+        volumes:
+            - ./build:/public
+            - ./node_modules:/public/node_modules
+        working_dir: /public
+        ports:
+            - 8080:8080
