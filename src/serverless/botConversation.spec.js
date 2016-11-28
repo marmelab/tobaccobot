@@ -1,5 +1,5 @@
 import expect from 'expect';
-import sg, { call } from 'sg.js';
+import { call } from 'sg.js';
 
 import dynamoDB from './services/dynamoDB';
 import botConversation, { botConversationSaga } from './botConversation';
