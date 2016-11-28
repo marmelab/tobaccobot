@@ -15,21 +15,12 @@ services:
             - SERVERLESS_ENV=invoke
             - AWS_ACCESS_KEY_ID
             - AWS_SECRET_ACCESS_KEY
+            - AWS_DYNAMODB_ENDPOINT=http://localhost:8000
             - OCTOPUSH_USER_LOGIN
             - OCTOPUSH_API_KEY
             - OCTOPUSH_SIMULATION=OK
-        links:
-            - dynamodb
-        depends_on:
-            - dynamodb
-        ports:
-            - 3000:3000
+        network_mode: "host"
         entrypoint: ['node_modules/serverless/bin/serverless']
-
-    dynamodb:
-        image: deangiberson/aws-dynamodb-local
-        ports:
-            - 8000:8000
 
     deploy:
         extends:
@@ -41,8 +32,6 @@ services:
             - AWS_SECRET_ACCESS_KEY
             - OCTOPUSH_USER_LOGIN
             - OCTOPUSH_API_KEY
-        ports:
-            - 3000:3000
         entrypoint: node_modules/serverless/bin/serverless deploy
 
     serve:

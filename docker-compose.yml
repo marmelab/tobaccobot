@@ -23,6 +23,7 @@ services:
             - SERVERLESS_ENV=dev-server
             - AWS_ACCESS_KEY_ID=akid
             - AWS_SECRET_ACCESS_KEY=secret
+            - AWS_DYNAMODB_ENDPOINT=http://dynamodb:8000
             - OCTOPUSH_USER_LOGIN
             - OCTOPUSH_API_KEY
             - OCTOPUSH_SIMULATION=ok

@@ -4,10 +4,11 @@ module.exports = {
         user_login: process.env.OCTOPUSH_USER_LOGIN,
         api_key: process.env.OCTOPUSH_API_KEY,
         simutation: process.env.OCTOPUSH_SIMULATION,
+        disabled: !!process.env.OCTOPUSH_DISABLED,
     },
     aws: {
         credentials: {
-            endpoint: 'http://dynamodb:8000',
+            endpoint: process.env.AWS_DYNAMODB_ENDPOINT,
             accessKeyId: process.env.AWS_ACCESS_KEY_ID,
             secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
             region: 'eu-west-1',
