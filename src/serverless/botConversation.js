@@ -47,5 +47,5 @@ export default function botConversation(event, ctx, cb) {
     } catch (error) {
         console.error({ error });
     }
-    return cb();
+    return cb(null, '');
 }
