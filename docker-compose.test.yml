@@ -1,19 +1,22 @@
-test:
-  extends:
-    file: ./docker-compose.yml
-    service: node
-  environment:
-    - BABEL_ENV=node
-    - NODE_ENV=test
-    - SERVERLESS_ENV=mocha
-    - OCTOPUSH_USER_LOGIN=login
-    - OCTOPUSH_API_KEY=apikey
-    - OCTOPUSH_SIMULATION=ok
-  links:
-    - dynamodbtest
-  ports:
-    - 3001:3001
-  command: node_modules/.bin/mocha ./src/**/*.spec.js
-
-dynamodbtest:
-  image: deangiberson/aws-dynamodb-local
+version: '2'
+services:
+    test:
+        extends:
+            file: ./docker-compose.yml
+            service: node
+        environment:
+            - BABEL_ENV=node
+            - NODE_ENV=test
+            - SERVERLESS_ENV=mocha
+            - OCTOPUSH_USER_LOGIN=login
+            - OCTOPUSH_API_KEY=apikey
+            - OCTOPUSH_SIMULATION=ok
+        links:
+            - dynamodbtest
+        depends_on:
+            - dynamodbtest
+        ports:
+            - 3001:3001
+        command: node_modules/.bin/mocha ./src/**/*.spec.js
+    dynamodbtest:
+        image: deangiberson/aws-dynamodb-local

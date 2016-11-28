@@ -1,39 +1,41 @@
-node:
-  image: node:4.3
-  volumes:
-    - .:/app
-  working_dir: /app
+version: '2'
+services:
+    node:
+        image: node:4.3
+        volumes:
+            - .:/app
+        working_dir: /app
+    webpack-dev-server:
+        extends:
+            file: ./docker-compose.yml
+            service: node
+        environment:
+            BABEL_ENV: browser
+        ports:
+            - 3001:3001
+        command: node node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 3001 --host 0.0.0.0
+    serverless-dev-server:
+        extends:
+            file: ./docker-compose.yml
+            service: node
+        environment:
+            - SLS_DEBUG=OK
+            - SERVERLESS_ENV=dev-server
+            - AWS_ACCESS_KEY_ID=akid
+            - AWS_SECRET_ACCESS_KEY=secret
+            - OCTOPUSH_USER_LOGIN
+            - OCTOPUSH_API_KEY
+            - OCTOPUSH_SIMULATION=ok
+        depends_on:
+            - dynamodb
+        links:
+            - dynamodb
+        ports:
+            - 3000:3000
+        command: node_modules/serverless/bin/serverless offline --port 3000 --host 0.0.0.0
 
-webpack-dev-server:
-  extends:
-    file: ./docker-compose.yml
-    service: node
-  environment:
-    BABEL_ENV: browser
-  ports:
-    - 3001:3001
-  command: node node_modules/webpack-dev-server/bin/webpack-dev-server.js --port 3001 --host 0.0.0.0
-
-serverless-dev-server:
-  extends:
-    file: ./docker-compose.yml
-    service: node
-  environment:
-    - SLS_DEBUG=OK
-    - SERVERLESS_ENV=dev-server
-    - AWS_ACCESS_KEY_ID=akid
-    - AWS_SECRET_ACCESS_KEY=secret
-    - OCTOPUSH_USER_LOGIN
-    - OCTOPUSH_API_KEY
-    - OCTOPUSH_SIMULATION=ok
-  links:
-    - dynamodb
-  ports:
-    - 3000:3000
-  command: node_modules/serverless/bin/serverless offline --port 3000 --host 0.0.0.0
-
-dynamodb:
-  image: deangiberson/aws-dynamodb-local
-  ports:
-    - 8000:8000
-  entrypoint: ["/usr/bin/java", "-Djava.library.path=.", "-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/var/dynamodb_local"]
+    dynamodb:
+        image: deangiberson/aws-dynamodb-local
+        ports:
+            - 8000:8000
+        entrypoint: ["/usr/bin/java", "-Djava.library.path=.", "-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/var/dynamodb_local"]
