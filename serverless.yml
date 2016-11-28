@@ -65,6 +65,14 @@ functions:
           integration: lambda
           path: bot_conversation
           cors: true
+  botConversationGet:
+    handler: src/serverless/index.botConversation
+    events:
+      - http:
+          method: GET
+          integration: lambda
+          path: bot_conversation
+          cors: true
   setupSmokerTable:
     handler: src/serverless/index.setupSmokerTable
 
