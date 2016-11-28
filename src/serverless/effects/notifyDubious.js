@@ -1,11 +1,11 @@
 import { call } from 'sg.js';
 
-import dubiousMessage from '../messages/dubious';
+import askDubiousMessage from '../messages/askDubious';
 import sendSms from '../services/sendSms';
 import smoker from '../services/smoker';
 
 export const getMessages = users => ({
-    message: dubiousMessage(),
+    message: askDubiousMessage(),
     phones: users.map(user => user.phone),
 });
 
@@ -16,6 +16,9 @@ export const setStateToWelcomed = users =>
     }));
 
 export default function* notifyDubious(users) {
+    if (!users) {
+        return;
+    }
     const { message, phones } = yield call(getMessages, users);
     yield call(sendSms, phones, message);
 

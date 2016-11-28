@@ -18,6 +18,9 @@ export const setStateToAsked = users =>
 
 
 export default function* notifyDubious(users) {
+    if (!users) {
+        return;
+    }
     const { message, phones } = yield call(getMessages, users);
     yield call(sendSms, phones, message);
     const askedUsers = yield call(setStateToAsked, users);

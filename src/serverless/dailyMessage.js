@@ -9,7 +9,7 @@ import notifyQualified from './effects/notifyQualified';
 
 export function* dailyMessageSaga(lastIndex) {
     const { lastKey, items } = yield call(smoker.all, batchSize, lastIndex);
-    if (!lastKey) {
+    if (!items || !items.length) {
         return;
     }
 
@@ -18,17 +18,15 @@ export function* dailyMessageSaga(lastIndex) {
     yield call(notifyDubious, dubious);
     yield call(notifyQualified, qualified);
 
+    if (!lastKey) {
+        return;
+    }
+
     yield* dailyMessageSaga(lastKey); // yield* execute a generator in the context of the current one
 }
 
 export default function dailyMessage(event, ctx, cb) {
-    try {
-        sg(dailyMessageSaga)()
-        .catch((error) => {
-            console.error({ error });
-        });
-    } catch (error) {
-        console.error({ error });
-    }
-    return cb();
+    sg(dailyMessageSaga)()
+    .then(() => cb())
+    .catch(cb);
 }
