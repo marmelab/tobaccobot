@@ -6,11 +6,7 @@ import botConversation, { botConversationSaga } from './botConversation';
 import { setupSmokerTable } from './setupSmokerTable';
 
 import getUser from './effects/getUser';
-import qualifyUser from './effects/qualifyUser';
-import updateUser from './effects/updateUser';
-import sendDubiousMessage from './effects/sendDubiousMessage';
-import sendQualifiedMessage from './effects/sendQualifiedMessage';
-import computeTargetConsumption from './effects/computeTargetConsumption';
+import handleWelcomedUser from './effects/handleWelcomedUser';
 
 describe('botConversation', () => {
     describe('botConversation lambda', () => {
@@ -40,7 +36,7 @@ describe('botConversation', () => {
     });
 
     describe('botConversation saga', () => {
-        describe('qualified user', () => {
+        describe('welcomed user', () => {
             const message = { number: '+33614786356', text: '42' };
             const saga = botConversationSaga(message);
             const user = { name: 'johnny', phone: 'foo', state: 'welcomed' };
@@ -49,49 +45,35 @@ describe('botConversation', () => {
                 expect(saga.next().value).toEqual(call(getUser, message.number));
             });
 
-            it('should qualify the user', () => {
-                expect(saga.next(user).value).toEqual(call(qualifyUser, message.text));
-            });
-
-            it('should get the next targeted number of cigarettes', () => {
-                expect(saga.next({ state: 'qualified', nbCigarettes: 20 }).value).toEqual(call(computeTargetConsumption, 20));
-            });
-
-            it('should update the user', () => {
-                expect(saga.next(15).value).toEqual(call(updateUser, {
-                    ...user,
-                    remainingDays: 28,
-                    state: 'qualified',
-                    targetConsumption: 15,
-                }));
-            });
-
-            it('should send the qualified message', () => {
-                expect(saga.next().value).toEqual(call(sendQualifiedMessage, 'foo', 15));
+            it('should call handleWelcomedUser with message and user', () => {
+                expect(saga.next(user).value).toEqual(call(handleWelcomedUser, message, user));
             });
         });
-        describe('dubious user', () => {
-            const message = { number: '+33614786356', text: 'foo' };
+
+        describe('other user', () => {
+            const message = { number: '+33614786356', text: '42' };
             const saga = botConversationSaga(message);
-            const user = { name: 'johnny', phone: 'foo', state: 'welcomed' };
+            const user = { name: 'johnny', phone: 'foo', state: 'other' };
 
             it('should get the user', () => {
                 expect(saga.next().value).toEqual(call(getUser, message.number));
             });
 
-            it('should qualify the user', () => {
-                expect(saga.next(user).value).toEqual(call(qualifyUser, message.text));
+            it('should end', () => {
+                expect(saga.next(user).done).toBe(true);
+            });
+        });
+
+        describe('no user', () => {
+            const message = { number: '+33614786356', text: '42' };
+            const saga = botConversationSaga(message);
+
+            it('should get the user', () => {
+                expect(saga.next().value).toEqual(call(getUser, message.number));
             });
 
-            it('should update the user', () => {
-                expect(saga.next({ state: 'dubious' }).value).toEqual(call(updateUser, {
-                    ...user,
-                    state: 'dubious',
-                }));
-            });
-
-            it('should send the dubious message', () => {
-                expect(saga.next().value).toEqual(call(sendDubiousMessage, user.phone));
+            it('should end', () => {
+                expect(saga.next().done).toBe(true);
             });
         });
     });
