@@ -14,6 +14,10 @@ export function* botConversationSaga(message) {
         yield call(handleWelcomedUser, message, user);
         return;
     }
+    case 'asked': {
+        yield call(handleWelcomedUser, message, user);
+        return;
+    }
     default:
         return;
     }
