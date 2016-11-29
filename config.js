@@ -14,4 +14,5 @@ module.exports = {
             region: 'eu-west-1',
         },
     },
+    batchSize: 10,
 };

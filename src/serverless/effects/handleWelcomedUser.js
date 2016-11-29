@@ -8,7 +8,6 @@ import computeTargetConsumption from './computeTargetConsumption';
 
 export default function* handleWelcomedUser(message, user) {
     const { state, nbCigarettes } = yield call(qualifyUser, message.text);
-    console.log({ state });
     switch (state) {
     case 'dubious': {
         yield call(updateUser, { ...user, state });

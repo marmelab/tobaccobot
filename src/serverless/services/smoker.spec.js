@@ -49,23 +49,43 @@ describe('smoker', () => {
             });
             yield dynamoDB.putItem('smoker', {
                 name: 'jane',
-                phone: '0666666666',
+                phone: '+33666666666',
                 state: 'tested',
             });
 
-            const results = yield smoker.all();
-            expect(results).toEqual([
-                {
-                    name: 'john',
-                    phone: '+33614786356',
-                    state: 'tested',
+            const firstBatch = yield smoker.all(1);
+            expect(firstBatch).toEqual({
+                lastKey: {
+                    phone: { S: '+33614786356' },
                 },
-                {
-                    name: 'jane',
-                    phone: '0666666666',
-                    state: 'tested',
+                items: [
+                    {
+                        name: 'john',
+                        phone: '+33614786356',
+                        state: 'tested',
+                    },
+                ],
+            });
+
+            const secondBatch = yield smoker.all(1, firstBatch.lastKey);
+            expect(secondBatch).toEqual({
+                lastKey: {
+                    phone: { S: '+33666666666' },
                 },
-            ]);
+                items: [
+                    {
+                        name: 'jane',
+                        phone: '+33666666666',
+                        state: 'tested',
+                    },
+                ],
+            });
+
+            const thirdBatch = yield smoker.all(1, secondBatch.lastKey);
+            expect(thirdBatch).toEqual({
+                lastKey: null,
+                items: [],
+            });
         });
     });
 

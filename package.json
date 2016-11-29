@@ -23,7 +23,7 @@
     "expect": "1.20.2",
     "isomorphic-fetch": "2.2.1",
     "octopush": "1.0.2",
-    "sg.js": "0.0.3"
+    "sg.js": "0.0.4"
   },
   "devDependencies": {
     "babel-core": "6.18.2",
