@@ -17,7 +17,7 @@ export const setStateToAsked = users =>
     }));
 
 
-export default function* notifyDubious(users) {
+export default function* notifyQualified(users) {
     if (!users) {
         return;
     }
