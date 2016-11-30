@@ -16,12 +16,13 @@ export const getCombo = (history) => {
 
 export const isBackFromBad = (previousState, currentState) => previousState === 'bad' && currentState === 'good';
 
-export const getState = (current, targetConsumption) => (current <= targetConsumption ? 'good' : 'bad');
+export const getState = (current, week, targetConsumption) => (current <= targetConsumption[week] ? 'good' : 'bad');
 
 const evaluateHistory = function (history, targetConsumption) {
     const [previous, current] = history.slice(-2);
     const stateHistory = history.map(nb => this.config.getState(nb, targetConsumption));
     const [previousState, currentState] = stateHistory.slice(-2);
+
     return {
         targetConsumption,
         state: stateHistory.slice(-1)[0],
