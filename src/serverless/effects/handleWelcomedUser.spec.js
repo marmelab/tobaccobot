@@ -3,7 +3,7 @@ import { call } from 'sg.js';
 
 import handleWelcomedUser from './handleWelcomedUser';
 
-import qualifyUser from './qualifyUser';
+import getNbCigarettes from './getNbCigarettes';
 import updateUser from './updateUser';
 import sendDubiousMessage from './sendDubiousMessage';
 import sendQualifiedMessage from './sendQualifiedMessage';
@@ -16,11 +16,11 @@ describe('handleWelcomedUser', () => {
         const saga = handleWelcomedUser(message, user);
 
         it('should qualify the user', () => {
-            expect(saga.next(user).value).toEqual(call(qualifyUser, message.text));
+            expect(saga.next(user).value).toEqual(call(getNbCigarettes, message.text));
         });
 
         it('should get the next targeted number of cigarettes', () => {
-            expect(saga.next({ state: 'qualified', nbCigarettes: 20 }).value).toEqual(call(computeTargetConsumption, 20));
+            expect(saga.next(20).value).toEqual(call(computeTargetConsumption, 20));
         });
 
         it('should update the user', () => {
@@ -42,11 +42,11 @@ describe('handleWelcomedUser', () => {
         const saga = handleWelcomedUser(message, user);
 
         it('should qualify the user', () => {
-            expect(saga.next(user).value).toEqual(call(qualifyUser, message.text));
+            expect(saga.next(user).value).toEqual(call(getNbCigarettes, message.text));
         });
 
         it('should update the user', () => {
-            expect(saga.next({ state: 'dubious' }).value).toEqual(call(updateUser, {
+            expect(saga.next(null).value).toEqual(call(updateUser, {
                 ...user,
                 state: 'dubious',
             }));
