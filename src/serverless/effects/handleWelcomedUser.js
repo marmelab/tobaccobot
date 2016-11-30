@@ -19,6 +19,7 @@ export default function* handleWelcomedUser(message, user) {
     yield call(updateUser, {
         ...user,
         remainingDays: 28,
+        week: 1,
         state: 'qualified',
         targetConsumption,
     });

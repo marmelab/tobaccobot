@@ -2,7 +2,7 @@ import octopush from 'octopush';
 import config from 'config';
 import octopushMock from './octopushMock';
 
-export const sendSmsFactory = octopushImpl => (phone, message) =>
+export const sendSmsFactory = octopushImpl => (phone, message, ch1, ch2, ch3) =>
     new Promise((resolve, reject) => {
         try {
             const sms = new octopushImpl.SMS(config.octopush.user_login, config.octopush.api_key);
@@ -18,6 +18,16 @@ export const sendSmsFactory = octopushImpl => (phone, message) =>
             sms.set_sms_mode(octopushImpl.constants.INSTANTANE);
             sms.set_sms_sender('tobaccobot');
             sms.set_sms_request_id(sms.uniqid());
+
+            if (ch1) {
+                sms.set_sms_fields_1(ch1);
+            }
+            if (ch2) {
+                sms.set_sms_fields_2(ch2);
+            }
+            if (ch3) {
+                sms.set_sms_fields_3(ch3);
+            }
 
             sms.send((error, result) => {
                 if (error) {
