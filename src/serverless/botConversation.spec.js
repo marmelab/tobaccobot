@@ -7,6 +7,7 @@ import { setupSmokerTable } from './setupSmokerTable';
 
 import getUser from './effects/getUser';
 import handleWelcomedUser from './effects/handleWelcomedUser';
+import handleAskedUser from './effects/handleAskedUser';
 
 describe('botConversation', () => {
     describe('botConversation lambda', () => {
@@ -47,6 +48,20 @@ describe('botConversation', () => {
 
             it('should call handleWelcomedUser with message and user', () => {
                 expect(saga.next(user).value).toEqual(call(handleWelcomedUser, message, user));
+            });
+        });
+
+        describe('asked user', () => {
+            const message = { number: '+33614786356', text: '42' };
+            const saga = botConversationSaga(message);
+            const user = { name: 'johnny', phone: 'foo', state: 'asked' };
+
+            it('should get the user', () => {
+                expect(saga.next().value).toEqual(call(getUser, message.number));
+            });
+
+            it('should call handleAskedUser with message and user', () => {
+                expect(saga.next(user).value).toEqual(call(handleAskedUser, message, user));
             });
         });
 
