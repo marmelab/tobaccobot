@@ -18,13 +18,12 @@ export const isBackFromBad = (previousState, currentState) => previousState === 
 
 export const getState = (current, targetConsumption) => (current <= targetConsumption ? 'good' : 'bad');
 
-export const evaluateHistory = (history, targetConsumption) => {
-    const [previous, current] = history.slice(-1, 2);
-    const stateHistory = history.map(nb => getState(nb, targetConsumption));
-    const [previousState, currentState] = stateHistory.slice(-1, 2);
-
+const evaluateHistory = function (history, targetConsumption) {
+    const [previous, current] = history.slice(-2);
+    const stateHistory = history.map(nb => this.config.getState(nb, targetConsumption));
+    const [previousState, currentState] = stateHistory.slice(-2);
     return {
-        state: this.config.getState(current, targetConsumption),
+        state: stateHistory.slice(-1)[0],
         backFromBad: this.config.isBackFromBad(previousState, currentState),
         combo: this.config.getCombo(stateHistory),
         delta: this.config.getDelta(previous, current),
