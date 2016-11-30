@@ -2,9 +2,11 @@ import { call } from 'sg.js';
 
 import getNbCigarettes from './getNbCigarettes';
 import smoker from '../services/smoker';
+import evaluateHistory from './evaluateHistory';
 
 export const updateUser = (user, nbCigarettes) => {
     const history = (user.history || []).concat(nbCigarettes);
+
     return {
         ...user,
         remainingDays: user.remainingDays - 1,
@@ -14,11 +16,16 @@ export const updateUser = (user, nbCigarettes) => {
 
 export default function* handleWelcomedUser(message, user) {
     const nbCigarettes = yield call(getNbCigarettes, message.text);
-    const updatedUser = yield call(updateUser, user, nbCigarettes);
-    yield call(smoker.save, {
-        ...updatedUser,
-    });
     if (!nbCigarettes) {
         return;
     }
+
+
+    const updatedUser = yield call(updateUser, user, nbCigarettes);
+    const evaluation = evaluateHistory(updatedUser.history, updatedUser.targetConsumption);
+
+    yield call(smoker.save, {
+        ...updatedUser,
+        state: evaluation.state,
+    });
 }

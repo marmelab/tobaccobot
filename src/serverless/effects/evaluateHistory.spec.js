@@ -16,6 +16,7 @@ describe('evaluateHistory', () => {
     it('should return state, lambda, combo, backFromBad and delta', () => {
         expect(testEvaluateHistory(['val1', 'val2', 'val3'], 'targetConsumption'))
         .toEqual({
+            targetConsumption: 'targetConsumption',
             state: 'state',
             delta: 'delta',
             combo: 'combo',

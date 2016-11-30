@@ -23,6 +23,7 @@ const evaluateHistory = function (history, targetConsumption) {
     const stateHistory = history.map(nb => this.config.getState(nb, targetConsumption));
     const [previousState, currentState] = stateHistory.slice(-2);
     return {
+        targetConsumption,
         state: stateHistory.slice(-1)[0],
         backFromBad: this.config.isBackFromBad(previousState, currentState),
         combo: this.config.getCombo(stateHistory),

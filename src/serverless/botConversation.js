@@ -2,6 +2,7 @@ import sg, { call } from 'sg.js';
 
 import getUser from './effects/getUser';
 import handleWelcomedUser from './effects/handleWelcomedUser';
+import handleAskedUser from './effects/handleAskedUser';
 
 export function* botConversationSaga(message) {
     const user = yield call(getUser, message.number);
@@ -15,7 +16,7 @@ export function* botConversationSaga(message) {
         return;
     }
     case 'asked': {
-        yield call(handleWelcomedUser, message, user);
+        yield call(handleAskedUser, message, user);
         return;
     }
     default:
