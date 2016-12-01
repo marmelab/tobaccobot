@@ -1,5 +1,5 @@
 import octopush from 'octopush';
-import config from '../../../config';
+import config from 'config';
 
 export const sendSmsFactory = octopushImpl => (phone, message) =>
     new Promise((resolve, reject) => {

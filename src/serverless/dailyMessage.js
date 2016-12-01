@@ -1,5 +1,5 @@
 import sg, { call } from 'sg.js';
-import { batchSize } from '../../config';
+import { batchSize } from 'config';
 
 import smoker from './services/smoker';
 
