@@ -15,4 +15,5 @@ module.exports = {
         },
     },
     batchSize: 10,
+    subscribeUrl: process.env.SUBSCRIBE_URL,
 };
