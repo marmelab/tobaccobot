@@ -51,7 +51,7 @@ describe('handleAskedUser', () => {
             history: 'history',
             targetConsumption: 'targetConsumption',
             phone: 'updatedUserPhone',
-            state: 'state',
+            state: 'qualified',
         }));
     });
 

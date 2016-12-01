@@ -26,6 +26,6 @@ export default function* handleAskedUser(message, user) {
     yield call(sendDailyEvaluationMessage, updatedUser.phone, evaluation);
     yield call(smoker.save, {
         ...updatedUser,
-        state: evaluation.state,
+        state: 'qualified',
     });
 }
