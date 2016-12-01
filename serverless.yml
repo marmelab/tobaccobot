@@ -122,6 +122,7 @@ resources:
               Action:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
+                - dynamodb:Scan
               Resource: arn:aws:dynamodb:*:*:table/smoker
         Roles:
           - Ref: IamRoleLambdaExecution
