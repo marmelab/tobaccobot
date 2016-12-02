@@ -28,7 +28,7 @@ will use docker to run
  - serverless-dev-server: serverless webpack plugin to serve lambda (port 3000)
  - dynamodb (port 8000)
 
-To initialise smoker table do
+To initialize smoker table do
 ```
 make dk_setup_smoker_table
 ```
