@@ -26,7 +26,7 @@ export function* botConversationSaga(message) {
 
 export default function botConversation(event, ctx, cb) {
     try {
-        sg(botConversationSaga)(event)
+        sg(botConversationSaga)(event.body || event)
         .catch((error) => {
             console.error({ error });
         });

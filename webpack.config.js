@@ -2,6 +2,7 @@ require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const ConfigPlugin = require('webpack-config-plugin');
 
 const loaders = [{
     test: /\.js$/,
@@ -43,6 +44,7 @@ const plugins = [
         filename: 'index.html',
         template: '!!html!' + path.resolve(__dirname, './src/frontend/index.html'),
     }),
+    new ConfigPlugin({ dir: path.resolve(__dirname, 'config') }),
 ];
 
 module.exports = {

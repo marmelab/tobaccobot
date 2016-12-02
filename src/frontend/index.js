@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import { subscribeUrl } from 'config';
 
 const form = document.getElementById('form');
 const nameInput = document.getElementById('name');
@@ -22,7 +23,7 @@ form.addEventListener('submit', () => {
     invalid.classList.add('hidden');
     spinner.classList.remove('hidden');
 
-    fetch('http://localhost:3000/subscribe', {
+    fetch(subscribeUrl, {
         method: 'POST',
         headers: {
             Accept: 'application/json',

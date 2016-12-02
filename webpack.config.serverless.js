@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const ConfigPlugin = require('webpack-config-plugin');
 
 module.exports = {
     entry: './src/serverless/index.js',
@@ -17,5 +18,8 @@ module.exports = {
             { test: /\.json$/, loader: 'json-loader' },
         ],
     },
+    plugins: [
+        new ConfigPlugin({ dir: path.resolve(__dirname, 'config') }),
+    ],
     externals: ['aws-sdk'],
 };

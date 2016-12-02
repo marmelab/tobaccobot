@@ -3,7 +3,7 @@ import { call } from 'sg.js';
 
 import { dailyMessageSaga } from './dailyMessage';
 import smoker from './services/smoker';
-import config from '../../config';
+import config from 'config';
 import sortSmokerByState from './effects/sortSmokersByState';
 import notifyDubious from './effects/notifyDubious';
 import notifyQualified from './effects/notifyQualified';
