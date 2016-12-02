@@ -13,12 +13,12 @@ export default function* weeklyMessageSaga(lastIndex) {
         return;
     }
     const smokers = yield call(getWeeklySmoker, items);
+    const updatedUsers = yield smokers.map(user => call(updateUser, user));
     if (smokers && smokers.length) {
-        const messagesData = yield call(getWeeklyMessageData, smokers);
+        const messagesData = yield call(getWeeklyMessageData, updatedUsers);
         yield call(sendWeeklyMessage, messagesData);
     }
 
-    const updatedUsers = yield smokers.map(user => call(updateUser, user));
     yield updatedUsers.map(user => call(smoker.save, user));
 
     if (!lastKey) {
