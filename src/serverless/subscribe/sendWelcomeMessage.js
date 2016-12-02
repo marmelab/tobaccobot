@@ -1,5 +1,5 @@
 import sendSms from '../services/sendSms';
-import welcomeMsg from '../messages/welcome';
+import welcomeMsg from './welcome';
 
 export const sendWelcomeMessageFactory = send => (phone, name) =>
     send(phone, welcomeMsg(name));
