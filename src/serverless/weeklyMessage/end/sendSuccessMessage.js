@@ -6,5 +6,5 @@ And from now on, you're on your own - I won't bother you again.
 It's been a pleasure to coach you! Cheers.`
 );
 
-export default send => users =>
-    send(users.map(user => user.phone), successMessage());
+export default send => phones =>
+    send(phones, successMessage());

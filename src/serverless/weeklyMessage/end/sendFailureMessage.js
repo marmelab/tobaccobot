@@ -5,5 +5,5 @@ We'll stop this for now, but I'm confident that you can try another time.
 We'll keep in touch!`
 );
 
-export default send => users =>
-    send(users.map(user => user.phone), failureMessage());
+export default send => phones =>
+    send(phones, failureMessage());

@@ -1,11 +1,26 @@
-export const hasStoppedSmoking = user =>
-    user.history.slice(-3).every(data => data.consumption === 0);
+export const hasStoppedSmoking = (user) => {
+    if (!user || !user.history || user.history.length < 3) {
+        return false;
+    }
+    return user.history.slice(-3).every(data => data.consumption === 0);
+};
 
-export default users =>
-    users.reduce((result, user) => ({
-        ...result,
-        [hasStoppedSmoking(user) ? 'success' : 'failure']: [...result.success, user],
-    }), {
+export const sortUserBySuccessFactory = hasStopped => users =>
+    users.reduce((result, user) => {
+        if (hasStopped(user)) {
+            return {
+                ...result,
+                success: [...result.success, user.phone],
+            };
+        }
+        return {
+            ...result,
+            failure: [...result.failure, user.phone],
+        };
+    }, {
         success: [],
         failure: [],
     });
+
+
+export default sortUserBySuccessFactory(hasStoppedSmoking);
