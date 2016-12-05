@@ -1,11 +1,13 @@
 import sg from 'sg.js';
 
+import logger from './services/logger';
 import generatorToCPS from './utils/generatorToCPS';
 import subscribeSaga from './subscribe/saga';
 
-export function* subscribe({ body }) {
+export function* subscribe(event, ctx) {
+    logger.info('subscribe lambda called', { event }, ctx);
     try {
-        const user = yield sg(subscribeSaga)(body);
+        const user = yield sg(subscribeSaga)(event.body);
 
         return {
             statusCode: 200,
@@ -15,7 +17,7 @@ export function* subscribe({ body }) {
             body: user,
         };
     } catch (error) {
-        console.error({ error });
+        logger.error(error.message, error.stack);
 
         return {
             statusCode: 500,
