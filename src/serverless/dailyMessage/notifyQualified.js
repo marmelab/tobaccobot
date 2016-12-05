@@ -1,6 +1,6 @@
 import { call } from 'sg.js';
 
-import askDailyMessage from '../messages/askDaily';
+import askDailyMessage from './askDaily';
 import sendSms from '../services/sendSms';
 import smoker from '../services/smoker';
 
