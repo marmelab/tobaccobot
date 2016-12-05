@@ -4,9 +4,7 @@ import config from 'config';
 
 import weeklyMessageSaga from './saga';
 import smoker from '../services/smoker';
-import getWeeklySmoker from './getWeeklySmoker';
-import getWeeklyMessageData from './getWeeklyMessageData';
-import sendWeeklyMessage from './sendWeeklyMessage';
+import newTargetsaga from './newTarget';
 
 describe('weeklyMessageSaga', () => {
     let iterator;
@@ -20,30 +18,9 @@ describe('weeklyMessageSaga', () => {
         expect(value).toEqual(call(smoker.all, config.batchSize, undefined));
     });
 
-    it('should call getWeeklySmoker with user returned by smoker.all', () => {
+    it('should call newTargetsaga with user returned by smoker.all', () => {
         const { value } = iterator.next({ items: 'users', lastKey: 'lastKey' });
-        expect(value).toEqual(call(getWeeklySmoker, 'users'));
-    });
-
-    it('should call updateUser with all smoker', () => {
-        const { value } = iterator.next(['smokers']);
-        expect(value).toEqual([call(smoker.save, 'smokers')]);
-    });
-
-    it('should call getWeeklyMessageData with smokers', () => {
-        const { value } = iterator.next(['updatedSmokers']);
-        expect(value).toEqual(call(getWeeklyMessageData, ['updatedSmokers']));
-    });
-
-
-    it('should call sendWeeklyMessage with messagesData', () => {
-        const { value } = iterator.next('messagesData');
-        expect(value).toEqual(call(sendWeeklyMessage, 'messagesData'));
-    });
-
-    it('should call smoker.save with all updatedSmoker', () => {
-        const { value } = iterator.next();
-        expect(value).toEqual([call(smoker.save, 'updatedSmokers')]);
+        expect(value).toEqual([call(newTargetsaga, 'users')]);
     });
 
     it('should restart and call smoker.all with config.batchSize and lastKey that was returned by previous smoker.all', () => {
