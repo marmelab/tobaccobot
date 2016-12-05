@@ -1,29 +1,21 @@
 import expect from 'expect';
 import { call } from 'sg.js';
 
-import handleAskedUser from './handleAskedUser';
+import handleAskedUser from './index';
 import addConsumptionToUser from './addConsumptionToUser';
-import getNbCigarettes from './getNbCigarettes';
 import evaluateHistory from './evaluateHistory';
 import sendDailyEvaluationMessage from './sendDailyEvaluationMessage';
-import smoker from '../services/smoker';
+import smoker from '../../services/smoker';
 
 describe('handleAskedUser', () => {
     let iterator;
-    const message = {
-        text: 'text',
-    };
+    const nbCigarettes = 42;
     const user = {
         name: 'john',
         phone: 'phone',
     };
     before(() => {
-        iterator = handleAskedUser(message, user);
-    });
-
-    it('should call getNbCigarettes with message.text', () => {
-        const { value } = iterator.next();
-        expect(value).toEqual(call(getNbCigarettes, message.text));
+        iterator = handleAskedUser(nbCigarettes, user);
     });
 
     it('should call updateUser with user and nbCigarettes returned by getNbCigarettes', () => {
@@ -56,10 +48,8 @@ describe('handleAskedUser', () => {
         }));
     });
 
-    it('should end if no number returned by getNbCigarettes', () => {
-        const it = handleAskedUser(message, user);
-        const { value } = it.next();
-        expect(value).toEqual(call(getNbCigarettes, message.text));
+    it('should end if nbCigarettes is null', () => {
+        const it = handleAskedUser();
         const { done } = it.next();
         expect(done).toBe(true);
     });

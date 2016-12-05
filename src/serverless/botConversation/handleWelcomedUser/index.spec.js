@@ -1,30 +1,25 @@
 import expect from 'expect';
 import { call } from 'sg.js';
 
-import handleWelcomedUser from './handleWelcomedUser';
+import handleWelcomedUser from './index';
 
-import getNbCigarettes from './getNbCigarettes';
-import updateUser from './updateUser';
+import smoker from '../../services/smoker';
 import sendDubiousMessage from './sendDubiousMessage';
 import sendQualifiedMessage from './sendQualifiedMessage';
 import computeTargetConsumption from './computeTargetConsumption';
 
 describe('handleWelcomedUser', () => {
     describe('qualified user', () => {
-        const message = { number: '+33614786356', text: '42' };
+        const nbCigarettes = 42;
         const user = { name: 'johnny', phone: 'foo', state: 'welcomed' };
-        const saga = handleWelcomedUser(message, user);
-
-        it('should qualify the user', () => {
-            expect(saga.next(user).value).toEqual(call(getNbCigarettes, message.text));
-        });
+        const saga = handleWelcomedUser(nbCigarettes, user);
 
         it('should get the next targeted number of cigarettes', () => {
-            expect(saga.next(20).value).toEqual(call(computeTargetConsumption, 20));
+            expect(saga.next().value).toEqual(call(computeTargetConsumption, nbCigarettes));
         });
 
         it('should update the user', () => {
-            expect(saga.next(15).value).toEqual(call(updateUser, {
+            expect(saga.next(15).value).toEqual(call(smoker.save, {
                 ...user,
                 remainingDays: 28,
                 state: 'qualified',
@@ -38,16 +33,11 @@ describe('handleWelcomedUser', () => {
         });
     });
     describe('dubious user', () => {
-        const message = { number: '+33614786356', text: 'foo' };
         const user = { name: 'johnny', phone: 'foo', state: 'welcomed' };
-        const saga = handleWelcomedUser(message, user);
-
-        it('should qualify the user', () => {
-            expect(saga.next(user).value).toEqual(call(getNbCigarettes, message.text));
-        });
+        const saga = handleWelcomedUser(null, user);
 
         it('should update the user', () => {
-            expect(saga.next(null).value).toEqual(call(updateUser, {
+            expect(saga.next(null).value).toEqual(call(smoker.save, {
                 ...user,
                 state: 'dubious',
             }));

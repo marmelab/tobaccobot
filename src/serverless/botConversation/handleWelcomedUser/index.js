@@ -1,22 +1,20 @@
 import { call } from 'sg.js';
 
-import getNbCigarettes from './getNbCigarettes';
 import sendQualifiedMessage from './sendQualifiedMessage';
-import updateUser from './updateUser';
+import smoker from '../../services/smoker';
 import sendDubiousMessage from './sendDubiousMessage';
 import computeTargetConsumption from './computeTargetConsumption';
 
-export default function* handleWelcomedUser(message, user) {
-    const nbCigarettes = yield call(getNbCigarettes, message.text);
+export default function* handleWelcomedUser(nbCigarettes, user) {
     if (nbCigarettes === null) {
-        yield call(updateUser, { ...user, state: 'dubious' });
+        yield call(smoker.save, { ...user, state: 'dubious' });
 
         yield call(sendDubiousMessage, user.phone);
         return;
     }
     const targetConsumption = yield call(computeTargetConsumption, nbCigarettes);
 
-    yield call(updateUser, {
+    yield call(smoker.save, {
         ...user,
         remainingDays: 28,
         week: 1,

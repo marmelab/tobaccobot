@@ -7,7 +7,6 @@ import smoker from '../services/smoker';
 import getWeeklySmoker from './getWeeklySmoker';
 import getWeeklyMessageData from './getWeeklyMessageData';
 import sendWeeklyMessage from './sendWeeklyMessage';
-import updateUser from './updateUser';
 
 describe('weeklyMessageSaga', () => {
     let iterator;
@@ -28,7 +27,7 @@ describe('weeklyMessageSaga', () => {
 
     it('should call updateUser with all smoker', () => {
         const { value } = iterator.next(['smokers']);
-        expect(value).toEqual([call(updateUser, 'smokers')]);
+        expect(value).toEqual([call(smoker.save, 'smokers')]);
     });
 
     it('should call getWeeklyMessageData with smokers', () => {

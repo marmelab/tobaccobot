@@ -2,11 +2,11 @@ import { call } from 'sg.js';
 
 import createUser from './createUser';
 import sendWelcomeMessage from './sendWelcomeMessage';
-import updateUser from '../effects/updateUser';
+import smoker from '../services/smoker';
 
 export default function* subscribeSaga(smokerData) {
-    let smoker = yield call(createUser, smokerData);
-    yield call(sendWelcomeMessage, smoker.phone, smoker.name);
-    smoker = yield call(updateUser, { ...smoker, state: 'welcomed' });
-    return smoker;
+    let user = yield call(createUser, smokerData);
+    yield call(sendWelcomeMessage, user.phone, user.name);
+    user = yield call(smoker.save, { ...user, state: 'welcomed' });
+    return user;
 }

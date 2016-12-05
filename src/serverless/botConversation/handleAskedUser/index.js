@@ -1,13 +1,11 @@
 import { call } from 'sg.js';
 
-import getNbCigarettes from './getNbCigarettes';
-import smoker from '../services/smoker';
+import smoker from '../../services/smoker';
 import evaluateHistory from './evaluateHistory';
 import sendDailyEvaluationMessage from './sendDailyEvaluationMessage';
 import addConsumptionToUser from './addConsumptionToUser';
 
-export default function* handleAskedUser(message, user) {
-    const nbCigarettes = yield call(getNbCigarettes, message.text);
+export default function* handleAskedUser(nbCigarettes, user) {
     if (!nbCigarettes) {
         return;
     }

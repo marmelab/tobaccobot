@@ -5,7 +5,7 @@ import subscribeSaga from './saga';
 
 import createUser from './createUser';
 import sendWelcomeMessage from './sendWelcomeMessage';
-import updateUser from '../effects/updateUser';
+import smoker from '../services/smoker';
 
 describe('subscribe saga', () => {
     const smokerData = { name: 'johnny', phone: '+33614786356' };
@@ -20,6 +20,6 @@ describe('subscribe saga', () => {
     });
 
     it('should update the user state', () => {
-        expect(saga.next(smokerData).value).toEqual(call(updateUser, { ...smokerData, state: 'welcomed' }));
+        expect(saga.next(smokerData).value).toEqual(call(smoker.save, { ...smokerData, state: 'welcomed' }));
     });
 });
