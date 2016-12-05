@@ -2,11 +2,11 @@ import expect from 'expect';
 import { call } from 'sg.js';
 import config from 'config';
 
-import { dailyMessageSaga } from './dailyMessage';
-import smoker from './services/smoker';
-import sortSmokerByState from './effects/sortSmokersByState';
-import notifyDubious from './effects/notifyDubious';
-import notifyQualified from './effects/notifyQualified';
+import dailyMessageSaga from './saga';
+import smoker from '../services/smoker';
+import sortSmokerByState from './sortSmokersByState';
+import notifyDubious from './notifyDubious';
+import notifyQualified from './notifyQualified';
 
 describe('dailyMessageSaga', () => {
     let iterator;
@@ -37,7 +37,7 @@ describe('dailyMessageSaga', () => {
         expect(value).toEqual(call(smoker.all, config.batchSize, 'lastKey'));
     });
 
-    it('shoulod end if smoker.all returned no last Key', () => {
+    it('should end if smoker.all returned no last Key', () => {
         const { done } = iterator.next({});
         expect(done).toBe(true);
     });
