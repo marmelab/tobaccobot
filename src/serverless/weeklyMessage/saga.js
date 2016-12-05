@@ -3,6 +3,7 @@ import { batchSize } from 'config';
 
 import smoker from '../services/smoker';
 import newTarget from './newTarget';
+import end from './end';
 
 export default function* weeklyMessageSaga(lastIndex) {
     const { lastKey, items } = yield call(smoker.all, batchSize, lastIndex);
@@ -12,6 +13,7 @@ export default function* weeklyMessageSaga(lastIndex) {
 
     yield [
         call(newTarget, items),
+        call(end, items),
     ];
 
     if (!lastKey) {

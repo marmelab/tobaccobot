@@ -4,7 +4,8 @@ import config from 'config';
 
 import weeklyMessageSaga from './saga';
 import smoker from '../services/smoker';
-import newTargetsaga from './newTarget';
+import newTargetSaga from './newTarget';
+import endSaga from './end';
 
 describe('weeklyMessageSaga', () => {
     let iterator;
@@ -18,9 +19,12 @@ describe('weeklyMessageSaga', () => {
         expect(value).toEqual(call(smoker.all, config.batchSize, undefined));
     });
 
-    it('should call newTargetsaga with user returned by smoker.all', () => {
+    it('should call newTargetSaga with user returned by smoker.all', () => {
         const { value } = iterator.next({ items: 'users', lastKey: 'lastKey' });
-        expect(value).toEqual([call(newTargetsaga, 'users')]);
+        expect(value).toEqual([
+            call(newTargetSaga, 'users'),
+            call(endSaga, 'users'),
+        ]);
     });
 
     it('should restart and call smoker.all with config.batchSize and lastKey that was returned by previous smoker.all', () => {
