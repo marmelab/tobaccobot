@@ -1,13 +1,16 @@
 import expect from 'expect';
 import { call } from 'sg.js';
+import omit from 'lodash.omit';
 
 import dynamoDB from './services/dynamoDB';
 import { subscribe, subscribeSaga } from './subscribe';
 import { setupSmokerTable } from './setupSmokerTable';
+import octopushMock from './services/octopushMock';
 
 import createUser from './effects/createUser';
 import sendWelcomeMessage from './effects/sendWelcomeMessage';
 import updateUser from './effects/updateUser';
+import welcomeMsg from './messages/welcome';
 
 describe('subscribe', () => {
     describe('subscribe lambda', () => {
@@ -58,6 +61,44 @@ describe('subscribe', () => {
 
         it('should update the user state', () => {
             expect(saga.next(smokerData).value).toEqual(call(updateUser, { ...smokerData, state: 'welcomed' }));
+        });
+    });
+
+    describe('e2e', () => {
+        before(function* () {
+            yield setupSmokerTable();
+        });
+
+        it('should register the user and welcome him', function* () {
+            const name = 'john';
+            const phone = '+33614786356';
+
+            yield subscribe({ body: { name, phone } });
+            const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === phone));
+
+            expect(omit(sms, 'request_id')).toEqual({
+                with_replies: 1,
+                transactional: 1,
+                text: welcomeMsg(name),
+                recipients: [phone],
+                type: octopushMock.constants.SMS_PREMIUM,
+                mode: octopushMock.constants.INSTANTANE,
+                sender: 'tobaccobot',
+            });
+
+            const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+
+            expect(Item).toEqual({
+                name: 'john',
+                phone: '+33614786356',
+                state: 'welcomed',
+            });
+        });
+
+        after(function* () {
+            yield dynamoDB.deleteTable({
+                TableName: 'smoker',
+            });
         });
     });
 });
