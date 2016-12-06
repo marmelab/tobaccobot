@@ -27,6 +27,11 @@ export const reallyGood = () => (
 You're on track for the second day, keep up the good work!`
 );
 
+export const goodCombo = () => (
+`Good job!
+It's now [x] days that you're in the objective. En route for a successfull week!`
+);
+
 export const good = () => (
 `Thanks.
 We'll speak again tomorrow.`
@@ -51,6 +56,10 @@ export default (evaluation) => {
 
     if (evaluation.combo === 2) {
         return reallyGood();
+    }
+
+    if (evaluation.combo > 2) {
+        return goodCombo();
     }
 
     return good();

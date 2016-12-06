@@ -5,6 +5,7 @@ import dailyEvaluationMessage, {
     greatProgress,
     good,
     reallyGood,
+    goodCombo,
     bad,
     reallyBad,
 } from './dailyEvaluation';
@@ -16,6 +17,10 @@ describe('dailyEvaluation message', () => {
 
     it('should return reallyGood message if state is good and combo 2', () => {
         expect(dailyEvaluationMessage({ state: 'good', combo: 2 })).toBe(reallyGood());
+    });
+
+    it('should return goodCombo message if state is good and combo more than 2', () => {
+        expect(dailyEvaluationMessage({ state: 'good', combo: 3 })).toBe(goodCombo());
     });
 
     it('should return bad message if state is bad and combo 1', () => {
