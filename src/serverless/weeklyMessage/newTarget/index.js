@@ -11,7 +11,6 @@ export default function* newTarget(items) {
     const updatedUsers = yield smokers.map(user => call(smoker.save, user));
     if (smokers && smokers.length) {
         const messagesData = yield call(getWeeklyMessageData, updatedUsers);
-        console.log({ messagesData });
         yield call(sendNewtargetMessage, messagesData);
     }
 

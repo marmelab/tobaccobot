@@ -19,6 +19,7 @@ services:
             - OCTOPUSH_USER_LOGIN
             - OCTOPUSH_API_KEY
             - OCTOPUSH_SIMULATION=OK
+            - LOG=ok
         network_mode: "host"
         entrypoint: ['node_modules/serverless/bin/serverless']
 
@@ -32,6 +33,7 @@ services:
             - AWS_SECRET_ACCESS_KEY
             - OCTOPUSH_USER_LOGIN
             - OCTOPUSH_API_KEY
+            - LOG=ok
         entrypoint: node_modules/serverless/bin/serverless deploy
 
     serve:
