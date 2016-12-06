@@ -3,7 +3,7 @@ const path = require('path');
 const ConfigPlugin = require('webpack-config-plugin');
 
 module.exports = {
-    entry: './src/serverless/index.js',
+    entry: ['babel-polyfill', './src/serverless/index.js'],
     target: 'node',
     module: {
         loaders: [
