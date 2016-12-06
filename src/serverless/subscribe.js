@@ -1,16 +1,7 @@
-import sg, { call } from 'sg.js';
+import sg from 'sg.js';
+
 import generatorToCPS from './utils/generatorToCPS';
-
-import createUser from './effects/createUser';
-import sendWelcomeMessage from './effects/sendWelcomeMessage';
-import updateUser from './effects/updateUser';
-
-export function* subscribeSaga(smokerData) {
-    let smoker = yield call(createUser, smokerData);
-    yield call(sendWelcomeMessage, smoker.phone, smoker.name);
-    smoker = yield call(updateUser, { ...smoker, state: 'welcomed' });
-    return smoker;
-}
+import subscribeSaga from './subscribe/saga';
 
 export function* subscribe({ body }) {
     try {

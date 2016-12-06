@@ -1,19 +1,15 @@
 import expect from 'expect';
-import { call } from 'sg.js';
 import omit from 'lodash.omit';
 
 import dynamoDB from './services/dynamoDB';
-import { subscribe, subscribeSaga } from './subscribe';
+import { subscribe } from './subscribe';
 import { setupSmokerTable } from './setupSmokerTable';
 import octopushMock from './services/octopushMock';
 
-import createUser from './effects/createUser';
-import sendWelcomeMessage from './effects/sendWelcomeMessage';
-import updateUser from './effects/updateUser';
-import welcomeMsg from './messages/welcome';
+import welcomeMsg from './subscribe/welcome';
 
-describe('subscribe', () => {
-    describe('subscribe lambda', () => {
+describe('subscribe lambda', () => {
+    describe('e2e', () => {
         before(function* () {
             yield setupSmokerTable();
         });
@@ -38,35 +34,6 @@ describe('subscribe', () => {
             const { Item } = yield dynamoDB.getItem('smoker', 'phone', '06147');
 
             expect(Item).toBe(undefined);
-        });
-
-        after(function* () {
-            yield dynamoDB.deleteTable({
-                TableName: 'smoker',
-            });
-        });
-    });
-
-    describe('subscribe saga', () => {
-        const smokerData = { name: 'johnny', phone: '+33614786356' };
-        const saga = subscribeSaga(smokerData);
-
-        it('should create the user', () => {
-            expect(saga.next().value).toEqual(call(createUser, smokerData));
-        });
-
-        it('should send the welcome message', () => {
-            expect(saga.next(smokerData).value).toEqual(call(sendWelcomeMessage, smokerData.phone, smokerData.name));
-        });
-
-        it('should update the user state', () => {
-            expect(saga.next(smokerData).value).toEqual(call(updateUser, { ...smokerData, state: 'welcomed' }));
-        });
-    });
-
-    describe('e2e', () => {
-        before(function* () {
-            yield setupSmokerTable();
         });
 
         it('should register the user and welcome him', function* () {

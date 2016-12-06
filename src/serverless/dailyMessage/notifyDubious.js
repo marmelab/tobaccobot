@@ -1,29 +1,27 @@
 import { call } from 'sg.js';
 
-import askDailyMessage from '../messages/askDaily';
+import askDubiousMessage from './askDubious';
 import sendSms from '../services/sendSms';
 import smoker from '../services/smoker';
 
 export const getMessages = users => ({
-    message: askDailyMessage(),
+    message: askDubiousMessage(),
     phones: users.map(user => user.phone),
 });
 
-export const setStateToAsked = users =>
-    users
-    .map(user => ({
+export const setStateToWelcomed = users =>
+    users.map(user => ({
         ...user,
-        state: 'asked',
+        state: 'welcomed',
     }));
 
-
-export default function* notifyQualified(users) {
+export default function* notifyDubious(users) {
     if (!users) {
         return;
     }
     const { message, phones } = yield call(getMessages, users);
     yield call(sendSms, phones, message);
-    const askedUsers = yield call(setStateToAsked, users);
 
-    yield askedUsers.map(user => call(smoker.save, user));
+    const updatedUsers = yield call(setStateToWelcomed, users);
+    yield updatedUsers.map(user => call(smoker.save, user));
 }

@@ -1,6 +1,6 @@
 import expect, { createSpy } from 'expect';
 import { sendWelcomeMessageFactory } from './sendWelcomeMessage';
-import welcomeMsg from '../messages/welcome';
+import welcomeMsg from './welcome';
 
 describe('sendWelcomeMessage', () => {
     it('should send the welcome message using the bot', () => {

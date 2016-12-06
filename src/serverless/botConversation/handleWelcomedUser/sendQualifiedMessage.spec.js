@@ -1,6 +1,6 @@
 import expect, { createSpy } from 'expect';
 import { sendQualifiedMessageFactory } from './sendQualifiedMessage';
-import qualifiedMessage from '../messages/qualified';
+import qualifiedMessage from './qualified';
 
 describe('sendQualifiedMessage', () => {
     it('should send the qualified message using the bot', () => {
