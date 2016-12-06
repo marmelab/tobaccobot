@@ -1,7 +1,9 @@
 import expect from 'expect';
 
 import dailyEvaluationMessage, {
-    backOnTrack,
+    backFromBad,
+    backFromReallyBad,
+    backFromBadCombo,
     greatProgress,
     good,
     reallyGood,
@@ -31,8 +33,16 @@ describe('dailyEvaluation message', () => {
         expect(dailyEvaluationMessage({ state: 'bad', combo: 2 })).toBe(reallyBad());
     });
 
-    it('should return backOnTrack message if backFromBad is true', () => {
-        expect(dailyEvaluationMessage({ backFromBad: true })).toBe(backOnTrack());
+    it('should return backFromBad message if backFromBad is 1', () => {
+        expect(dailyEvaluationMessage({ backFromBad: 1 })).toBe(backFromBad());
+    });
+
+    it('should return backFromReallyBad message if backFromBad is 2', () => {
+        expect(dailyEvaluationMessage({ backFromBad: 2 })).toBe(backFromReallyBad());
+    });
+
+    it('should return backFromBadCombo message if backFromBad is more than 2', () => {
+        expect(dailyEvaluationMessage({ backFromBad: 3 })).toBe(backFromBadCombo());
     });
 
     it('should return greatProgress message if delta is at most -3', () => {

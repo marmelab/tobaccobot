@@ -29,7 +29,7 @@ describe('evaluateHistory', () => {
     });
 
     it('should call isBackFromBad with state2 and state3', () => {
-        expect(isBackFromBadSpy).toHaveBeenCalledWith('state2', 'state3');
+        expect(isBackFromBadSpy).toHaveBeenCalledWith(history);
     });
 
     it('should call combo, with all result from getState', () => {
@@ -61,23 +61,48 @@ describe('evaluateHistory', () => {
 
     describe('isBackFromBad', () => {
         it('should return false if previous value is good', () => {
-            expect(isBackFromBad('good', 'bad')).toBe(false);
-            expect(isBackFromBad('good', 'good')).toBe(false);
+            expect(isBackFromBad([{ state: 'good' }, { state: 'bad' }])).toBe(false);
+            expect(isBackFromBad([{ state: 'good' }, { state: 'good' }])).toBe(false);
         });
 
         it('should return false if current value is still bad', () => {
-            expect(isBackFromBad('bad', 'bad')).toBe(false);
+            expect(isBackFromBad([{ state: 'bad' }, { state: 'bad' }])).toBe(false);
         });
 
-        it('should return true if previous value is bad and current one is true', () => {
-            expect(isBackFromBad('bad', 'good')).toBe(true);
+        it('should return 1 if previous value is bad and current one is true', () => {
+            expect(isBackFromBad([
+                { state: 'bad' },
+                { state: 'good' },
+            ])).toBe(1);
+        });
+
+        it('should return 2 if 2 previous value are bad and current one is true', () => {
+            expect(isBackFromBad([
+                { state: 'good' },
+                { state: 'bad' },
+                { state: 'bad' },
+                { state: 'good' },
+            ])).toBe(2);
         });
 
         it('should return false if if one of the value is undefined', () => {
-            expect(isBackFromBad('bad')).toBe(false);
-            expect(isBackFromBad('good')).toBe(false);
-            expect(isBackFromBad(undefined, 'bad')).toBe(false);
-            expect(isBackFromBad(undefined, 'good')).toBe(false);
+            expect(isBackFromBad([
+                { state: 'bad' },
+                { state: undefined },
+            ])).toBe(false);
+            expect(isBackFromBad([
+                { state: 'good' },
+                { state: undefined },
+            ])).toBe(false);
+            expect(isBackFromBad([
+                { state: undefined },
+                { state: 'bad' },
+            ])).toBe(false);
+            expect(isBackFromBad([
+                { state: undefined },
+                { state: 'good' },
+            ])).toBe(false);
+            expect(isBackFromBad([])).toBe(false);
         });
     });
 });
