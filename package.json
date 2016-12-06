@@ -55,6 +55,7 @@
     "json-loader": "0.5.4",
     "lodash.omit": "^4.5.0",
     "mocha": "3.1.2",
+    "nlp_compromise": "6.5.3",
     "serverless": "1.1.0",
     "serverless-offline": "3.4.1",
     "serverless-webpack": "1.0.0-rc.2",
