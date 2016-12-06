@@ -11,9 +11,10 @@ export const getMessages = users => ({
 
 export const setStateToAsked = users =>
     users
-    .map(user => ({
+    .map(({ remainingDays, ...user }) => ({
         ...user,
         state: 'asked',
+        remainingDays: remainingDays - 1,
     }));
 
 

@@ -11,7 +11,7 @@ export default (user, consumption) => {
 
     return {
         ...user,
-        remainingDays: remainingDays - 1,
+        remainingDays,
         history: newHistory,
         state,
     };

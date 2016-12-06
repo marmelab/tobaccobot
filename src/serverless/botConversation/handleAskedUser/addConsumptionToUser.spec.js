@@ -14,7 +14,7 @@ describe('addConsumptionToUser', () => {
         };
         expect(addConsumptionToUser(user, 19)).toEqual({
             ...user,
-            remainingDays: 12,
+            remainingDays: 13,
             state: 'bad',
             history: [
                 'previous',

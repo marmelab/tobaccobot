@@ -25,11 +25,11 @@ describe('dailyMessageSaga', () => {
         expect(value).toEqual(call(sortSmokerByState, 'users'));
     });
 
-    it('should call notifyQualified with qualified key returned by sortSmokerByState then notifyDubious with dubious key', () => {
-        let { value } = iterator.next({ qualified: 'qualified', dubious: 'dubious' });
+    it('should call notifyQualified with qualified and asked key then notifyDubious with dubious key', () => {
+        let { value } = iterator.next({ asked: ['asked'], qualified: ['qualified'], dubious: 'dubious' });
         expect(value).toEqual(call(notifyDubious, 'dubious'));
         value = iterator.next().value;
-        expect(value).toEqual(call(notifyQualified, 'qualified'));
+        expect(value).toEqual(call(notifyQualified, ['asked', 'qualified']));
     });
 
     it('should restart and call smoker.all with config.batchSize and lastKey that was returned by previous smoker.all', () => {

@@ -12,11 +12,12 @@ export default function* dailyMessageSaga(lastIndex) {
     if (!items || !items.length) {
         return;
     }
-
-    const { dubious, qualified } = yield call(sortSmokerByState, items);
+    const { asked = [], dubious = [], qualified = [] } = yield call(sortSmokerByState, items);
 
     yield call(notifyDubious, dubious);
-    yield call(notifyQualified, qualified);
+
+    // Users with asked state haven't answered the previous day, we send them a message for the current day anyway
+    yield call(notifyQualified, [...asked, ...qualified]);
 
     if (!lastKey) {
         return;
