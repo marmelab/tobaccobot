@@ -3,49 +3,90 @@ import AWS from 'aws-sdk';
 import dynamoDBWrapper from 'aws-dynamodb';
 
 import logger from './logger';
-import cpsToPromise from '../utils/cpsToPromise';
 
 if (config.serverlessEnv !== 'deploy') {
     AWS.config.update(config.aws.credentials);
 }
 
 const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
-
 dynamoDB.on('error', (operation, error, payload) => logger.error(error.message, { operation, payload, stack: error.stack }));
 
 export default {
-    createTable:
-    cpsToPromise(dynamoDB.client.createTable, dynamoDB.client),
-    deleteTable: cpsToPromise(dynamoDB.client.deleteTable, dynamoDB.client),
-    putItem: cpsToPromise((table, item, cb) =>
-        dynamoDB
-        .table(table)
-        .return(dynamoDB.ALL_OLD)
-        .insert_or_replace(item, cb)),
-    getItem: cpsToPromise((table, attr, value, cb) =>
-        dynamoDB
-        .table(table)
-        .where(attr).eq(value)
-        .get(cb)),
-    deleteItem: cpsToPromise((table, attr, value, cb) =>
-        dynamoDB
-        .table(table)
-        .where(attr).eq(value)
-        .return(dynamoDB.ALL_OLD)
-        .delete(cb)),
-    scan: cpsToPromise((table, limit = 10, lastKey, cb) =>
-        dynamoDB
-        .table(table)
-        .limit(limit)
-        .resume(lastKey)
-        .scan(function (error, data) {
-            if (error) {
-                return cb(error);
-            }
-            return cb(null, {
-                items: data,
-                lastKey: this.LastEvaluatedKey,
+    createTable(params) {
+        return new Promise((resolve, reject) => {
+            dynamoDB.on('error', (operation, error) => reject(error));
+
+            dynamoDB.client.createTable(params, (err, result) => {
+                if (err) return reject(err);
+                return resolve(result);
             });
-        })
-    ),
+        });
+    },
+    deleteTable(params) {
+        return new Promise((resolve, reject) => {
+            dynamoDB.on('error', (operation, error) => reject(error));
+
+            dynamoDB.client.deleteTable(params, (err, result) => {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
+    putItem(table, item) {
+        return new Promise((resolve, reject) => {
+            dynamoDB.on('error', (operation, error) => reject(error));
+
+            dynamoDB
+            .table(table)
+            .return(dynamoDB.ALL_OLD)
+            .insert_or_replace(item, (err, result) => {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
+    getItem(table, attr, value) {
+        return new Promise((resolve, reject) => {
+            dynamoDB.on('error', (operation, error) => reject(error));
+
+            dynamoDB
+            .table(table)
+            .where(attr).eq(value)
+            .get((err, result) => {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
+    deleteItem(table, attr, value) {
+        return new Promise((resolve, reject) => {
+            dynamoDB.on('error', (operation, error) => reject(error));
+
+            dynamoDB
+            .table(table)
+            .where(attr).eq(value)
+            .return(dynamoDB.ALL_OLD)
+            .delete((err, result) => {
+                if (err) return reject(err);
+                return resolve(result);
+            });
+        });
+    },
+    scan(table, limit = 10, lastKey) {
+        return new Promise((resolve, reject) => {
+            dynamoDB.on('error', (operation, error) => reject(error));
+
+            dynamoDB
+            .table(table)
+            .limit(limit)
+            .resume(lastKey)
+            .scan(function (err, data) {
+                if (err) return reject(err);
+                return resolve({
+                    items: data,
+                    lastKey: this.LastEvaluatedKey,
+                });
+            });
+        });
+    },
 };
