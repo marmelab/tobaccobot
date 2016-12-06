@@ -1,17 +1,18 @@
 export default (user, consumption) => {
-    const state = consumption <= user.targetConsumption[user.week] ? 'good' : 'bad';
-    const history = (user.history || [])
+    const { targetConsumption, week, history = [], remainingDays } = user;
+    const state = consumption <= targetConsumption[week] ? 'good' : 'bad';
+    const newHistory = history
     .concat({
-        day: 28 - user.remainingDays,
-        week: user.week,
+        day: 28 - remainingDays,
+        week,
         consumption,
         state,
     });
 
     return {
         ...user,
-        remainingDays: user.remainingDays - 1,
-        history,
+        remainingDays: remainingDays - 1,
+        history: newHistory,
         state,
     };
 };

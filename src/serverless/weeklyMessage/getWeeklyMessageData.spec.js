@@ -2,7 +2,7 @@ import expect from 'expect';
 
 import getWeeklyMessageData from './getWeeklyMessageData';
 
-describe.only('getWeeklyMessageData', () => {
+describe('getWeeklyMessageData', () => {
     it('should compute remainingWeeks, oldTarget, newTarget and phone for each user', () => {
         expect(getWeeklyMessageData([
             {
