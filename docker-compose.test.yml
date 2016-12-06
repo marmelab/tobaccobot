@@ -21,5 +21,26 @@ services:
         ports:
             - 3001:3001
         command: node_modules/.bin/mocha ./src/**/*.spec.js
+    test-e2e:
+        extends:
+            file: ./docker-compose.yml
+            service: node
+        environment:
+            - BABEL_ENV=node
+            - SERVERLESS_ENV=mocha
+            - AWS_ACCESS_KEY_ID=akid
+            - AWS_SECRET_ACCESS_KEY=secret
+            - AWS_DYNAMODB_ENDPOINT=http://dynamodbtest:8000
+            - OCTOPUSH_USER_LOGIN=login
+            - OCTOPUSH_API_KEY=apikey
+            - OCTOPUSH_SIMULATION=ok
+            - OCTOPUSH_DISABLED=ok
+        links:
+            - dynamodbtest
+        depends_on:
+            - dynamodbtest
+        ports:
+            - 3001:3001
+        command: node_modules/.bin/mocha ./test/e2e/*.spec.js
     dynamodbtest:
         image: deangiberson/aws-dynamodb-local

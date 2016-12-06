@@ -1,11 +1,11 @@
 import octopush from 'octopush';
 import config from 'config';
+import octopushMock from './octopushMock';
 
 export const sendSmsFactory = octopushImpl => (phone, message) =>
     new Promise((resolve, reject) => {
         try {
             const sms = new octopushImpl.SMS(config.octopush.user_login, config.octopush.api_key);
-
             if (config.octopush.simutation) {
                 sms.set_simulation_mode();
             }
@@ -33,4 +33,4 @@ export const sendSmsFactory = octopushImpl => (phone, message) =>
         }
     });
 
-export default config.octopush.disabled ? () => Promise.resolve() : sendSmsFactory(octopush);
+export default config.octopush.disabled ? sendSmsFactory(octopushMock) : sendSmsFactory(octopush);
