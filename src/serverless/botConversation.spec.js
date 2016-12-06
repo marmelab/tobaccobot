@@ -1,17 +1,11 @@
 import expect from 'expect';
-
-import { call } from 'sg.js';
 import omit from 'lodash.omit';
 
 import dynamoDB from './services/dynamoDB';
 import botConversationLambda, { botConversation } from './botConversation';
-import botConversationSaga from './botConversation/saga';
 import { setupSmokerTable } from './setupSmokerTable';
 import octopushMock from './services/octopushMock';
 
-import getUser from './botConversation/getUser';
-import handleWelcomedUser from './botConversation/handleWelcomedUser';
-import handleAskedUser from './botConversation/handleAskedUser';
 import qualifiedMessage from './botConversation/handleWelcomedUser/qualified';
 import dailyEvaluation from './botConversation/handleAskedUser/dailyEvaluation';
 import computeTargetConsumption from './botConversation/handleWelcomedUser/computeTargetConsumption';
@@ -35,63 +29,6 @@ describe('botConversation', () => {
         after(function* () {
             yield dynamoDB.deleteTable({
                 TableName: 'smoker',
-            });
-        });
-    });
-
-    describe('botConversation saga', () => {
-        describe('welcomed user', () => {
-            const message = { number: '+33614786356', text: '42' };
-            const saga = botConversationSaga(message);
-            const user = { name: 'johnny', phone: 'foo', state: 'welcomed' };
-
-            it('should get the user', () => {
-                expect(saga.next().value).toEqual(call(getUser, message.number));
-            });
-
-            it('should call handleWelcomedUser with message and user', () => {
-                expect(saga.next(user).value).toEqual(call(handleWelcomedUser, message, user));
-            });
-        });
-
-        describe('asked user', () => {
-            const message = { number: '+33614786356', text: '42' };
-            const saga = botConversationSaga(message);
-            const user = { name: 'johnny', phone: 'foo', state: 'asked' };
-
-            it('should get the user', () => {
-                expect(saga.next().value).toEqual(call(getUser, message.number));
-            });
-
-            it('should call handleAskedUser with message and user', () => {
-                expect(saga.next(user).value).toEqual(call(handleAskedUser, message, user));
-            });
-        });
-
-        describe('other user', () => {
-            const message = { number: '+33614786356', text: '42' };
-            const saga = botConversationSaga(message);
-            const user = { name: 'johnny', phone: 'foo', state: 'other' };
-
-            it('should get the user', () => {
-                expect(saga.next().value).toEqual(call(getUser, message.number));
-            });
-
-            it('should end', () => {
-                expect(saga.next(user).done).toBe(true);
-            });
-        });
-
-        describe('no user', () => {
-            const message = { number: '+33614786356', text: '42' };
-            const saga = botConversationSaga(message);
-
-            it('should get the user', () => {
-                expect(saga.next().value).toEqual(call(getUser, message.number));
-            });
-
-            it('should end', () => {
-                expect(saga.next().done).toBe(true);
             });
         });
     });
