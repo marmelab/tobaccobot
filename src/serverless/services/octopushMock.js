@@ -11,6 +11,18 @@ class SMS {
         return uuid();
     }
 
+    set_sms_fields_1(value) {
+        this.sms.sms_fields_1 = value;
+    }
+
+    set_sms_fields_2(value) {
+        this.sms.sms_fields_2 = value;
+    }
+
+    set_sms_fields_3(value) {
+        this.sms.sms_fields_3 = value;
+    }
+
     set_simulation_mode() {}
 
     set_option_with_replies(value) {

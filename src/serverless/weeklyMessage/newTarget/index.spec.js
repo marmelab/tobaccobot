@@ -5,7 +5,7 @@ import newTargetSaga from './index';
 import smoker from '../../services/smoker';
 import getWeeklySmoker from './getWeeklySmoker';
 import getWeeklyMessageData from './getWeeklyMessageData';
-import sendWeeklyMessage from './sendWeeklyMessage';
+import sendNewTargetMessage from './sendNewTargetMessage';
 import updateUser from './updateUser';
 
 describe('newTargetSaga', () => {
@@ -31,9 +31,9 @@ describe('newTargetSaga', () => {
     });
 
 
-    it('should call sendWeeklyMessage with messagesData', () => {
+    it('should call sendNewTargetMessage with messagesData', () => {
         const { value } = iterator.next('messagesData');
-        expect(value).toEqual(call(sendWeeklyMessage, 'messagesData'));
+        expect(value).toEqual(call(sendNewTargetMessage, 'messagesData'));
     });
 
     it('should call smoker.save with all updatedSmoker', () => {

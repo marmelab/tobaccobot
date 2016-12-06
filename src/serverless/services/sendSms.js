@@ -16,7 +16,7 @@ export const sendSmsFactory = octopushImpl => (phone, message, ch1, ch2, ch3) =>
             sms.set_option_with_replies(1);
             sms.set_option_transactional(1);
             sms.set_sms_text(message);
-            sms.set_sms_recipients([phone]);
+            sms.set_sms_recipients([].concat(phone));
             sms.set_sms_type(octopushImpl.constants.SMS_PREMIUM);
             sms.set_sms_mode(octopushImpl.constants.INSTANTANE);
             sms.set_sms_sender('tobaccobot');
