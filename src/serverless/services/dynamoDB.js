@@ -8,12 +8,13 @@ if (config.serverlessEnv !== 'deploy') {
     AWS.config.update(config.aws.credentials);
 }
 
+const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
+dynamoDB.on('error', (operation, error, payload) => logger.error(error.message, { operation, payload, stack: error.stack }));
+
 export default {
     createTable(params) {
         return new Promise((resolve, reject) => {
-            const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
-
-            dynamoDB.on('error', (operation, error, payload) => logger.error(error.message, { operation, payload, stack: error.stack }));
+            dynamoDB.on('error', (operation, error) => reject(error));
 
             dynamoDB.client.createTable(params, (err, result) => {
                 if (err) return reject(err);
@@ -23,9 +24,7 @@ export default {
     },
     deleteTable(params) {
         return new Promise((resolve, reject) => {
-            const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
-
-            dynamoDB.on('error', (operation, error, payload) => reject({ operation, error, payload }));
+            dynamoDB.on('error', (operation, error) => reject(error));
 
             dynamoDB.client.deleteTable(params, (err, result) => {
                 if (err) return reject(err);
@@ -35,9 +34,7 @@ export default {
     },
     putItem(table, item) {
         return new Promise((resolve, reject) => {
-            const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
-
-            dynamoDB.on('error', (operation, error, payload) => reject({ operation, error, payload }));
+            dynamoDB.on('error', (operation, error) => reject(error));
 
             dynamoDB
             .table(table)
@@ -50,9 +47,7 @@ export default {
     },
     getItem(table, attr, value) {
         return new Promise((resolve, reject) => {
-            const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
-
-            dynamoDB.on('error', (operation, error, payload) => reject({ operation, error, payload }));
+            dynamoDB.on('error', (operation, error) => reject(error));
 
             dynamoDB
             .table(table)
@@ -65,9 +60,7 @@ export default {
     },
     deleteItem(table, attr, value) {
         return new Promise((resolve, reject) => {
-            const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
-
-            dynamoDB.on('error', (operation, error, payload) => reject({ operation, error, payload }));
+            dynamoDB.on('error', (operation, error) => reject(error));
 
             dynamoDB
             .table(table)
@@ -81,9 +74,7 @@ export default {
     },
     scan(table, limit = 10, lastKey) {
         return new Promise((resolve, reject) => {
-            const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
-
-            dynamoDB.on('error', (operation, error, payload) => reject({ operation, error, payload }));
+            dynamoDB.on('error', (operation, error) => reject(error));
 
             dynamoDB
             .table(table)
