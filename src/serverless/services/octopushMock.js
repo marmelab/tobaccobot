@@ -53,6 +53,9 @@ class SMS {
 
 export default {
     SMS,
+    clear() {
+        sentSms.splice(0, sentSms.length);
+    },
     constants: octopush.constants,
     sentSms,
 };
