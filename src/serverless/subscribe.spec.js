@@ -9,41 +9,31 @@ import octopushMock from './services/octopushMock';
 import welcomeMsg from './subscribe/welcome';
 
 describe('subscribe lambda', () => {
-    before(function* () {
-        yield setupSmokerTable();
-    });
-
-    it('should save event.body as new smoker', function* () {
-        const response = yield subscribe({ body: { name: 'john', phone: '+33614786356' } });
-        expect(response.statusCode).toBe(200);
-        const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
-
-        expect(Item).toEqual({
-            name: 'john',
-            phone: '+33614786356',
-            state: 'welcomed',
-        });
-    });
-
-    it('should return error 500 if event.body as invalid phone', function* () {
-        const smoker = { name: 'johnny', phone: '06147' };
-        const response = yield subscribe({ body: smoker });
-        expect(response.statusCode).toBe(500);
-        expect(response.body).toEqual('Expected { name: \'johnny\', phone: \'06147\', state: \'subscribed\' } to match { name: /\\S+/, phone: /\\+[0-9]{11}/, state: /\\S+/ }');
-        const { Item } = yield dynamoDB.getItem('smoker', 'phone', '06147');
-
-        expect(Item).toBe(undefined);
-    });
-
-    after(function* () {
-        yield dynamoDB.deleteTable({
-            TableName: 'smoker',
-        });
-    });
-
     describe('e2e', () => {
         before(function* () {
             yield setupSmokerTable();
+        });
+
+        it('should save event.body as new smoker', function* () {
+            const response = yield subscribe({ body: { name: 'john', phone: '+33614786356' } });
+            expect(response.statusCode).toBe(200);
+            const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+
+            expect(Item).toEqual({
+                name: 'john',
+                phone: '+33614786356',
+                state: 'welcomed',
+            });
+        });
+
+        it('should return error 500 if event.body as invalid phone', function* () {
+            const smoker = { name: 'johnny', phone: '06147' };
+            const response = yield subscribe({ body: smoker });
+            expect(response.statusCode).toBe(500);
+            expect(response.body).toEqual('Expected { name: \'johnny\', phone: \'06147\', state: \'subscribed\' } to match { name: /\\S+/, phone: /\\+[0-9]{11}/, state: /\\S+/ }');
+            const { Item } = yield dynamoDB.getItem('smoker', 'phone', '06147');
+
+            expect(Item).toBe(undefined);
         });
 
         it('should register the user and welcome him', function* () {
