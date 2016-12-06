@@ -11,7 +11,7 @@ Congratulations!`
 
 export const bad = targetConsumption => (
 `Ok, you're not on track, but it's not a big deal.
-Perhaps you had an hard day?
+Perhaps you had a hard day?
 The important thing is not to stop trying to quit.
 You can do it, try smoking ${targetConsumption} cigarettes at most today!`
 );

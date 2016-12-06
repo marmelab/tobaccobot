@@ -29,6 +29,7 @@ describe('handleWelcomedUser', () => {
                 remainingDays: 28,
                 state: 'qualified',
                 targetConsumption: 15,
+                week: 1,
             }));
         });
 

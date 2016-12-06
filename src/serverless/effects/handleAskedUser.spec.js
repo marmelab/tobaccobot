@@ -1,7 +1,8 @@
 import expect from 'expect';
 import { call } from 'sg.js';
 
-import handleAskedUser, { updateUser } from './handleAskedUser';
+import handleAskedUser from './handleAskedUser';
+import addConsumptionToUser from './addConsumptionToUser';
 import getNbCigarettes from './getNbCigarettes';
 import evaluateHistory from './evaluateHistory';
 import sendDailyEvaluationMessage from './sendDailyEvaluationMessage';
@@ -27,7 +28,7 @@ describe('handleAskedUser', () => {
 
     it('should call updateUser with user and nbCigarettes returned by getNbCigarettes', () => {
         const { value } = iterator.next(42);
-        expect(value).toEqual(call(updateUser, user, 42));
+        expect(value).toEqual(call(addConsumptionToUser, user, 42));
     });
 
     it('should call evaluateHistory with updatedUser', () => {
