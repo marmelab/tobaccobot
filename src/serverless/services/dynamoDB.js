@@ -2,6 +2,7 @@ import config from 'config';
 import AWS from 'aws-sdk';
 import dynamoDBWrapper from 'aws-dynamodb';
 
+import logger from './logger';
 import cpsToPromise from '../utils/cpsToPromise';
 
 if (config.serverlessEnv !== 'deploy') {
@@ -10,7 +11,7 @@ if (config.serverlessEnv !== 'deploy') {
 
 const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
 
-dynamoDB.on('error', (operation, error, payload) => console.error({ operation, error, payload }));
+dynamoDB.on('error', (operation, error, payload) => logger.error(error.message, { operation, payload, stack: error.stack }));
 
 export default {
     createTable:

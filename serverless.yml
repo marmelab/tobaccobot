@@ -22,6 +22,7 @@ provider:
   runtime: nodejs4.3
   stage: dev
   region: eu-west-1
+  cfLogs: true
 
 # you can overwrite defaults here
 #  stage: dev
@@ -129,7 +130,6 @@ resources:
 plugins:
   - serverless-webpack
   - serverless-offline
-provider.cfLogs: true
 custom:
   webpack: ./webpack.config.serverless.js
   serverless-offline:
