@@ -14,6 +14,7 @@ services:
             - OCTOPUSH_API_KEY=apikey
             - OCTOPUSH_SIMULATION=ok
             - OCTOPUSH_DISABLED=ok
+            - LOG=ko
         links:
             - dynamodbtest
         depends_on:

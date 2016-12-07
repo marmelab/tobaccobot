@@ -28,6 +28,7 @@ services:
             - OCTOPUSH_USER_LOGIN
             - OCTOPUSH_API_KEY
             - OCTOPUSH_SIMULATION=ok
+            - LOG=ok
         depends_on:
             - dynamodb
         links:

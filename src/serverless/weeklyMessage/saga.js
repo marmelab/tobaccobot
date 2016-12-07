@@ -2,23 +2,19 @@ import { call } from 'sg.js';
 import { batchSize } from 'config';
 
 import smoker from '../services/smoker';
-import getWeeklySmoker from './getWeeklySmoker';
-import sendWeeklyMessage from './sendWeeklyMessage';
-import getWeeklyMessageData from './getWeeklyMessageData';
+import newTarget from './newTarget';
+import end from './end';
 
 export default function* weeklyMessageSaga(lastIndex) {
     const { lastKey, items } = yield call(smoker.all, batchSize, lastIndex);
     if (!items || !items.length) {
         return;
     }
-    const smokers = yield call(getWeeklySmoker, items);
-    const updatedUsers = yield smokers.map(user => call(smoker.save, user));
-    if (smokers && smokers.length) {
-        const messagesData = yield call(getWeeklyMessageData, updatedUsers);
-        yield call(sendWeeklyMessage, messagesData);
-    }
 
-    yield updatedUsers.map(user => call(smoker.save, user));
+    yield [
+        call(newTarget, items),
+        call(end, items),
+    ];
 
     if (!lastKey) {
         return;

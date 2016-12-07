@@ -40,7 +40,7 @@ describe('getWeeklyMessageData', () => {
             phones: [1, 2, 3],
             oldTarget: [3, 4, 4],
             newTarget: [2, 2, 0],
-            remainingWeeks: [2, 1, 0],
+            remainingWeeks: [3, 2, 1],
         });
     });
 });
