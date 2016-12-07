@@ -46,7 +46,14 @@ You can do it, try smoking ${targetConsumption} cigarettes at most today!`
 export const reallyBad = () => (
 `if you really want to quit smoking, you must reduce your consumption right away.
 In the meantime, how about some reading?
-I recommend that you read this article about the diseases that can be caused by tobacco: http://www.lung.org/our-initiatives/tobacco/reports-resources/10-worst-diseases-smoking-causes.html`
+I recommend that you read this article about the diseases that can be caused by tobacco:
+http://www.lung.org/our-initiatives/tobacco/reports-resources/10-worst-diseases-smoking-causes.html`
+);
+
+export const badCombo = (combo, targetConsumption) => (
+`It's been ${combo} days that you are over the objective of ${targetConsumption} cigarettes.
+But you still can make it! Reduce your consumption today! Some new reading to help you quit smoking :
+http://www.lung.org/our-initiatives/tobacco/reports-resources/sotc/by-the-numbers/10-health-effects-caused-by-smoking.html`
 );
 
 export const reallyGood = () => (
@@ -86,11 +93,14 @@ export default (evaluation) => {
 
 
     if (evaluation.state === 'bad') {
-        if (evaluation.combo === 1) {
-            return bad(evaluation.targetConsumption);
+        if (evaluation.combo === 2) {
+            return reallyBad();
+        }
+        if (evaluation.combo > 2) {
+            return badCombo(evaluation.combo, evaluation.targetConsumption);
         }
 
-        return reallyBad();
+        return bad(evaluation.targetConsumption);
     }
 
     if (evaluation.combo === 2) {

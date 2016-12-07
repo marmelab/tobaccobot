@@ -11,6 +11,7 @@ import dailyEvaluationMessage, {
     goodCombo,
     bad,
     reallyBad,
+    badCombo,
 } from './dailyEvaluation';
 
 describe('dailyEvaluation message', () => {
@@ -32,6 +33,10 @@ describe('dailyEvaluation message', () => {
 
     it('should return reallyBad message if state is bad and combo greater than 1', () => {
         expect(dailyEvaluationMessage({ state: 'bad', combo: 2, delta: [] })).toBe(reallyBad());
+    });
+
+    it('should return badCombo message if state is bad and combo greater than 2', () => {
+        expect(dailyEvaluationMessage({ state: 'bad', combo: 3, targetConsumption: 19, delta: [] })).toBe(badCombo(3, 19));
     });
 
     it('should return backFromBad message if backFromBad is 1', () => {
