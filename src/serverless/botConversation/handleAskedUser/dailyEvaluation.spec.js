@@ -23,7 +23,7 @@ describe.only('dailyEvaluation message', () => {
     });
 
     it('should return goodCombo message if state is good and combo more than 2', () => {
-        expect(dailyEvaluationMessage({ state: 'good', combo: 3, delta: [] })).toBe(goodCombo());
+        expect(dailyEvaluationMessage({ state: 'good', combo: 3, delta: [] })).toBe(goodCombo(3));
     });
 
     it('should return bad message if state is bad and combo 1', () => {

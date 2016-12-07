@@ -54,9 +54,9 @@ export const reallyGood = () => (
 You're on track for the second day, keep up the good work!`
 );
 
-export const goodCombo = () => (
+export const goodCombo = combo => (
 `Good job!
-It's now [x] days that you're in the objective. En route for a successfull week!`
+It's now ${combo} days that you're in the objective. En route for a successfull week!`
 );
 
 export const good = () => (
@@ -98,7 +98,7 @@ export default (evaluation) => {
     }
 
     if (evaluation.combo > 2) {
-        return goodCombo();
+        return goodCombo(evaluation.combo);
     }
 
     return good();
