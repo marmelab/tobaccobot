@@ -1,6 +1,6 @@
 import expect from 'expect';
 
-import evaluateHistory, { getCombo, isBackFromBad } from './evaluateHistory';
+import evaluateHistory, { getCombo, isBackFromBad, getDelta } from './evaluateHistory';
 
 describe('evaluateHistory', () => {
     const getComboSpy = expect.createSpy().andReturn('combo');
@@ -37,7 +37,7 @@ describe('evaluateHistory', () => {
     });
 
     it('should call getDelta with last two value from history', () => {
-        expect(getDeltaSpy).toHaveBeenCalledWith(2, 3);
+        expect(getDeltaSpy).toHaveBeenCalledWith(history);
     });
 
 
@@ -103,6 +103,17 @@ describe('evaluateHistory', () => {
                 { state: 'good' },
             ])).toBe(false);
             expect(isBackFromBad([])).toBe(false);
+        });
+    });
+
+    describe('getDelta', () => {
+        it('should return a list of delta', () => {
+            expect(getDelta([
+                { consumption: 5 },
+                { consumption: 5 },
+                { consumption: 10 },
+                { consumption: 5 },
+            ])).toEqual([0, 5, -5]);
         });
     });
 });

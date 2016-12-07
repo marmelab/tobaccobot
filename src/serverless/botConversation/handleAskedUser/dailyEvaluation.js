@@ -30,6 +30,12 @@ Wow, you've made great progress, it's ${Math.abs(delta)} less than yesterday.
 Congratulations!`
 );
 
+export const continuedGreatProgress = delta => (
+`WOW! You did it again! ${Math.abs(delta)} less than yesterday!
+Congratulations!
+I am already waiting for tomorrow to see if you continue on the same track!`
+);
+
 export const bad = targetConsumption => (
 `Ok, you're not on track, but it's not a big deal.
 Perhaps you had a hard day?
@@ -71,9 +77,13 @@ export default (evaluation) => {
         return backFromBadCombo();
     }
 
-    if (evaluation.delta <= -3) {
+    if (evaluation.delta.slice(-1)[0] <= -3) {
+        if (evaluation.delta.length >= 2 && evaluation.delta.slice(-2)[0] <= -3) {
+            return continuedGreatProgress(evaluation.delta.slice(-1)[0]);
+        }
         return greatProgress(evaluation.delta);
     }
+
 
     if (evaluation.state === 'bad') {
         if (evaluation.combo === 1) {

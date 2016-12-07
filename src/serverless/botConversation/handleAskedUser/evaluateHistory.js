@@ -1,6 +1,19 @@
 import configurable from 'configurable.js';
 
-export const getDelta = (previous, current) => current - previous;
+export const getDelta = history =>
+    history.reduce(({ previous, delta }, { consumption }) => {
+        if (!previous) {
+            return {
+                previous: consumption,
+                delta,
+            };
+        }
+        return {
+            previous: consumption,
+            delta: delta.concat(consumption - previous),
+        };
+    }, { delta: [], previous: undefined }).delta;
+
 
 export const getCombo = (history) => {
     const { combo } = history.reduce((previous, { state }) => {
@@ -23,14 +36,12 @@ export const isBackFromBad = (history) => {
 };
 
 const evaluateHistory = function (history, targetConsumption) {
-    const [previous, current] = history.slice(-2);
-
     return {
         targetConsumption,
         state: history.slice(-1)[0].state,
         backFromBad: this.config.isBackFromBad(history),
         combo: this.config.getCombo(history),
-        delta: this.config.getDelta(previous.consumption, current.consumption),
+        delta: this.config.getDelta(history),
     };
 };
 
