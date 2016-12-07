@@ -14,19 +14,6 @@ export const getDelta = history =>
         };
     }, { delta: [], previous: undefined }).delta;
 
-
-export const getCombo = (history) => {
-    const { combo } = history.reduce((previous, { state }) => {
-        if (previous.state === state) {
-            return { state, combo: previous.combo + 1 };
-        }
-
-        return { state, combo: 1 };
-    }, { combo: 0 });
-
-    return combo;
-};
-
 export const getComboHistory = history =>
     history.reduce(({ previous, comboHistory }, { state }) => {
         if (previous === state) {
@@ -48,6 +35,34 @@ export const getComboHistory = history =>
             comboHistory: [...comboHistory, { state, combo: 1 }],
         };
     }, { previous: undefined, comboHistory: [] }).comboHistory;
+
+export const getCombo = (history) => {
+    const comboHistory = getComboHistory(history);
+    const lastCombo = comboHistory.slice(-1)[0];
+
+    if (!lastCombo) {
+        return { combo: 0 };
+    }
+
+    if (lastCombo.combo < 2) {
+        return { combo: lastCombo.combo };
+    }
+    if (lastCombo.combo === 2) {
+        return {
+            combo: lastCombo.combo,
+            repeatition: comboHistory
+            .filter(data => data.state === lastCombo.state && data.combo >= 2)
+            .length,
+        };
+    }
+
+    return {
+        combo: lastCombo.combo,
+        repeatition: comboHistory
+        .filter(data => data.state === lastCombo.state && data.combo > 2)
+        .reduce((result, { combo }) => result + (combo - 2), 0),
+    };
+};
 
 export const isBackFromBad = (history) => {
     const [previous = {}, current = {}] = history.slice(-2);
