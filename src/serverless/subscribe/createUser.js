@@ -1,3 +1,4 @@
+import uuid from 'uuid/v4';
 import smoker from '../services/smoker';
 
 export default async function (userData) {
@@ -7,6 +8,9 @@ export default async function (userData) {
     };
 
     smoker.check(smokerData);
-    await smoker.save(smokerData);
+    await smoker.save({
+        ...smokerData,
+        uuid: uuid(),
+    });
     return smoker.get(smokerData.phone);
 }

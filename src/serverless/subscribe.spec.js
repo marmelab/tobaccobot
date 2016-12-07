@@ -19,7 +19,7 @@ describe('subscribe lambda', () => {
             expect(response.statusCode).toBe(200);
             const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-            expect(Item).toEqual({
+            expect(omit(Item, 'uuid')).toEqual({
                 name: 'john',
                 phone: '+33614786356',
                 state: 'welcomed',
@@ -55,7 +55,7 @@ describe('subscribe lambda', () => {
 
             const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-            expect(Item).toEqual({
+            expect(omit(Item, 'uuid')).toEqual({
                 name: 'john',
                 phone: '+33614786356',
                 state: 'welcomed',
