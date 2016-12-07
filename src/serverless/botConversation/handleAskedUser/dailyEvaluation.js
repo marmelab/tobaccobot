@@ -43,17 +43,29 @@ The important thing is not to stop trying to quit.
 You can do it, try smoking ${targetConsumption} cigarettes at most today!`
 );
 
-export const reallyBad = () => (
+const reallyBadLinks = [
+    'http://www.lung.org/our-initiatives/tobacco/reports-resources/10-worst-diseases-smoking-causes.html',
+    'http://www.lung.org/our-initiatives/tobacco/reports-resources/sotc/by-the-numbers/9-of-the-worst-diseases-you.html',
+    'https://www.cdc.gov/tobacco/data_statistics/fact_sheets/health_effects/effects_cig_smoking/',
+];
+
+export const reallyBad = (link = reallyBadLinks[0]) => (
 `if you really want to quit smoking, you must reduce your consumption right away.
 In the meantime, how about some reading?
 I recommend that you read this article about the diseases that can be caused by tobacco:
-http://www.lung.org/our-initiatives/tobacco/reports-resources/10-worst-diseases-smoking-causes.html`
+${link}`
 );
 
-export const badCombo = (combo, targetConsumption) => (
+const badComboLinks = [
+    'http://www.lung.org/our-initiatives/tobacco/reports-resources/sotc/by-the-numbers/10-health-effects-caused-by-smoking.html',
+    'https://www.unitypoint.org/livewell/article.aspx?id=17ace3fc-fb01-45c3-8617-1beb81404fc4',
+    'https://www.newscientist.com/article/dn19725-gross-disease-images-best-at-making-smokers-quit/',
+];
+
+export const badCombo = (combo, targetConsumption, link = badComboLinks[0]) => (
 `It's been ${combo} days that you are over the objective of ${targetConsumption} cigarettes.
 But you still can make it! Reduce your consumption today! Some new reading to help you quit smoking :
-http://www.lung.org/our-initiatives/tobacco/reports-resources/sotc/by-the-numbers/10-health-effects-caused-by-smoking.html`
+${link}`
 );
 
 export const reallyGood = () => (
