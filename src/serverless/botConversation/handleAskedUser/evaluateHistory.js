@@ -27,6 +27,28 @@ export const getCombo = (history) => {
     return combo;
 };
 
+export const getComboHistory = history =>
+    history.reduce(({ previous, comboHistory }, { state }) => {
+        if (previous === state) {
+            const lastCombo = comboHistory.slice(-1)[0];
+            return {
+                previous: state,
+                comboHistory: [
+                    ...comboHistory.slice(0, -1),
+                    {
+                        ...lastCombo,
+                        combo: lastCombo.combo + 1,
+                    },
+                ],
+            };
+        }
+
+        return {
+            previous: state,
+            comboHistory: [...comboHistory, { state, combo: 1 }],
+        };
+    }, { previous: undefined, comboHistory: [] }).comboHistory;
+
 export const isBackFromBad = (history) => {
     const [previous = {}, current = {}] = history.slice(-2);
     if (!previous || previous.state !== 'bad' || !current || current.state !== 'good') {
