@@ -11,7 +11,9 @@ import dailyEvaluationMessage, {
     goodCombo,
     bad,
     reallyBad,
+    reallyBadLinks,
     badCombo,
+    badComboLinks,
 } from './dailyEvaluation';
 
 describe('dailyEvaluation message', () => {
@@ -28,15 +30,29 @@ describe('dailyEvaluation message', () => {
     });
 
     it('should return bad message if state is bad and combo 1', () => {
-        expect(dailyEvaluationMessage({ state: 'bad', combo: 1, targetConsumption: 23, delta: [] })).toBe(bad(23));
+        expect(dailyEvaluationMessage({ state: 'bad', combo: { hit: 1 }, targetConsumption: 23, delta: [] })).toBe(bad(23));
     });
 
-    it('should return reallyBad message if state is bad and combo greater than 1', () => {
-        expect(dailyEvaluationMessage({ state: 'bad', combo: 2, delta: [] })).toBe(reallyBad());
+    it('should return reallyBad message with link based on repeatition if state is bad and combo greater than 1', () => {
+        expect(dailyEvaluationMessage({ state: 'bad', combo: { hit: 2, repeatition: 1 }, delta: [] }))
+        .toBe(reallyBad(reallyBadLinks[0]));
+        expect(dailyEvaluationMessage({ state: 'bad', combo: { hit: 2, repeatition: 2 }, delta: [] }))
+        .toBe(reallyBad(reallyBadLinks[1]));
+        expect(dailyEvaluationMessage({ state: 'bad', combo: { hit: 2, repeatition: 3 }, delta: [] }))
+        .toBe(reallyBad(reallyBadLinks[2]));
+        expect(dailyEvaluationMessage({ state: 'bad', combo: { hit: 2, repeatition: 4 }, delta: [] }))
+        .toBe(reallyBad(reallyBadLinks[0]));
     });
 
-    it('should return badCombo message if state is bad and combo greater than 2', () => {
-        expect(dailyEvaluationMessage({ state: 'bad', combo: 3, targetConsumption: 19, delta: [] })).toBe(badCombo(3, 19));
+    it('should return badCombo message with link based on repeatition if state is bad and combo greater than 2', () => {
+        expect(dailyEvaluationMessage({ state: 'bad', combo: { hit: 3, repeatition: 1 }, targetConsumption: 19, delta: [] }))
+        .toBe(badCombo(3, 19, badComboLinks[0]));
+        expect(dailyEvaluationMessage({ state: 'bad', combo: { hit: 3, repeatition: 2 }, targetConsumption: 19, delta: [] }))
+        .toBe(badCombo(3, 19, badComboLinks[1]));
+        expect(dailyEvaluationMessage({ state: 'bad', combo: { hit: 3, repeatition: 3 }, targetConsumption: 19, delta: [] }))
+        .toBe(badCombo(3, 19, badComboLinks[2]));
+        expect(dailyEvaluationMessage({ state: 'bad', combo: { hit: 3, repeatition: 4 }, targetConsumption: 19, delta: [] }))
+        .toBe(badCombo(3, 19, badComboLinks[0]));
     });
 
     it('should return backFromBad message if backFromBad is 1', () => {

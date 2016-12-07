@@ -43,7 +43,7 @@ The important thing is not to stop trying to quit.
 You can do it, try smoking ${targetConsumption} cigarettes at most today!`
 );
 
-const reallyBadLinks = [
+export const reallyBadLinks = [
     'http://www.lung.org/our-initiatives/tobacco/reports-resources/10-worst-diseases-smoking-causes.html',
     'http://www.lung.org/our-initiatives/tobacco/reports-resources/sotc/by-the-numbers/9-of-the-worst-diseases-you.html',
     'https://www.cdc.gov/tobacco/data_statistics/fact_sheets/health_effects/effects_cig_smoking/',
@@ -56,7 +56,7 @@ I recommend that you read this article about the diseases that can be caused by 
 ${link}`
 );
 
-const badComboLinks = [
+export const badComboLinks = [
     'http://www.lung.org/our-initiatives/tobacco/reports-resources/sotc/by-the-numbers/10-health-effects-caused-by-smoking.html',
     'https://www.unitypoint.org/livewell/article.aspx?id=17ace3fc-fb01-45c3-8617-1beb81404fc4',
     'https://www.newscientist.com/article/dn19725-gross-disease-images-best-at-making-smokers-quit/',
@@ -103,13 +103,16 @@ export default (evaluation) => {
         return greatProgress(evaluation.delta);
     }
 
-
     if (evaluation.state === 'bad') {
-        if (evaluation.combo === 2) {
-            return reallyBad();
+        if (evaluation.combo.hit === 2) {
+            return reallyBad(reallyBadLinks[(evaluation.combo.repeatition - 1) % 3]);
         }
-        if (evaluation.combo > 2) {
-            return badCombo(evaluation.combo, evaluation.targetConsumption);
+        if (evaluation.combo.hit > 2) {
+            return badCombo(
+                evaluation.combo.hit,
+                evaluation.targetConsumption,
+                badComboLinks[(evaluation.combo.repeatition - 1) % 3]
+            );
         }
 
         return bad(evaluation.targetConsumption);

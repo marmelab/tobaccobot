@@ -24,7 +24,7 @@ export const getComboHistory = history =>
                     ...comboHistory.slice(0, -1),
                     {
                         ...lastCombo,
-                        combo: lastCombo.combo + 1,
+                        hit: lastCombo.hit + 1,
                     },
                 ],
             };
@@ -32,7 +32,7 @@ export const getComboHistory = history =>
 
         return {
             previous: state,
-            comboHistory: [...comboHistory, { state, combo: 1 }],
+            comboHistory: [...comboHistory, { state, hit: 1 }],
         };
     }, { previous: undefined, comboHistory: [] }).comboHistory;
 
@@ -41,26 +41,26 @@ export const getCombo = (history) => {
     const lastCombo = comboHistory.slice(-1)[0];
 
     if (!lastCombo) {
-        return { combo: 0 };
+        return { hit: 0 };
     }
 
-    if (lastCombo.combo < 2) {
-        return { combo: lastCombo.combo };
+    if (lastCombo.hit < 2) {
+        return { hit: lastCombo.hit };
     }
-    if (lastCombo.combo === 2) {
+    if (lastCombo.hit === 2) {
         return {
-            combo: lastCombo.combo,
+            hit: lastCombo.hit,
             repeatition: comboHistory
-            .filter(data => data.state === lastCombo.state && data.combo >= 2)
+            .filter(data => data.state === lastCombo.state && data.hit >= 2)
             .length,
         };
     }
 
     return {
-        combo: lastCombo.combo,
+        hit: lastCombo.hit,
         repeatition: comboHistory
-        .filter(data => data.state === lastCombo.state && data.combo > 2)
-        .reduce((result, { combo }) => result + (combo - 2), 0),
+        .filter(data => data.state === lastCombo.state && data.hit > 2)
+        .reduce((result, { hit }) => result + (hit - 2), 0),
     };
 };
 
@@ -69,7 +69,7 @@ export const isBackFromBad = (history) => {
     if (!previous || previous.state !== 'bad' || !current || current.state !== 'good') {
         return false;
     }
-    return getCombo(history.slice(0, -1));
+    return getCombo(history.slice(0, -1)).hit;
 };
 
 const evaluateHistory = function (history, targetConsumption) {
