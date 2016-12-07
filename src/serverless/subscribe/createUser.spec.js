@@ -1,4 +1,7 @@
 import expect from 'expect';
+import omit from 'lodash.omit';
+
+
 import createUser from './createUser';
 import dynamoDB from '../services/dynamoDB';
 import { setupTables } from '../setupTables';
@@ -16,7 +19,7 @@ describe('createUser', () => {
 
         const user = yield dynamoDB.getItem('smoker', 'phone', '+33102030405');
 
-        expect(user).toEqual({
+        expect(omit(user, 'uuid')).toEqual({
             name: 'Frodo',
             phone: '+33102030405',
             state: 'subscribed',
@@ -29,7 +32,7 @@ describe('createUser', () => {
             phone: '+33102030405',
         });
 
-        expect(user).toEqual({
+        expect(omit(user, 'uuid')).toEqual({
             name: 'Frodo',
             phone: '+33102030405',
             state: 'subscribed',
