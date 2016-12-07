@@ -13,7 +13,7 @@ import dailyEvaluationMessage, {
     reallyBad,
 } from './dailyEvaluation';
 
-describe.only('dailyEvaluation message', () => {
+describe('dailyEvaluation message', () => {
     it('should return good message if state is good', () => {
         expect(dailyEvaluationMessage({ state: 'good', delta: [] })).toBe(good());
     });
