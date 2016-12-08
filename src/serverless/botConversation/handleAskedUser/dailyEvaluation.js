@@ -1,12 +1,39 @@
-export const backOnTrack = () => (
+export const backFromBad = () => (
 `Great, you're back on track!
 Keep up the good work.`
+);
+
+export const backFromReallyBad = targetConsumption => (
+`You made it!
+You are back in the objective of ${targetConsumption} cigarettes per day for this week!
+Keep quit smoking!
+We'll check again tomorrow.`
+);
+
+export const backFromBadCombo = () => (
+`WOW! You made it!
+You are now back on good tracks!
+Never quit smoking again, it is worth the effort, you'll see!
+We'll speak again tomorrow.`
+);
+
+export const reallyBackOnTrack = targetConsumption => (
+`You made it!
+You are back in the objective of ${targetConsumption} cigarettes per day for this week!
+Keep quit smoking!
+We'll check again tomorrow.`
 );
 
 export const greatProgress = delta => (
 `Great.
 Wow, you've made great progress, it's ${Math.abs(delta)} less than yesterday.
 Congratulations!`
+);
+
+export const continuedGreatProgress = delta => (
+`WOW! You did it again! ${Math.abs(delta)} less than yesterday!
+Congratulations!
+I am already waiting for tomorrow to see if you continue on the same track!`
 );
 
 export const bad = targetConsumption => (
@@ -27,19 +54,36 @@ export const reallyGood = () => (
 You're on track for the second day, keep up the good work!`
 );
 
+export const goodCombo = combo => (
+`Good job!
+It's now ${combo} days that you're in the objective. En route for a successfull week!`
+);
+
 export const good = () => (
 `Thanks.
 We'll speak again tomorrow.`
 );
 
 export default (evaluation) => {
-    if (evaluation.backFromBad) {
-        return backOnTrack();
+    if (evaluation.backFromBad === 1) {
+        return backFromBad();
     }
 
-    if (evaluation.delta <= -3) {
+    if (evaluation.backFromBad === 2) {
+        return backFromReallyBad(evaluation.targetConsumption);
+    }
+
+    if (evaluation.backFromBad > 2) {
+        return backFromBadCombo();
+    }
+
+    if (evaluation.delta.slice(-1)[0] <= -3) {
+        if (evaluation.delta.length >= 2 && evaluation.delta.slice(-2)[0] <= -3) {
+            return continuedGreatProgress(evaluation.delta.slice(-1)[0]);
+        }
         return greatProgress(evaluation.delta);
     }
+
 
     if (evaluation.state === 'bad') {
         if (evaluation.combo === 1) {
@@ -51,6 +95,10 @@ export default (evaluation) => {
 
     if (evaluation.combo === 2) {
         return reallyGood();
+    }
+
+    if (evaluation.combo > 2) {
+        return goodCombo(evaluation.combo);
     }
 
     return good();

@@ -136,7 +136,7 @@ describe('botConversation', () => {
                 expect(omit(sms, 'request_id')).toEqual({
                     with_replies: 1,
                     transactional: 1,
-                    text: dailyEvaluation({ state: 'bad' }),
+                    text: dailyEvaluation({ state: 'bad', delta: [] }),
                     recipients: [number],
                     type: octopushMock.constants.SMS_PREMIUM,
                     mode: octopushMock.constants.INSTANTANE,
