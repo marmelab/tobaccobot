@@ -42,7 +42,7 @@ const plugins = [
     new HtmlWebpackPlugin({
         hash: true,
         filename: 'index.html',
-        template: '!!html!' + path.resolve(__dirname, './src/frontend/index.html'),
+        template: '!!html!' + path.resolve(__dirname, './src/frontend/subscribe/index.html'),
     }),
     new ConfigPlugin({ dir: path.resolve(__dirname, 'config') }),
 ];
@@ -51,7 +51,7 @@ module.exports = {
     devtool: 'cheap-module-source-map',
     entry: {
         index: [
-            './src/frontend/index.js',
+            './src/frontend/subscribe/index.js',
         ],
     },
     module: {
