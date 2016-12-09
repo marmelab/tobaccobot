@@ -8,7 +8,6 @@ import notifyQualified from './notifyQualified';
 
 export default function* dailyMessageSaga(lastIndex) {
     const { lastKey, items } = yield call(smoker.all, batchSize, lastIndex);
-
     if (!items || !items.length) {
         return;
     }

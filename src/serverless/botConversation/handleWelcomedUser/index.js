@@ -19,7 +19,7 @@ export default function* handleWelcomedUser(nbCigarettes, user) {
         remainingDays: 28,
         week: 1,
         state: 'qualified',
-        targetConsumption: targetConsumption[1],
+        targetConsumption,
     });
 
     yield call(sendQualifiedMessage, user.phone, targetConsumption[1]);
