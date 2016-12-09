@@ -10,6 +10,7 @@ export function* botConversation(event) {
 
 export default function (event, ctx, cb) {
     logger.info('botConversation called', { event }, ctx);
+
     try {
         generatorToCPS(botConversationSaga)(event);
     } catch (error) {
