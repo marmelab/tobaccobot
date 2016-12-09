@@ -19,11 +19,11 @@ describe('handleWelcomedUser', () => {
         });
 
         it('should update the user', () => {
-            expect(saga.next({ 1: 15 }).value).toEqual(call(smoker.save, {
+            expect(saga.next({ 1: 15, 2: 10, 3: 5, 4: 0 }).value).toEqual(call(smoker.save, {
                 ...user,
                 remainingDays: 28,
                 state: 'qualified',
-                targetConsumption: 15,
+                targetConsumption: { 1: 15, 2: 10, 3: 5, 4: 0 },
                 week: 1,
             }));
         });

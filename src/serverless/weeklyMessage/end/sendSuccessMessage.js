@@ -8,7 +8,11 @@ And from now on, you're on your own - I won't bother you again.
 It's been a pleasure to coach you! Cheers.`
 );
 
-export const sendSuccessMessageFactory = send => phones =>
+export const sendSuccessMessageFactory = send => (phones) => {
+    if (!phones || !phones.length) {
+        return;
+    }
     send(phones, successMessage());
+};
 
 export default sendSuccessMessageFactory(sendSms);

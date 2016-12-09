@@ -7,7 +7,11 @@ We'll stop this for now, but I'm confident that you can try another time.
 We'll keep in touch!`
 );
 
-export const sendFailureMessageFactory = send => phones =>
+export const sendFailureMessageFactory = send => (phones) => {
+    if (!phones || !phones.length) {
+        return;
+    }
     send(phones, failureMessage());
+};
 
 export default sendFailureMessageFactory(sendSms);
