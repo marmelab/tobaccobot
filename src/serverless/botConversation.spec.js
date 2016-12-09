@@ -118,7 +118,7 @@ describe('botConversation', () => {
                     name: 'john',
                     phone: '+33614786356',
                     state: 'qualified',
-                    remainingDays: 25,
+                    remainingDays: 26,
                     history: [{
                         day: 1,
                         week: 1,

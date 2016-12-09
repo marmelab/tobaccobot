@@ -73,13 +73,15 @@ describe('dailyMessage', () => {
             });
         });
 
-        it('should send sms asking for today consumption to all qualified users', (done) => {
+        it('should send sms asking for today consumption to all qualified and asked users', (done) => {
             dailyMessage(null, null, (error) => {
                 if (error) return done(error);
 
                 try {
-                    const sms = octopushMock.sentSms.find(({ recipients }) => recipients.includes('+33614786356') && recipients.includes('+33614786357'));
-
+                    const sms = octopushMock.sentSms.find(({ recipients }) => recipients.includes('+33614786356'));
+                    expect(sms.recipients).toInclude('+33614786356');
+                    expect(sms.recipients).toInclude('+33614786357');
+                    expect(sms.recipients).toInclude('+33614786310');
                     expect(omit(sms, ['request_id', 'recipients'])).toEqual({
                         with_replies: 1,
                         transactional: 1,
@@ -101,7 +103,9 @@ describe('dailyMessage', () => {
                 if (error) return done(error);
 
                 try {
-                    const sms = octopushMock.sentSms.find(({ recipients }) => recipients.includes('+33614786358') && recipients.includes('+33614786359'));
+                    const sms = octopushMock.sentSms.find(({ recipients }) => recipients.includes('+33614786358'));
+                    expect(sms.recipients).toInclude('+33614786358');
+                    expect(sms.recipients).toInclude('+33614786359');
 
                     expect(omit(sms, ['request_id', 'recipients'])).toEqual({
                         with_replies: 1,
