@@ -14,17 +14,54 @@ export const getDelta = history =>
         };
     }, { delta: [], previous: undefined }).delta;
 
-
-export const getCombo = (history) => {
-    const { combo } = history.reduce((previous, { state }) => {
-        if (previous.state === state) {
-            return { state, combo: previous.combo + 1 };
+export const getComboHistory = history =>
+    history.reduce(({ previous, comboHistory }, { state }) => {
+        if (previous === state) {
+            const lastCombo = comboHistory.slice(-1)[0];
+            return {
+                previous: state,
+                comboHistory: [
+                    ...comboHistory.slice(0, -1),
+                    {
+                        ...lastCombo,
+                        hit: lastCombo.hit + 1,
+                    },
+                ],
+            };
         }
 
-        return { state, combo: 1 };
-    }, { combo: 0 });
+        return {
+            previous: state,
+            comboHistory: [...comboHistory, { state, hit: 1 }],
+        };
+    }, { previous: undefined, comboHistory: [] }).comboHistory;
 
-    return combo;
+export const getCombo = (history) => {
+    const comboHistory = getComboHistory(history);
+    const lastCombo = comboHistory.slice(-1)[0];
+
+    if (!lastCombo) {
+        return { hit: 0 };
+    }
+
+    if (lastCombo.hit < 2) {
+        return { hit: lastCombo.hit };
+    }
+    if (lastCombo.hit === 2) {
+        return {
+            hit: lastCombo.hit,
+            repeatition: comboHistory
+            .filter(data => data.state === lastCombo.state && data.hit >= 2)
+            .length,
+        };
+    }
+
+    return {
+        hit: lastCombo.hit,
+        repeatition: comboHistory
+        .filter(data => data.state === lastCombo.state && data.hit > 2)
+        .reduce((result, { hit }) => result + (hit - 2), 0),
+    };
 };
 
 export const isBackFromBad = (history) => {
@@ -32,7 +69,7 @@ export const isBackFromBad = (history) => {
     if (!previous || previous.state !== 'bad' || !current || current.state !== 'good') {
         return false;
     }
-    return getCombo(history.slice(0, -1));
+    return getCombo(history.slice(0, -1)).hit;
 };
 
 const evaluateHistory = function (history, targetConsumption) {

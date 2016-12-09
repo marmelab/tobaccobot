@@ -1,6 +1,11 @@
 import expect from 'expect';
 
-import evaluateHistory, { getCombo, isBackFromBad, getDelta } from './evaluateHistory';
+import evaluateHistory, {
+    getCombo,
+    getComboHistory,
+    isBackFromBad,
+    getDelta,
+} from './evaluateHistory';
 
 describe('evaluateHistory', () => {
     const getComboSpy = expect.createSpy().andReturn('combo');
@@ -40,22 +45,72 @@ describe('evaluateHistory', () => {
         expect(getDeltaSpy).toHaveBeenCalledWith(history);
     });
 
-
     describe('getCombo', () => {
         it('should return combo number of consecutive similar value at the end', () => {
-            expect(getCombo(['good', 'good', 'good'].map(state => ({ state })))).toBe(3);
+            expect(getCombo(['good', 'good', 'good'].map(state => ({ state }))))
+            .toEqual({ hit: 3, repeatition: 1 });
         });
 
         it('should return combo number of consecutive similar value at the end', () => {
-            expect(getCombo(['good', 'bad', 'good', 'good'].map(state => ({ state })))).toBe(2);
+            expect(getCombo(['good', 'good', 'good', 'bad', 'good', 'good'].map(state => ({ state }))))
+            .toEqual({
+                hit: 2,
+                repeatition: 2,
+            });
         });
 
         it('should return combo number of consecutive similar value at the end', () => {
-            expect(getCombo(['good', 'good', 'good', 'bad'].map(state => ({ state })))).toBe(1);
+            expect(getCombo([
+                'good', 'good', 'good', 'good', 'good',
+                'bad',
+                'good', 'good', 'good', 'good',
+            ].map(state => ({ state }))))
+            .toEqual({
+                hit: 4,
+                repeatition: 5,
+            });
+        });
+
+        it('should return combo number of consecutive similar value at the end', () => {
+            expect(getCombo(['good', 'good', 'good', 'bad'].map(state => ({ state }))))
+            .toEqual({
+                hit: 1,
+            });
         });
 
         it('should return combo of 0 if receiving empty array', () => {
-            expect(getCombo([])).toBe(0);
+            expect(getCombo([]))
+            .toEqual({
+                hit: 0,
+            });
+        });
+    });
+
+    describe('getComboHistory', () => {
+        it('should return combo number of consecutive similar value at the end', () => {
+            expect(getComboHistory(['good', 'good', 'good'].map(state => ({ state }))))
+            .toEqual([{ state: 'good', hit: 3 }]);
+        });
+
+        it('should return combo number of consecutive similar value at the end', () => {
+            expect(getComboHistory(['good', 'good', 'bad', 'good', 'good', 'good'].map(state => ({ state }))))
+            .toEqual([
+                { state: 'good', hit: 2 },
+                { state: 'bad', hit: 1 },
+                { state: 'good', hit: 3 },
+            ]);
+        });
+
+        it('should return combo number of consecutive similar value at the end', () => {
+            expect(getComboHistory(['good', 'good', 'good', 'bad'].map(state => ({ state }))))
+            .toEqual([
+                { state: 'good', hit: 3 },
+                { state: 'bad', hit: 1 },
+            ]);
+        });
+
+        it('should return combo of 0 if receiving empty array', () => {
+            expect(getComboHistory([])).toEqual([]);
         });
     });
 
