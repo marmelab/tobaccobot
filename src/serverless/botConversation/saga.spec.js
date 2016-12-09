@@ -5,6 +5,7 @@ import botConversationSaga from './saga';
 import getUser from './getUser';
 import handleWelcomedUser from './handleWelcomedUser';
 import handleAskedUser from './handleAskedUser';
+import handleStopUser from './handleStopUser';
 import getNbCigarettes from './getNbCigarettes';
 
 describe('botConversation saga', () => {
@@ -68,6 +69,24 @@ describe('botConversation saga', () => {
 
         it('should get the user', () => {
             expect(saga.next().value).toEqual(call(getUser, message.number));
+        });
+
+        it('should end', () => {
+            expect(saga.next().done).toBe(true);
+        });
+    });
+
+    describe('stop user', () => {
+        const message = { number: '+33614786356', text: 'STOP', stop_date: 'today' };
+        const saga = botConversationSaga(message);
+        const user = { name: 'johnny', phone: 'foo', state: 'other' };
+
+        it('should get the user', () => {
+            expect(saga.next().value).toEqual(call(getUser, message.number));
+        });
+
+        it('should call handleStopUser with user', () => {
+            expect(saga.next(user).value).toEqual(call(handleStopUser, user));
         });
 
         it('should end', () => {

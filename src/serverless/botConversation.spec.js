@@ -21,6 +21,7 @@ import {
     reallyBad,
     reallyGood,
 } from './botConversation/handleAskedUser/dailyEvaluation';
+import stopMessage from './botConversation/handleStopUser/stop';
 import computeTargetConsumption from './botConversation/handleWelcomedUser/computeTargetConsumption';
 
 describe('botConversation', () => {
@@ -906,6 +907,70 @@ describe('botConversation', () => {
 
                     octopushMock.clear();
                 });
+            });
+        });
+
+        describe('user want to stop', () => {
+            before(function* () {
+                yield setupSmokerTable();
+
+                yield dynamoDB.putItem('smoker', {
+                    name: 'john',
+                    phone: '+33614786356',
+                    remainingDays: 26,
+                    state: 'asked',
+                    week: 1,
+                    targetConsumption: computeTargetConsumption(20),
+                    history: [{
+                        day: 1,
+                        week: 1,
+                        consumption: 20,
+                        state: 'bad',
+                    }],
+                });
+            });
+
+            it('should update the user and notify him about the program being stopped', function* () {
+                const text = '20';
+                const number = '+33614786356';
+
+                yield botConversation({ text, number, stop_date: 'today' });
+                const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
+
+                const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+
+                expect(Item).toEqual({
+                    name: 'john',
+                    phone: '+33614786356',
+                    remainingDays: 26,
+                    state: 'stopped',
+                    week: 1,
+                    targetConsumption: computeTargetConsumption(20),
+                    history: [{
+                        day: 1,
+                        week: 1,
+                        consumption: 20,
+                        state: 'bad',
+                    }],
+                });
+
+                expect(omit(sms, 'request_id')).toEqual({
+                    with_replies: 1,
+                    transactional: 1,
+                    text: stopMessage(),
+                    recipients: [number],
+                    type: octopushMock.constants.SMS_PREMIUM,
+                    mode: octopushMock.constants.INSTANTANE,
+                    sender: 'tobaccobot',
+                });
+            });
+
+            after(function* () {
+                yield dynamoDB.deleteTable({
+                    TableName: 'smoker',
+                });
+
+                octopushMock.clear();
             });
         });
     });
