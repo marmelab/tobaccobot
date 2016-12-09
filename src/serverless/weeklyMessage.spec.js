@@ -159,9 +159,9 @@ describe('e2e weeklyMessage', () => {
             recipients: [endOfWeekUser.phone],
             type: octopushMock.constants.SMS_PREMIUM,
             mode: octopushMock.constants.INSTANTANE,
-            sms_fields_1: [4],
-            sms_fields_2: [2],
-            sms_fields_3: [2],
+            sms_fields_1: [2],
+            sms_fields_2: [1],
+            sms_fields_3: [0],
             sender: 'tobaccobot',
         });
     });

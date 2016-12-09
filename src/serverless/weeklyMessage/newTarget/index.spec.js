@@ -19,19 +19,18 @@ describe('newTargetSaga', () => {
         expect(value).toEqual(call(getWeeklySmoker, 'users'));
     });
 
-    it('should call updateUser with all smoker', () => {
-        const { value } = iterator.next(['smokers']);
-        expect(value).toEqual([call(updateUser, 'smokers')]);
-    });
-
     it('should call getWeeklyMessageData with smokers', () => {
-        const { value } = iterator.next(['updatedSmokers']);
-        expect(value).toEqual(call(getWeeklyMessageData, ['updatedSmokers']));
+        const { value } = iterator.next(['weeklySmokers']);
+        expect(value).toEqual(call(getWeeklyMessageData, ['weeklySmokers']));
     });
-
 
     it('should call sendNewTargetMessage with messagesData', () => {
         const { value } = iterator.next('messagesData');
         expect(value).toEqual(call(sendNewTargetMessage, 'messagesData'));
+    });
+
+    it('should call updateUser with all smoker', () => {
+        const { value } = iterator.next(['smokers']);
+        expect(value).toEqual([call(updateUser, 'weeklySmokers')]);
     });
 });
