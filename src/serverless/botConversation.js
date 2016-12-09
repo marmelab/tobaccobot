@@ -5,7 +5,11 @@ import botConversationSaga from './botConversation/saga';
 import generatorToCPS from './utils/generatorToCPS';
 
 export function* botConversation(event) {
-    return yield sg(botConversationSaga)(event.body || event);
+    if (event.body && event.body.status === 'DELIVERED') { // Acknowledgement, ignoring
+        return;
+    }
+    yield sg(botConversationSaga)(event.body || event);
+    return;
 }
 
 export default function (event, ctx, cb) {
