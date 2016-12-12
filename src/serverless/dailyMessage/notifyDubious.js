@@ -16,7 +16,7 @@ export const setStateToWelcomed = users =>
     }));
 
 export default function* notifyDubious(users) {
-    if (!users) {
+    if (!users || !users.length) {
         return;
     }
     const { message, phones } = yield call(getMessages, users);

@@ -22,7 +22,7 @@ provider:
   runtime: nodejs4.3
   stage: dev
   region: eu-west-1
-  cfLogs: true
+  # cfLogs: true
 
 # you can overwrite defaults here
 #  stage: dev
@@ -129,6 +129,7 @@ resources:
               Action:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
+                - dynamodb:DeleteItem
                 - dynamodb:Scan
               Resource: arn:aws:dynamodb:*:*:table/smoker
         Roles:

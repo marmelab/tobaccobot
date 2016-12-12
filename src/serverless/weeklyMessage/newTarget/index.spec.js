@@ -2,7 +2,6 @@ import expect from 'expect';
 import { call } from 'sg.js';
 
 import newTargetSaga from './index';
-import smoker from '../../services/smoker';
 import getWeeklySmoker from './getWeeklySmoker';
 import getWeeklyMessageData from './getWeeklyMessageData';
 import sendNewTargetMessage from './sendNewTargetMessage';
@@ -20,24 +19,18 @@ describe('newTargetSaga', () => {
         expect(value).toEqual(call(getWeeklySmoker, 'users'));
     });
 
-    it('should call updateUser with all smoker', () => {
-        const { value } = iterator.next(['smokers']);
-        expect(value).toEqual([call(smoker.save, 'smokers')]);
-    });
-
     it('should call getWeeklyMessageData with smokers', () => {
-        const { value } = iterator.next(['updatedSmokers']);
-        expect(value).toEqual(call(getWeeklyMessageData, ['updatedSmokers']));
+        const { value } = iterator.next(['weeklySmokers']);
+        expect(value).toEqual(call(getWeeklyMessageData, ['weeklySmokers']));
     });
-
 
     it('should call sendNewTargetMessage with messagesData', () => {
         const { value } = iterator.next('messagesData');
         expect(value).toEqual(call(sendNewTargetMessage, 'messagesData'));
     });
 
-    it('should call smoker.save with all updatedSmoker', () => {
-        const { value } = iterator.next();
-        expect(value).toEqual([call(updateUser, 'updatedSmokers')]);
+    it('should call updateUser with all smoker', () => {
+        const { value } = iterator.next(['smokers']);
+        expect(value).toEqual([call(updateUser, 'weeklySmokers')]);
     });
 });

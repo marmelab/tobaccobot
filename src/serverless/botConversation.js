@@ -2,17 +2,21 @@ import sg from 'sg.js';
 import logger from './services/logger';
 
 import botConversationSaga from './botConversation/saga';
-import generatorToCPS from './utils/generatorToCPS';
 
-export function* botConversation(event) {
-    return yield sg(botConversationSaga)(event.body || event);
+export function botConversation(body) {
+    if (body && body.status === 'DELIVERED') { // Acknowledgement, ignoring
+        return Promise.resolve();
+    }
+
+    return sg(botConversationSaga)(body);
 }
 
 export default function (event, ctx, cb) {
     logger.info('botConversation called', { event }, ctx);
 
     try {
-        generatorToCPS(botConversationSaga)(event);
+        botConversation(event.body || event)
+        .catch(error => logger.error(error));
     } catch (error) {
         logger.error(error.message, error.stack);
     }

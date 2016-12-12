@@ -1,8 +1,8 @@
 export default function getWeeklyMessageData(users) {
     return users.reduce((result, { week, targetConsumption, phone }) => {
-        const remainingWeeks = 4 - (week - 1);
-        const oldTarget = targetConsumption[week - 1];
-        const newTarget = targetConsumption[week];
+        const remainingWeeks = 4 - week;
+        const oldTarget = targetConsumption[week];
+        const newTarget = targetConsumption[week + 1];
         return {
             phones: [...result.phones, phone],
             remainingWeeks: [...result.remainingWeeks, remainingWeeks],

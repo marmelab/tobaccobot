@@ -49,7 +49,7 @@ describe('botConversation', () => {
             it('should update the user and notify him about its objective', function* () {
                 const text = '20';
                 const number = '+33614786356';
-                const targetConsumption = computeTargetConsumption(20)[1];
+                const targetConsumption = computeTargetConsumption(20);
 
                 yield botConversation({ text, number });
                 const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
@@ -68,7 +68,7 @@ describe('botConversation', () => {
                 expect(omit(sms, 'request_id')).toEqual({
                     with_replies: 1,
                     transactional: 1,
-                    text: qualifiedMessage(targetConsumption),
+                    text: qualifiedMessage(targetConsumption[1]),
                     recipients: [number],
                     type: octopushMock.constants.SMS_PREMIUM,
                     mode: octopushMock.constants.INSTANTANE,

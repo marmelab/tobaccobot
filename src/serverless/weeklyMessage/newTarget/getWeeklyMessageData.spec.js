@@ -13,7 +13,7 @@ describe('getWeeklyMessageData', () => {
                     3: 1,
                     4: 0,
                 },
-                week: 2,
+                week: 1,
             },
             {
                 phone: 2,
@@ -23,7 +23,7 @@ describe('getWeeklyMessageData', () => {
                     3: 2,
                     4: 0,
                 },
-                week: 3,
+                week: 2,
             },
             {
                 phone: 3,
@@ -33,7 +33,7 @@ describe('getWeeklyMessageData', () => {
                     3: 4,
                     4: 0,
                 },
-                week: 4,
+                week: 3,
             },
         ]))
         .toEqual({
