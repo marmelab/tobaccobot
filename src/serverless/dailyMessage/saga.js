@@ -1,6 +1,7 @@
 import { call } from 'sg.js';
 import { batchSize } from 'config';
 
+import getDailySmokers from './getDailySmokers';
 import smoker from '../services/smoker';
 import sortSmokerByState from './sortSmokersByState';
 import notifyDubious from './notifyDubious';
@@ -11,7 +12,9 @@ export default function* dailyMessageSaga(lastIndex) {
     if (!items || !items.length) {
         return;
     }
-    const { asked = [], dubious = [], qualified = [] } = yield call(sortSmokerByState, items);
+
+    const dailySmokers = yield call(getDailySmokers, items);
+    const { asked = [], dubious = [], qualified = [] } = yield call(sortSmokerByState, dailySmokers);
 
     yield call(notifyDubious, dubious);
 
