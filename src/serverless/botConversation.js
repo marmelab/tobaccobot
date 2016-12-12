@@ -13,9 +13,6 @@ export function botConversation(body) {
 
 export default function (event, ctx, cb) {
     logger.info('botConversation called', { event }, ctx);
-    if (event.body && event.body.status === 'DELIVERED') { // Acknowledgement, ignoring
-        return cb();
-    }
 
     try {
         botConversation(event.body || event)
