@@ -121,7 +121,7 @@ resources:
       Type: AWS::IAM::Policy
       DependsOn: DynamoDbSmokerTable
       Properties:
-        PolicyName: lambda-dynamodb
+        PolicyName: lambda-dynamodb-smoker
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
@@ -151,7 +151,7 @@ resources:
       Type: AWS::IAM::Policy
       DependsOn: DynamoDbArchiveTable
       Properties:
-        PolicyName: lambda-dynamodb
+        PolicyName: lambda-dynamodb-archive
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
