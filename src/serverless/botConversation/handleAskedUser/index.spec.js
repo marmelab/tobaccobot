@@ -13,6 +13,8 @@ describe('handleAskedUser', () => {
     const user = {
         name: 'john',
         phone: 'phone',
+        week: 3,
+        targetConsumption: [12, 24, 31, 42],
     };
     before(() => {
         iterator = handleAskedUser(nbCigarettes, user);
@@ -26,10 +28,11 @@ describe('handleAskedUser', () => {
     it('should call evaluateHistory with updatedUser', () => {
         const { value } = iterator.next({
             history: 'history',
-            targetConsumption: 'targetConsumption',
+            targetConsumption: [12, 24, 31, 42],
             phone: 'updatedUserPhone',
+            week: 3,
         });
-        expect(value).toEqual(call(evaluateHistory, 'history', 'targetConsumption'));
+        expect(value).toEqual(call(evaluateHistory, 'history', 42));
     });
 
     it('should call sendDailyEvaluationMessage with updatedUserPhone and returned evaluation', () => {
@@ -42,9 +45,10 @@ describe('handleAskedUser', () => {
         const { value } = iterator.next();
         expect(value).toEqual(call(smoker.save, {
             history: 'history',
-            targetConsumption: 'targetConsumption',
+            targetConsumption: [12, 24, 31, 42],
             phone: 'updatedUserPhone',
             state: 'qualified',
+            week: 3,
         }));
     });
 
