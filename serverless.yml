@@ -104,7 +104,7 @@ functions:
 # you can add CloudFormation resource templates here
 resources:
   Resources:
-    DynamoDbTable:
+    DynamoDbSmokerTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: smoker
@@ -117,9 +117,9 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-    DynamoDBIamPolicy:
+    DynamoDBSmokerIamPolicy:
       Type: AWS::IAM::Policy
-      DependsOn: DynamoDbTable
+      DependsOn: DynamoDbSmokerTable
       Properties:
         PolicyName: lambda-dynamodb
         PolicyDocument:
@@ -134,7 +134,7 @@ resources:
               Resource: arn:aws:dynamodb:*:*:table/smoker
         Roles:
           - Ref: IamRoleLambdaExecution
-    DynamoDbTable:
+    DynamoDbArchiveTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: archive
@@ -147,9 +147,9 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-    DynamoDBIamPolicy:
+    DynamoDBArchiveIamPolicy:
       Type: AWS::IAM::Policy
-      DependsOn: DynamoDbTable
+      DependsOn: DynamoDbArchiveTable
       Properties:
         PolicyName: lambda-dynamodb
         PolicyDocument:
