@@ -1,4 +1,4 @@
-import smoker from '../../services/smoker';
+import smoker from '../../../services/smoker';
 
 export default function updateUser(user) {
     return smoker.save({

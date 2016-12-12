@@ -2,7 +2,7 @@ import expect from 'expect';
 import { call } from 'sg.js';
 
 import newTargetSaga from './index';
-import getWeeklySmoker from './getWeeklySmoker';
+import getWeeklySmokers from './getWeeklySmokers';
 import getWeeklyMessageData from './getWeeklyMessageData';
 import sendNewTargetMessage from './sendNewTargetMessage';
 import updateUser from './updateUser';
@@ -14,9 +14,9 @@ describe('newTargetSaga', () => {
         iterator = newTargetSaga('users');
     });
 
-    it('should call getWeeklySmoker with users', () => {
+    it('should call getWeeklySmokers with users', () => {
         const { value } = iterator.next();
-        expect(value).toEqual(call(getWeeklySmoker, 'users'));
+        expect(value).toEqual(call(getWeeklySmokers, 'users'));
     });
 
     it('should call getWeeklyMessageData with smokers', () => {

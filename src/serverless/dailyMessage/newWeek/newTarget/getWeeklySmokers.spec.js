@@ -1,7 +1,7 @@
 import expect from 'expect';
-import getWeeklySmoker from './getWeeklySmoker';
+import getWeeklySmokers from './getWeeklySmokers';
 
-describe('getWeeklySmoker', () => {
+describe('getWeeklySmokers', () => {
     it('should correctly filter smokers', () => {
         const allSmokers = [{
             remainingDays: 21,
@@ -27,7 +27,7 @@ describe('getWeeklySmoker', () => {
             state: 'dubious',
         }];
 
-        const smokers = getWeeklySmoker(allSmokers);
+        const smokers = getWeeklySmokers(allSmokers);
 
         expect(smokers).toEqual(expectedSmokers);
     });

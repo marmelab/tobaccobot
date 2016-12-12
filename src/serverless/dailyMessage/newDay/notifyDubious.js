@@ -1,8 +1,8 @@
 import { call } from 'sg.js';
 
 import askDubiousMessage from './askDubious';
-import sendSms from '../services/sendSms';
-import smoker from '../services/smoker';
+import sendSms from '../../services/sendSms';
+import smoker from '../../services/smoker';
 
 export const getMessages = users => ({
     message: askDubiousMessage(),
