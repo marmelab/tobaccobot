@@ -3,7 +3,7 @@ import omit from 'lodash.omit';
 
 import dynamoDB from './services/dynamoDB';
 import { subscribe } from './subscribe';
-import { setupSmokerTable } from './setupSmokerTable';
+import { setupTables } from './setupTables';
 import octopushMock from './services/octopushMock';
 
 import welcomeMsg from './subscribe/welcome';
@@ -11,7 +11,7 @@ import welcomeMsg from './subscribe/welcome';
 describe('subscribe lambda', () => {
     describe('e2e', () => {
         before(function* () {
-            yield setupSmokerTable();
+            yield setupTables();
         });
 
         it('should save event.body as new smoker', function* () {

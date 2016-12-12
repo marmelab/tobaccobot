@@ -86,8 +86,8 @@ functions:
       - schedule:
         rate: cron(0 20 * * *)
         enabled: true
-  setupSmokerTable:
-    handler: src/serverless/index.setupSmokerTable
+  setupTables:
+    handler: src/serverless/index.setupTables
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

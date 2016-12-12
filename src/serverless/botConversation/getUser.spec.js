@@ -1,11 +1,11 @@
 import expect from 'expect';
 import getUser from './getUser';
 import dynamoDB from '../services/dynamoDB';
-import { setupSmokerTable } from '../setupSmokerTable';
+import { setupTables } from '../setupTables';
 
 describe('getUser', () => {
     before(function* () {
-        yield setupSmokerTable();
+        yield setupTables();
 
         yield dynamoDB.putItem('smoker', {
             name: 'Frodo',

@@ -13,20 +13,8 @@ describe('getWeeklySmoker', () => {
             remainingDays: 7,
             state: 'dubious',
         }, {
-            remainingDays: 21,
-            state: 'stopped',
-        }, {
-            remainingDays: 14,
-            state: 'stopped',
-        }, {
-            remainingDays: 7,
-            state: 'stopped',
-        }, {
             remainingDays: 42,
             state: 'asked',
-        }, {
-            remainingDays: 42,
-            state: 'stopped',
         }];
         const expectedSmokers = [{
             remainingDays: 21,

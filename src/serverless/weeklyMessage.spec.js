@@ -3,7 +3,7 @@ import omit from 'lodash.omit';
 
 import weeklyMessage from './weeklyMessage';
 import smoker from './services/smoker';
-import { setupSmokerTable } from './setupSmokerTable';
+import { setupTables } from './setupTables';
 import octopushMock from './services/octopushMock';
 import { successMessage } from './weeklyMessage/end/sendSuccessMessage';
 import { failureMessage } from './weeklyMessage/end/sendFailureMessage';
@@ -15,7 +15,7 @@ describe('e2e weeklyMessage', () => {
     let endOfWeekUser;
     let ignoredUser;
     before(function* () {
-        yield setupSmokerTable();
+        yield setupTables();
         successfulUser = {
             name: 'successfulUser',
             phone: '+33111111111',

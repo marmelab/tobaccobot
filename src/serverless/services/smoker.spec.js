@@ -1,11 +1,11 @@
 import expect from 'expect';
 import smoker from './smoker';
-import { setupSmokerTable } from '../setupSmokerTable';
+import { setupTables } from '../setupTables';
 import dynamoDB from './dynamoDB';
 
 describe('smoker', () => {
     beforeEach(function* () {
-        yield setupSmokerTable();
+        yield setupTables();
     });
 
     describe('save', () => {
