@@ -5,22 +5,20 @@ Keep up the good work.`
 
 export const backFromReallyBad = targetConsumption => (
 `You made it!
-You are back in the objective of ${targetConsumption} cigarettes per day for this week!
-Keep quit smoking!
-We'll check again tomorrow.`
+You are aligned with the objective of ${targetConsumption} cigarettes per day for this week.
+Keep up the efforts, we'll check again tomorrow.`
 );
 
 export const backFromBadCombo = () => (
 `WOW! You made it!
-You are now back on good tracks!
-Never quit smoking again, it is worth the effort, you'll see!
+You are now back on good tracks. Try to avoid small failures like the previous one, it is worth the effort, you'll see!
 We'll speak again tomorrow.`
 );
 
 export const reallyBackOnTrack = targetConsumption => (
 `You made it!
-You are back in the objective of ${targetConsumption} cigarettes per day for this week!
-Keep quit smoking!
+You are back in the objective of ${targetConsumption} cigarettes per day for this week.
+If you continue like that, you will manage to quit smoking.
 We'll check again tomorrow.`
 );
 
