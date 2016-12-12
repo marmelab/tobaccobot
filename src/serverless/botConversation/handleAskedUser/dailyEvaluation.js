@@ -116,12 +116,12 @@ export default (evaluation) => {
         return bad(evaluation.targetConsumption);
     }
 
-    if (evaluation.combo === 2) {
+    if (evaluation.combo.hit === 2) {
         return reallyGood();
     }
 
-    if (evaluation.combo > 2) {
-        return goodCombo(evaluation.combo);
+    if (evaluation.combo.hit > 2) {
+        return goodCombo(evaluation.combo.hit);
     }
 
     return good();

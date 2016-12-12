@@ -11,7 +11,7 @@ export default function* handleAskedUser(nbCigarettes, user) {
     }
 
     const updatedUser = yield call(addConsumptionToUser, user, nbCigarettes);
-    const evaluation = yield call(evaluateHistory, updatedUser.history, updatedUser.targetConsumption);
+    const evaluation = yield call(evaluateHistory, updatedUser.history, updatedUser.targetConsumption[updatedUser.week]);
     yield call(sendDailyEvaluationMessage, updatedUser.phone, evaluation);
     yield call(smoker.save, {
         ...updatedUser,
