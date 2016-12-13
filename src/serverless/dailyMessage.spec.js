@@ -4,7 +4,7 @@ import omit from 'lodash.omit';
 import octopushMock from './services/octopushMock';
 import dynamoDB from './services/dynamoDB';
 import dailyMessage from './dailyMessage';
-import { setupSmokerTable } from './setupSmokerTable';
+import { setupTables } from './setupTables';
 import computeTargetConsumption from './botConversation/handleWelcomedUser/computeTargetConsumption';
 import askDaily from './dailyMessage/askDaily';
 import askDubious from './dailyMessage/askDubious';
@@ -12,7 +12,7 @@ import askDubious from './dailyMessage/askDubious';
 describe('dailyMessage', () => {
     describe('dailyMessage lambda', () => {
         before(function* () {
-            yield setupSmokerTable();
+            yield setupTables();
 
             yield dynamoDB.putItem('smoker', {
                 name: 'dude',

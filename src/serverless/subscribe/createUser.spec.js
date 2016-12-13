@@ -1,11 +1,11 @@
 import expect from 'expect';
 import createUser from './createUser';
 import dynamoDB from '../services/dynamoDB';
-import { setupSmokerTable } from '../setupSmokerTable';
+import { setupTables } from '../setupTables';
 
 describe('createUser', () => {
     before(function* () {
-        yield setupSmokerTable();
+        yield setupTables();
     });
 
     it('should create the user', function* () {

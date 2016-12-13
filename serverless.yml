@@ -86,8 +86,8 @@ functions:
       - schedule:
         rate: cron(0 20 * * *)
         enabled: true
-  setupSmokerTable:
-    handler: src/serverless/index.setupSmokerTable
+  setupTables:
+    handler: src/serverless/index.setupTables
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -104,7 +104,7 @@ functions:
 # you can add CloudFormation resource templates here
 resources:
   Resources:
-    DynamoDbTable:
+    DynamoDbSmokerTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: smoker
@@ -117,11 +117,11 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-    DynamoDBIamPolicy:
+    DynamoDBSmokerIamPolicy:
       Type: AWS::IAM::Policy
-      DependsOn: DynamoDbTable
+      DependsOn: DynamoDbSmokerTable
       Properties:
-        PolicyName: lambda-dynamodb
+        PolicyName: lambda-dynamodb-smoker
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
@@ -132,6 +132,36 @@ resources:
                 - dynamodb:DeleteItem
                 - dynamodb:Scan
               Resource: arn:aws:dynamodb:*:*:table/smoker
+        Roles:
+          - Ref: IamRoleLambdaExecution
+    DynamoDbArchiveTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: archive
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    DynamoDBArchiveIamPolicy:
+      Type: AWS::IAM::Policy
+      DependsOn: DynamoDbArchiveTable
+      Properties:
+        PolicyName: lambda-dynamodb-archive
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:DeleteItem
+                - dynamodb:Scan
+              Resource: arn:aws:dynamodb:*:*:table/archive
         Roles:
           - Ref: IamRoleLambdaExecution
 plugins:

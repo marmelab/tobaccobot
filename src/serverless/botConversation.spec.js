@@ -3,7 +3,7 @@ import omit from 'lodash.omit';
 
 import dynamoDB from './services/dynamoDB';
 import botConversationLambda, { botConversation } from './botConversation';
-import { setupSmokerTable } from './setupSmokerTable';
+import { setupTables } from './setupTables';
 import octopushMock from './services/octopushMock';
 
 import qualifiedMessage from './botConversation/handleWelcomedUser/qualified';
@@ -27,7 +27,7 @@ import computeTargetConsumption from './botConversation/handleWelcomedUser/compu
 describe('botConversation', () => {
     describe('botConversation lambda', () => {
         before(function* () {
-            yield setupSmokerTable();
+            yield setupTables();
         });
 
         it('should return 200 with valid number of cigarettes', function* () {
@@ -47,11 +47,10 @@ describe('botConversation', () => {
         });
     });
 
-
     describe('e2e', () => {
         describe('welcomed user', () => {
             before(function* () {
-                yield setupSmokerTable();
+                yield setupTables();
 
                 yield dynamoDB.putItem('smoker', {
                     name: 'john',
@@ -102,7 +101,7 @@ describe('botConversation', () => {
         describe('asked user', () => {
             describe('bad', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -127,9 +126,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -171,7 +170,7 @@ describe('botConversation', () => {
 
             describe('reallyBad', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -196,9 +195,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -240,7 +239,7 @@ describe('botConversation', () => {
 
             describe('badCombo', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -270,9 +269,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -319,7 +318,7 @@ describe('botConversation', () => {
 
             describe('backFromBad', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -344,9 +343,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -388,7 +387,7 @@ describe('botConversation', () => {
 
             describe('backFromReallyBad', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -418,9 +417,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -467,7 +466,7 @@ describe('botConversation', () => {
 
             describe('backFromBadCombo', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -502,9 +501,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -556,7 +555,7 @@ describe('botConversation', () => {
 
             describe('good', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -576,9 +575,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -615,7 +614,7 @@ describe('botConversation', () => {
 
             describe('greatProgress', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -640,9 +639,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -684,7 +683,7 @@ describe('botConversation', () => {
 
             describe('continuedGreatProgress', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -714,9 +713,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -763,7 +762,7 @@ describe('botConversation', () => {
 
             describe('reallyGood', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -788,9 +787,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -832,7 +831,7 @@ describe('botConversation', () => {
 
             describe('goodCombo', () => {
                 before(function* () {
-                    yield setupSmokerTable();
+                    yield setupTables();
 
                     yield dynamoDB.putItem('smoker', {
                         name: 'john',
@@ -862,9 +861,9 @@ describe('botConversation', () => {
                     yield botConversation({ text, number });
                     const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                    const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                    const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                    expect(Item).toEqual({
+                    expect(item).toEqual({
                         name: 'john',
                         phone: '+33614786356',
                         state: 'qualified',
@@ -912,7 +911,7 @@ describe('botConversation', () => {
 
         describe('user want to stop', () => {
             before(function* () {
-                yield setupSmokerTable();
+                yield setupTables();
 
                 yield dynamoDB.putItem('smoker', {
                     name: 'john',
@@ -937,11 +936,13 @@ describe('botConversation', () => {
                 yield botConversation({ text, number, stop_date: 'today' });
                 const sms = octopushMock.sentSms.find(s => s.recipients.some(r => r === number));
 
-                const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+                const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                expect(Item).toEqual({
+                expect(item).toEqual({});
+
+                const archives = yield dynamoDB.scan('archive', 10);
+                expect(omit(archives.items[0], 'id')).toEqual({
                     name: 'john',
-                    phone: '+33614786356',
                     remainingDays: 26,
                     state: 'stopped',
                     week: 1,
@@ -968,6 +969,10 @@ describe('botConversation', () => {
             after(function* () {
                 yield dynamoDB.deleteTable({
                     TableName: 'smoker',
+                });
+
+                yield dynamoDB.deleteTable({
+                    TableName: 'archive',
                 });
 
                 octopushMock.clear();

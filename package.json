@@ -26,7 +26,7 @@
     "octopush": "1.0.2",
     "sg.js": "0.0.4",
     "webpack-config-plugin": "0.5.0",
-    "winston": "^2.3.0"
+    "winston": "2.3.0"
   },
   "devDependencies": {
     "babel-core": "6.18.2",
@@ -36,7 +36,7 @@
     "babel-plugin-transform-async-to-generator": "6.16.0",
     "babel-plugin-transform-object-rest-spread": "6.19.0",
     "babel-plugin-transform-runtime": "6.15.0",
-    "babel-polyfill": "^6.16.0",
+    "babel-polyfill": "6.16.0",
     "babel-preset-es2015": "6.18.0",
     "babel-preset-es2015-node4": "2.1.0",
     "babel-preset-es2016": "6.16.0",
@@ -54,13 +54,13 @@
     "html-loader": "0.4.4",
     "html-webpack-plugin": "2.24.1",
     "json-loader": "0.5.4",
-    "lodash.omit": "^4.5.0",
+    "lodash.omit": "4.5.0",
     "mocha": "3.1.2",
     "nlp_compromise": "6.5.3",
     "serverless": "1.1.0",
     "serverless-offline": "3.4.1",
     "serverless-webpack": "1.0.0-rc.2",
-    "uuid": "^3.0.1",
+    "uuid": "3.0.1",
     "webpack": "1.13.3",
     "webpack-dev-server": "1.16.2"
   }

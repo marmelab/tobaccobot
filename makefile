@@ -25,7 +25,7 @@ dk_install:
 	docker-compose -f docker-compose.util.yml run --rm npm install
 
 dk_setup_smoker_table: ## run serverless lambda
-	docker-compose -f docker-compose.util.yml run --rm serverless webpack invoke -f setupSmokerTable
+	docker-compose -f docker-compose.util.yml run --rm serverless webpack invoke -f setupTables
 
 dk_run:
 	docker-compose up

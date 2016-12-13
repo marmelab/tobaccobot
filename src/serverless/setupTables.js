@@ -1,9 +1,14 @@
 import generatorToCPS from './utils/generatorToCPS';
+import archive from './services/archive';
 import smoker from './services/smoker';
 
-export function* setupSmokerTable() {
+export function* setupTables() {
     try {
-        const result = yield smoker.createTable();
+        const result = yield [
+            smoker.createTable(),
+            archive.createTable(),
+        ];
+
         return {
             statusCode: 200,
             headers: {
@@ -20,4 +25,4 @@ export function* setupSmokerTable() {
     }
 }
 
-export default generatorToCPS(setupSmokerTable);
+export default generatorToCPS(setupTables);
