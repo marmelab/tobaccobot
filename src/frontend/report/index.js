@@ -5,6 +5,7 @@ import { reportUrl } from 'config';
 const weeks = [0, 7, 14, 21, 28];
 const errorMsg = document.getElementById('error');
 const invalidMsg = document.getElementById('invalid');
+const title = document.getElementById('title');
 
 const getParams = (query) => {
     if (!query) return {};
@@ -116,7 +117,7 @@ function render(consumptionHistory, targetConsumptionHistory) {
 }
 
 if (window.location.search && window.location.search.length > 0) {
-    const { phone } = getParams(window.location.search.substr(1));
+    const { phone, id } = getParams(window.location.search.substr(1));
 
     fetch(reportUrl, {
         method: 'POST',
@@ -126,6 +127,7 @@ if (window.location.search && window.location.search.length > 0) {
         },
         mode: 'cors',
         body: JSON.stringify({
+            id,
             phone,
         }),
     })
@@ -138,7 +140,8 @@ if (window.location.search && window.location.search.length > 0) {
         }
         return response.body;
     })
-    .then(({ consumptionHistory, targetConsumptionHistory }) => {
+    .then(({ name, consumptionHistory, targetConsumptionHistory }) => {
+        title.innerText = `Hi ${name}, here are your stats!`;
         d3.select(window).on('resize', () => render(consumptionHistory, targetConsumptionHistory));
         render(consumptionHistory, targetConsumptionHistory);
     })

@@ -18,6 +18,7 @@ export default function* reportDataSaga({ id, phone }) {
     }
 
     return {
+        name: user.name,
         consumptionHistory: user.history.map(h => h.consumption),
         targetConsumptionHistory: Object.values(user.targetConsumption),
     };

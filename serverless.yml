@@ -72,8 +72,8 @@ functions:
       - schedule:
         rate: cron(0 8 * * *)
         enabled: true
-  setupSmokerTable:
-    handler: src/serverless/index.setupSmokerTable
+  setupTables:
+    handler: src/serverless/index.setupTables
   subscribe:
     handler: src/serverless/index.subscribe
     events:
@@ -86,7 +86,7 @@ functions:
     handler: src/serverless/index.reportData
     events:
         - http:
-            method: GET
+            method: POST
             integration: lambda
             path: report_data
             cors: true
