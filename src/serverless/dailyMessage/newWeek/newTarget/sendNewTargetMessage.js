@@ -1,5 +1,6 @@
 import sendSms from '../../../services/sendSms';
 
+// As octopush can only use 3 parameters (ch1, ch2, ch3), we use the {prenom} parameter as a 4th one
 export const newTargetMessage = () => (
 `One week has passed since I gave you the objective to smoke only {ch1} cigarettes.
 You can see a chart about your progress at: {prenom}.
