@@ -2,8 +2,7 @@ import expect from 'expect';
 import { call } from 'sg.js';
 
 import endSaga from './';
-import archive from '../../../services/archive';
-import smoker from '../../../services/smoker';
+import archiveUser from './archiveUser';
 import getEndedUsers from './getEndedUsers';
 import sortUserBySuccess from './sortUserBySuccess';
 import sendSuccessMessage from './sendSuccessMessage';
@@ -11,18 +10,27 @@ import sendFailureMessage from './sendFailureMessage';
 
 describe('endSaga', () => {
     let iterator;
-    const endedUsers = [
-        { name: 'endedUser1', phone: 'phone1' },
-        { name: 'endedUser2', phone: 'phone2' },
+    const users = [
+        { name: 'endedUser1', phone: 'phone1', remainingDays: 0 },
+        { name: 'endedUser2', phone: 'phone2', remainingDays: 0 },
+        { name: 'endedUser3', phone: 'phone3', remainingDays: 10 },
     ];
 
+    const endedUsers = users.filter(u => u.remainingDays === 0);
+
     before(() => {
-        iterator = endSaga('users');
+        iterator = endSaga(users);
     });
 
     it('should call getEndedUsers with users', () => {
         const { value } = iterator.next();
-        expect(value).toEqual(call(getEndedUsers, 'users'));
+        expect(value).toEqual(call(getEndedUsers, users));
+    });
+
+    it('should call smoker.delete for every endedUsers', () => {
+        const { value } = iterator.next(endedUsers);
+
+        expect(value).toEqual(endedUsers.map(u => call(archiveUser, u)));
     });
 
     it('should call sortUserBySuccess with endedUsers', () => {
@@ -35,16 +43,6 @@ describe('endSaga', () => {
         expect(value).toEqual([
             call(sendSuccessMessage, 'success'),
             call(sendFailureMessage, 'failure'),
-        ]);
-    });
-
-    it('should call smoker.delete for every endedUsers', () => {
-        const { value } = iterator.next();
-        expect(value).toEqual([
-            call(smoker.delete, 'phone1'),
-            call(archive.archive, { name: 'endedUser1', phone: 'phone1', state: 'ended' }),
-            call(smoker.delete, 'phone2'),
-            call(archive.archive, { name: 'endedUser2', phone: 'phone2', state: 'ended' }),
         ]);
     });
 });

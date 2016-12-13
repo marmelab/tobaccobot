@@ -53,8 +53,9 @@ export default {
 
             dynamoDB
             .table(table)
-            .return(dynamoDB.ALL_OLD)
-            .insert_or_replace(item, (err, result) => {
+            .return(dynamoDB.ALL_NEW)
+            // We send a clone to insert_or_update because aws-dynamodb si not pure: it will remove the key from our object
+            .insert_or_update({ ...item }, (err, result) => {
                 if (err) return reject(err);
                 return resolve(result);
             });
@@ -70,7 +71,7 @@ export default {
             .get((err, result) => {
                 if (err) return reject(err);
                 // dynamoDB returns an empty object when it cannot find the one requested
-                if (!result.phone) {
+                if (Object.keys(result).length === 0) {
                     return resolve(null);
                 }
 

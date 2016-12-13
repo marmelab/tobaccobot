@@ -32,10 +32,15 @@ const erase = id =>
 const all = (limit, lastKey) =>
     dynamoDB.scan('archive', limit, lastKey);
 
-const archive = smoker => save({
-    ...omit(smoker, 'phone'),
-    id: uuid(),
-});
+const archive = (smoker) => {
+    const archiveduser = {
+        ...smoker,
+        id: uuid(),
+    };
+
+    return save(omit(archiveduser, 'phone'))
+        .then(() => archiveduser);
+};
 
 const check = (data) => {
     expect(data).toMatch({

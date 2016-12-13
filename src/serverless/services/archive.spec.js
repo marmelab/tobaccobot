@@ -1,4 +1,6 @@
 import expect from 'expect';
+import omit from 'lodash.omit';
+import uuid from 'uuid';
 import archive from './archive';
 import { setupTables } from '../setupTables';
 import dynamoDB from './dynamoDB';
@@ -10,30 +12,28 @@ describe('archive', () => {
 
     describe('archive', () => {
         it('should archive a smoker', function* () {
-            const result = yield archive.archive({ name: 'john', phone: '+33614786356', state: 'tested' });
-            expect(result).toEqual({});
+            const expectedUser = { name: 'john', phone: '+33614786356', state: 'tested' };
+            const result = yield archive.archive(expectedUser);
+            expect(omit(result, 'id')).toEqual(expectedUser);
+            expect(result.id).toExist();
 
             const { items } = yield dynamoDB.scan('archive', 10);
-
-            expect(items[0].name).toEqual('john');
-            expect(items[0].state).toEqual('tested');
-            expect(items[0].id).toExist();
-            expect(items[0].phone).toNotExist();
+            const [item] = items;
+            expect(omit(item, 'id')).toEqual(omit(expectedUser, ['phone']));
+            expect(item.id).toExist();
+            expect(item.phone).toNotExist();
         });
     });
 
     describe('save', () => {
         it('should save archive', function* () {
-            const result = yield archive.save({ name: 'john', id: 'foo', state: 'tested' });
-            expect(result).toEqual({});
+            const id = uuid();
+            const expected = { name: 'john', id, state: 'tested' };
+            const result = yield archive.save(expected);
+            expect(result).toEqual(expected);
 
-            const item = yield dynamoDB.getItem('archive', 'id', 'foo');
-
-            expect(item).toEqual({
-                name: 'john',
-                id: 'foo',
-                state: 'tested',
-            });
+            const item = yield dynamoDB.getItem('archive', 'id', id);
+            expect(item).toEqual(expected);
         });
     });
 
@@ -118,7 +118,7 @@ describe('archive', () => {
             });
             const searchResult = yield dynamoDB.getItem('archive', 'id', 'foo');
 
-            expect(searchResult).toEqual({});
+            expect(searchResult).toEqual(null);
         });
     });
 

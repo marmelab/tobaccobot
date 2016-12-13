@@ -10,12 +10,12 @@ export const sortUserBySuccessFactory = hasStopped => users =>
         if (hasStopped(user)) {
             return {
                 ...result,
-                success: [...result.success, user.phone],
+                success: [...result.success, user],
             };
         }
         return {
             ...result,
-            failure: [...result.failure, user.phone],
+            failure: [...result.failure, user],
         };
     }, {
         success: [],
