@@ -270,6 +270,7 @@ describe('dailyMessage', () => {
 
         after(function* () {
             yield dynamoDB.deleteTable({ TableName: 'smoker' });
+            yield dynamoDB.deleteTable({ TableName: 'archive' });
             octopushMock.clear();
         });
     });
