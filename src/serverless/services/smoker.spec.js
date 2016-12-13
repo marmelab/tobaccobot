@@ -102,9 +102,9 @@ describe('smoker', () => {
                 phone: '+33614786356',
                 state: 'tested',
             });
-            const searchResult = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-            expect(searchResult).toEqual({});
+            const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+            expect(item).toNotExist();
         });
     });
 
