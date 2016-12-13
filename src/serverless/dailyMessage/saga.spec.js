@@ -3,6 +3,7 @@ import { call } from 'sg.js';
 import config from 'config';
 
 import dailyMessageSaga from './saga';
+import getDailySmokers from './getDailySmokers';
 import smoker from '../services/smoker';
 import sortSmokerByState from './sortSmokersByState';
 import notifyDubious from './notifyDubious';
@@ -20,8 +21,13 @@ describe('dailyMessageSaga', () => {
         expect(value).toEqual(call(smoker.all, config.batchSize, undefined));
     });
 
-    it('should call sortSmokerByState with user returned by smoker.all', () => {
+    it('should call getDailySmokers with users returned by smoker.all', () => {
         const { value } = iterator.next({ items: 'users', lastKey: 'lastKey' });
+        expect(value).toEqual(call(getDailySmokers, 'users'));
+    });
+
+    it('should call sortSmokerByState with users returned by getDailySmokers', () => {
+        const { value } = iterator.next('users');
         expect(value).toEqual(call(sortSmokerByState, 'users'));
     });
 
