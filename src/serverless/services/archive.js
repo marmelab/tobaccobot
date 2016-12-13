@@ -1,4 +1,6 @@
 import expect from 'expect';
+import omit from 'lodash.omit';
+import uuid from 'uuid';
 
 import dynamoDB from './dynamoDB';
 
@@ -30,8 +32,13 @@ const erase = id =>
 const all = (limit, lastKey) =>
     dynamoDB.scan('archive', limit, lastKey);
 
-const check = (archive) => {
-    expect(archive).toMatch({
+const archive = smoker => save({
+    ...omit(smoker, 'phone'),
+    id: uuid(),
+});
+
+const check = (data) => {
+    expect(data).toMatch({
         name: /\S+/,
         state: /\S+/,
     });
@@ -40,6 +47,7 @@ const check = (archive) => {
 
 export default {
     all,
+    archive,
     check,
     createTable,
     delete: erase,

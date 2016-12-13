@@ -1,6 +1,7 @@
 import expect from 'expect';
 import omit from 'lodash.omit';
 
+import dynamoDB from './services/dynamoDB';
 import weeklyMessage from './weeklyMessage';
 import smoker from './services/smoker';
 import { setupTables } from './setupTables';
@@ -164,5 +165,17 @@ describe('e2e weeklyMessage', () => {
             sms_fields_3: [0],
             sender: 'tobaccobot',
         });
+    });
+
+    after(function* () {
+        yield dynamoDB.deleteTable({
+            TableName: 'smoker',
+        });
+
+        yield dynamoDB.deleteTable({
+            TableName: 'archive',
+        });
+
+        octopushMock.clear();
     });
 });

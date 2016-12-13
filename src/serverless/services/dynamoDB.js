@@ -16,9 +16,16 @@ export default {
         return new Promise((resolve, reject) => {
             dynamoDB.on('error', (operation, error) => reject(error));
 
-            dynamoDB.client.createTable(params, (err, result) => {
-                if (err) return reject(err);
-                return resolve(result);
+            dynamoDB.client.createTable(params, (err) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                dynamoDB.client.waitFor('tableExists', params, (errTableExists, result) => {
+                    if (errTableExists) return reject(errTableExists);
+                    return resolve(result);
+                });
             });
         });
     },
@@ -26,9 +33,16 @@ export default {
         return new Promise((resolve, reject) => {
             dynamoDB.on('error', (operation, error) => reject(error));
 
-            dynamoDB.client.deleteTable(params, (err, result) => {
-                if (err) return reject(err);
-                return resolve(result);
+            dynamoDB.client.deleteTable(params, (err) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                dynamoDB.client.waitFor('tableNotExists', params, (errTableExists, result) => {
+                    if (errTableExists) return reject(errTableExists);
+                    return resolve(result);
+                });
             });
         });
     },

@@ -1,5 +1,6 @@
 import { call } from 'sg.js';
 
+import archive from '../../services/archive';
 import smoker from '../../services/smoker';
 import getEndedUsers from './getEndedUsers';
 import sortUserBySuccess from './sortUserBySuccess';
@@ -14,5 +15,12 @@ export default function* end(users) {
         call(sendFailureMessage, failure),
     ];
 
-    yield endedUsers.map(({ phone }) => call(smoker.delete, phone));
+    yield endedUsers.reduce((funcs, user) => [
+        ...funcs,
+        call(smoker.delete, user.phone),
+        call(archive.archive, {
+            ...user,
+            state: 'ended',
+        }),
+    ], []);
 }

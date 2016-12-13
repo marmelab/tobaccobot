@@ -13,9 +13,9 @@ describe('smoker', () => {
             const result = yield smoker.save({ name: 'john', phone: '+33614786356', state: 'tested' });
             expect(result).toEqual({});
 
-            const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+            const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-            expect(Item).toEqual({
+            expect(item).toEqual({
                 name: 'john',
                 phone: '+33614786356',
                 state: 'tested',

@@ -2,6 +2,7 @@ import expect from 'expect';
 import { call } from 'sg.js';
 
 import endSaga from './index';
+import archive from '../../services/archive';
 import smoker from '../../services/smoker';
 import getEndedUsers from './getEndedUsers';
 import sortUserBySuccess from './sortUserBySuccess';
@@ -41,7 +42,9 @@ describe('endSaga', () => {
         const { value } = iterator.next();
         expect(value).toEqual([
             call(smoker.delete, 'phone1'),
+            call(archive.archive, { name: 'endedUser1', phone: 'phone1', state: 'ended' }),
             call(smoker.delete, 'phone2'),
+            call(archive.archive, { name: 'endedUser2', phone: 'phone2', state: 'ended' }),
         ]);
     });
 });
