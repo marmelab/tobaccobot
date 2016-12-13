@@ -12,6 +12,7 @@ const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
 dynamoDB.on('error', (operation, error, payload) => logger.error(error.message, { operation, payload, stack: error.stack }));
 
 export default {
+    dynamoDB,
     createTable(params) {
         return new Promise((resolve, reject) => {
             dynamoDB.on('error', (operation, error) => reject(error));
@@ -68,6 +69,11 @@ export default {
             .where(attr).eq(value)
             .get((err, result) => {
                 if (err) return reject(err);
+                // dynamoDB returns an empty object when it cannot find the one requested
+                if (!result.phone) {
+                    return resolve(null);
+                }
+
                 return resolve(result);
             });
         });
