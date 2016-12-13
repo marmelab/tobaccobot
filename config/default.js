@@ -17,5 +17,6 @@ module.exports = {
     batchSize: 10,
     subscribeUrl: process.env.SUBSCRIBE_URL,
     reportUrl: process.env.REPORT_URL,
+    reportLink: process.env.REPORT_LINK,
     logs: process.env.LOG === 'ok',
 };

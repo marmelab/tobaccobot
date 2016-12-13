@@ -15,6 +15,7 @@ services:
             - OCTOPUSH_SIMULATION=ok
             - OCTOPUSH_DISABLED=ok
             - LOG=ko
+            - REPORT_LINK=http://report
         links:
             - dynamodbtest
         depends_on:
