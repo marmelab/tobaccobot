@@ -2,8 +2,8 @@ import expect from 'expect';
 import { call } from 'sg.js';
 
 import notifyDubious, { getMessages, setStateToWelcomed } from './notifyDubious';
-import sendSms from '../services/sendSms';
-import smoker from '../services/smoker';
+import sendSms from '../../services/sendSms';
+import smoker from '../../services/smoker';
 
 describe('notifyDubious', () => {
     let iterator;

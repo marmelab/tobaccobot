@@ -1,4 +1,4 @@
-import sendSms from '../../services/sendSms';
+import sendSms from '../../../services/sendSms';
 
 export const successMessage = () => (
 `Wow, you have'nt smoked a cigarette in the past three days.

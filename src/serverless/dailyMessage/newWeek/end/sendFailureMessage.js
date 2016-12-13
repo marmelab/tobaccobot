@@ -1,4 +1,4 @@
-import sendSms from '../../services/sendSms';
+import sendSms from '../../../services/sendSms';
 
 export const failureMessage = () => (
 `Ok, I've done my best for the past 28 days, but it's not only in my hands -

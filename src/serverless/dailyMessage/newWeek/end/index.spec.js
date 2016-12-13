@@ -1,9 +1,9 @@
 import expect from 'expect';
 import { call } from 'sg.js';
 
-import endSaga from './index';
-import archive from '../../services/archive';
-import smoker from '../../services/smoker';
+import endSaga from './';
+import archive from '../../../services/archive';
+import smoker from '../../../services/smoker';
 import getEndedUsers from './getEndedUsers';
 import sortUserBySuccess from './sortUserBySuccess';
 import sendSuccessMessage from './sendSuccessMessage';
