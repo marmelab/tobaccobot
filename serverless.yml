@@ -129,8 +129,10 @@ resources:
           Statement:
             - Effect: Allow
               Action:
+                - dynamodb:DescribeTable
                 - dynamodb:GetItem
                 - dynamodb:PutItem
+                - dynamodb:UpdateItem
                 - dynamodb:DeleteItem
                 - dynamodb:Scan
               Resource: arn:aws:dynamodb:*:*:table/smoker
@@ -159,8 +161,10 @@ resources:
           Statement:
             - Effect: Allow
               Action:
+                - dynamodb:DescribeTable
                 - dynamodb:GetItem
                 - dynamodb:PutItem
+                - dynamodb:UpdateItem
                 - dynamodb:DeleteItem
                 - dynamodb:Scan
               Resource: arn:aws:dynamodb:*:*:table/archive
