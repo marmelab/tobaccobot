@@ -1,8 +1,8 @@
-require('webpack');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const config = require('config');
 const path = require('path');
-const ConfigPlugin = require('webpack-config-plugin');
 
 const loaders = [{
     test: /\.js$/,
@@ -51,7 +51,10 @@ const plugins = [
         template: '!!html!' + path.resolve(__dirname, './src/frontend/report/index.html'),
         chunks: ['report'],
     }),
-    new ConfigPlugin({ dir: path.resolve(__dirname, 'config') }),
+    new webpack.DefinePlugin({
+        SUBSCRIBE_URL: JSON.stringify(config.subscribeUrl),
+        REPORT_URL: JSON.stringify(config.reportUrl),
+    }),
 ];
 
 module.exports = {

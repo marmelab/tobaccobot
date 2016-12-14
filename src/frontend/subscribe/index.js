@@ -1,5 +1,5 @@
+/* globals SUBSCRIBE_URL */
 import fetch from 'isomorphic-fetch';
-import { subscribeUrl } from 'config';
 
 const form = document.getElementById('form');
 const nameInput = document.getElementById('name');
@@ -23,7 +23,7 @@ form.addEventListener('submit', () => {
     invalid.classList.add('hidden');
     spinner.classList.remove('hidden');
 
-    fetch(subscribeUrl, {
+    fetch(SUBSCRIBE_URL, {
         method: 'POST',
         headers: {
             Accept: 'application/json',

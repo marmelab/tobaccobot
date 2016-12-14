@@ -1,6 +1,6 @@
+/* globals REPORT_URL */
 import * as d3 from 'd3';
 import fetch from 'isomorphic-fetch';
-import { reportUrl } from 'config';
 
 const weeks = [0, 7, 14, 21, 28];
 const errorMsg = document.getElementById('error');
@@ -119,7 +119,7 @@ function render(consumptionHistory, targetConsumptionHistory) {
 if (window.location.search && window.location.search.length > 0) {
     const { phone, id } = getParams(window.location.search.substr(1));
 
-    fetch(reportUrl, {
+    fetch(REPORT_URL, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
