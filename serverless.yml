@@ -50,14 +50,6 @@ provider:
 #  artifact: my-service-code.zip
 
 functions:
-  subscribe:
-    handler: src/serverless/index.subscribe
-    events:
-      - http:
-          method: POST
-          integration: lambda
-          path: subscribe
-          cors: true
   botConversation:
     handler: src/serverless/index.botConversation
     events:
@@ -80,8 +72,24 @@ functions:
       - schedule:
         rate: cron(0 8 * * *)
         enabled: true
-  setupSmokerTable:
-    handler: src/serverless/index.setupSmokerTable
+  setupTables:
+    handler: src/serverless/index.setupTables
+  subscribe:
+    handler: src/serverless/index.subscribe
+    events:
+      - http:
+          method: POST
+          integration: lambda
+          path: subscribe
+          cors: true
+  reportData:
+    handler: src/serverless/index.reportData
+    events:
+        - http:
+            method: POST
+            integration: lambda
+            path: report_data
+            cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

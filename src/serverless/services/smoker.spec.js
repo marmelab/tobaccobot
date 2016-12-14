@@ -10,16 +10,14 @@ describe('smoker', () => {
 
     describe('save', () => {
         it('should save smoker', function* () {
-            const result = yield smoker.save({ name: 'john', phone: '+33614786356', state: 'tested' });
-            expect(result).toEqual({});
+            const expected = { name: 'john', phone: '+33614786356', state: 'tested' };
+
+            const result = yield smoker.save(expected);
+            expect(result).toEqual(expected);
 
             const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-            expect(item).toEqual({
-                name: 'john',
-                phone: '+33614786356',
-                state: 'tested',
-            });
+            expect(item).toEqual(expected);
         });
     });
 
@@ -102,9 +100,9 @@ describe('smoker', () => {
                 phone: '+33614786356',
                 state: 'tested',
             });
-            const searchResult = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-            expect(searchResult).toEqual({});
+            const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+            expect(item).toNotExist();
         });
     });
 

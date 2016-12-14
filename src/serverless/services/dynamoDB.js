@@ -12,6 +12,7 @@ const dynamoDB = dynamoDBWrapper(new AWS.DynamoDB());
 dynamoDB.on('error', (operation, error, payload) => logger.error(error.message, { operation, payload, stack: error.stack }));
 
 export default {
+    dynamoDB,
     createTable(params) {
         return new Promise((resolve, reject) => {
             dynamoDB.on('error', (operation, error) => reject(error));
@@ -52,8 +53,9 @@ export default {
 
             dynamoDB
             .table(table)
-            .return(dynamoDB.ALL_OLD)
-            .insert_or_replace(item, (err, result) => {
+            .return(dynamoDB.ALL_NEW)
+            // We send a clone to insert_or_update because aws-dynamodb si not pure: it will remove the key from our object
+            .insert_or_update({ ...item }, (err, result) => {
                 if (err) return reject(err);
                 return resolve(result);
             });
@@ -68,6 +70,11 @@ export default {
             .where(attr).eq(value)
             .get((err, result) => {
                 if (err) return reject(err);
+                // dynamoDB returns an empty object when it cannot find the one requested
+                if (Object.keys(result).length === 0) {
+                    return resolve(null);
+                }
+
                 return resolve(result);
             });
         });

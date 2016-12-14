@@ -8,8 +8,8 @@ describe('sortUserBySuccess', () => {
             { phone: 'phone1', history: [{ consumption: 0 }, { consumption: 0 }, { consumption: 0 }] },
             { phone: 'phone2', history: [{ consumption: 0 }, { consumption: 1 }, { consumption: 0 }] },
         ])).toEqual({
-            success: ['phone1'],
-            failure: ['phone2'],
+            success: [{ phone: 'phone1', history: [{ consumption: 0 }, { consumption: 0 }, { consumption: 0 }] }],
+            failure: [{ phone: 'phone2', history: [{ consumption: 0 }, { consumption: 1 }, { consumption: 0 }] }],
         });
     });
 

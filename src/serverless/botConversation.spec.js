@@ -938,7 +938,7 @@ describe('botConversation', () => {
 
                 const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-                expect(item).toEqual({});
+                expect(item).toEqual(null);
 
                 const archives = yield dynamoDB.scan('archive', 10);
                 expect(omit(archives.items[0], 'id')).toEqual({

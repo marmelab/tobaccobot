@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tobacco Bot Report</title>
+        <style>
+        #report {
+            position: absolute;
+            top: 90px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+        }
+        </style>
+        <link
+            crossorigin="anonymous"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            rel="stylesheet"
+        >
+        <link
+            crossorigin="anonymous"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+            rel="stylesheet"
+        >
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="invalid" class="hidden alert alert-warning">
+                        <p>Invalid identifier</p>
+                        <p>Please use the link we sent you.</p>
+                    </div>
+
+                    <div id="error" class="hidden alert alert-warning">
+                        <p>An error occured</p>
+                        <p>Please try again later.</p>
+                    </div>
+
+                    <div class="page-header">
+                      <h1 id="title"></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="report"></div>
+    </body>
+</html>

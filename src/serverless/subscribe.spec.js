@@ -19,7 +19,7 @@ describe('subscribe lambda', () => {
             expect(response.statusCode).toBe(200);
             const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
 
-            expect(Item).toEqual({
+            expect(omit(Item, 'uuid')).toEqual({
                 name: 'john',
                 phone: '+33614786356',
                 state: 'welcomed',
@@ -31,9 +31,9 @@ describe('subscribe lambda', () => {
             const response = yield subscribe({ body: smoker });
             expect(response.statusCode).toBe(500);
             expect(response.body).toEqual('Expected { name: \'johnny\', phone: \'06147\', state: \'subscribed\' } to match { name: /\\S+/, phone: /\\+[0-9]{11}/, state: /\\S+/ }');
-            const { Item } = yield dynamoDB.getItem('smoker', 'phone', '06147');
 
-            expect(Item).toBe(undefined);
+            const item = yield dynamoDB.getItem('smoker', 'phone', '06147');
+            expect(item).toNotExist();
         });
 
         it('should register the user and welcome him', function* () {
@@ -53,9 +53,8 @@ describe('subscribe lambda', () => {
                 sender: 'tobaccobot',
             });
 
-            const Item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
-
-            expect(Item).toEqual({
+            const item = yield dynamoDB.getItem('smoker', 'phone', '+33614786356');
+            expect(omit(item, 'uuid')).toEqual({
                 name: 'john',
                 phone: '+33614786356',
                 state: 'welcomed',

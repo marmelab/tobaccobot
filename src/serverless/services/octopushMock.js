@@ -57,6 +57,14 @@ class SMS {
         this.sms.request_id = value;
     }
 
+    set_recipients_first_names(value) {
+        this.sms.recipients_first_names = value;
+    }
+
+    set_recipients_last_names(value) {
+        this.sms.recipients_last_names = value;
+    }
+
     send(callback) {
         sentSms.push(this.sms);
         callback(null);
