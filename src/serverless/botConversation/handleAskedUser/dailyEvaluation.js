@@ -94,11 +94,13 @@ export default (evaluation) => {
         return backFromBadCombo();
     }
 
-    if (evaluation.delta.slice(-1)[0] <= -3) {
-        if (evaluation.delta.length >= 2 && evaluation.delta.slice(-2)[0] <= -3) {
-            return continuedGreatProgress(evaluation.delta.slice(-1)[0]);
+    const lastDelta = evaluation.delta.slice(-1)[0];
+    const previousDelta = evaluation.delta.slice(-2)[0];
+    if (lastDelta <= -3) {
+        if (evaluation.delta.length >= 2 && previousDelta <= -3) {
+            return continuedGreatProgress(lastDelta);
         }
-        return greatProgress(evaluation.delta);
+        return greatProgress(lastDelta);
     }
 
     if (evaluation.state === 'bad') {
