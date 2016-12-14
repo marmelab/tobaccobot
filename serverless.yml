@@ -22,7 +22,7 @@ provider:
   runtime: nodejs4.3
   stage: dev
   region: eu-west-1
-  # cfLogs: true
+  cfLogs: true
 
 # you can overwrite defaults here
 #  stage: dev
@@ -58,7 +58,7 @@ functions:
           integration: lambda
           path: bot_conversation
           cors: true
-  botConversationGet:
+  getBotConversation:
     handler: src/serverless/index.botConversation
     events:
       - http:
@@ -70,8 +70,8 @@ functions:
     handler: src/serverless/index.dailyMessage
     events:
       - schedule:
-        rate: cron(0 8 * * *)
-        enabled: true
+            rate: cron(0 8 ? * * *)
+            enabled: true
   setupTables:
     handler: src/serverless/index.setupTables
   subscribe:
