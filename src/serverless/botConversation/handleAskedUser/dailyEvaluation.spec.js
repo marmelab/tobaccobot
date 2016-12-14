@@ -68,7 +68,7 @@ describe('dailyEvaluation message', () => {
     });
 
     it('should return greatProgress message if delta is at most -3', () => {
-        expect(dailyEvaluationMessage({ delta: [-3] })).toBe(greatProgress(-3));
+        expect(dailyEvaluationMessage({ delta: [0, -3] })).toBe(greatProgress(-3));
     });
 
     it('should return continuedGreatProgress message if delta is at most -3 at least 2 days in a row', () => {
