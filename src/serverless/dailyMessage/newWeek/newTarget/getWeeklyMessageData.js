@@ -5,7 +5,7 @@ export default function getWeeklyMessageData(users) {
         const remainingWeeks = 4 - week;
         const oldTarget = targetConsumption[week];
         const newTarget = targetConsumption[week + 1];
-        const reportLink = `${config.reportLink}?phone=${encodeURIComponent(phone)}`;
+        const reportLink = `${config.reportLink}/?phone=${encodeURIComponent(phone)}`;
         return {
             newTarget: [...result.newTarget, newTarget],
             oldTarget: [...result.oldTarget, oldTarget],

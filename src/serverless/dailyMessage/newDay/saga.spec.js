@@ -30,4 +30,11 @@ describe('dailyMessageSaga', () => {
         value = iterator.next().value;
         expect(value).toEqual(call(notifyQualified, ['asked', 'qualified']));
     });
+
+    it('should end if getDailySmokers return no users', () => {
+        iterator = dailyMessageSaga('users');
+        iterator.next();
+        const { done } = iterator.next([]);
+        expect(done).toBe(true);
+    });
 });

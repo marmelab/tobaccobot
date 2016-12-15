@@ -29,6 +29,7 @@ services:
             - OCTOPUSH_USER_LOGIN
             - OCTOPUSH_API_KEY
             - OCTOPUSH_SIMULATION=ok
+            - REPORT_LINK=http://localhost:3001/subscribe
             - LOG=ok
         depends_on:
             - dynamodb
