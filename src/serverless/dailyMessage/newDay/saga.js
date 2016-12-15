@@ -7,6 +7,9 @@ import notifyQualified from './notifyQualified';
 
 export default function* dailyMessageSaga(smokers) {
     const dailySmokers = yield call(getDailySmokers, smokers);
+    if (!dailySmokers || !dailySmokers.length) {
+        return;
+    }
     const { asked = [], dubious = [], qualified = [] } = yield call(sortSmokersByState, dailySmokers);
 
     yield call(notifyDubious, dubious);
