@@ -22,47 +22,45 @@
         >
     </head>
     <body>
-        <div class="panel panel-default">
-            <div class="panel-heading"><h1>Tobacco Bot</h1></div>
-            <div class="panel-body">
-                <p class="lead">
-                    Congratulations !
-                </p>
-                <p class="lead">
-                    You're taking the first step to stop smoking !
-                </p>
-                <p class="lead">
-                    This program will help you stop by giving you realistic objectives every day.
-                </p>
-                <p class="lead">
-                    Please submit the following form to begin the program. Have faith in yourself!
-                </p>
-                <div id="invalid" class="hidden alert alert-warning">
-                    <p>Invalid information</p>
-                    <p>Please provide us with a valid phone number(international format: `+33123456789`) and your name.</p>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="jumbotron col-xs-12">
+                    <h1>Tobacco Bot</h1>
+                    <p class="lead">
+                        Congratulations ! You're taking the first step to stop smoking !
+                    </p>
+                    <p class="lead">
+                        This program will help you stop by giving you realistic objectives every day. Please submit the following form to begin the program. Have faith in yourself!
+                    </p>
                 </div>
-                <div id="success" class="hidden alert alert-success">
-                    <p>Subscribe success.</p>
-                    <p>We will contact you shortly.</p>
-                </div>
-                <div id="error" class="hidden alert alert-danger">
-                    <p>Subscribe Error.</p>
-                    <p>Something went wrong please retry later.</p>
-                </div>
-                <form id="form" class="form-signin" onsubmit="return false">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input id="name" class="form-control" name="name" type="text"></input>
+                <div class="col-xs-12">
+                    <div id="invalid" class="hidden alert alert-warning">
+                        <p>Invalid information</p>
+                        <p>Please provide us with a valid phone number(international format: `+33123456789`) and your name.</p>
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input id="phone" class="form-control" name="phone" type="text"></input>
+                    <div id="success" class="hidden alert alert-success">
+                        <p>Subscribe success.</p>
+                        <p>We will contact you shortly.</p>
                     </div>
-                    <button id="submitButton" class="btn btn-primary" type="submit">
-                        <i id="spinner" class="fa fa-spinner fa-spin hidden"></i>
-                        Submit
-                    </button>
-                </form>
+                    <div id="error" class="hidden alert alert-danger">
+                        <p>Subscribe Error.</p>
+                        <p>Something went wrong please retry later.</p>
+                    </div>
+                    <form id="form" class="form-signin" onsubmit="return false">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input id="name" class="form-control" name="name" type="text"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input id="phone" class="form-control" name="phone" type="text"></input>
+                        </div>
+                        <button id="submitButton" class="btn btn-primary" type="submit">
+                            <i id="spinner" class="fa fa-spinner fa-spin hidden"></i>
+                            Start the program
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </body>
