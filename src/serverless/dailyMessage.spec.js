@@ -226,11 +226,12 @@ describe('dailyMessage', () => {
             expect(users.items.find(u => u.name === failedUser.name)).toExist();
         });
 
-        it('should have incremented week of smoker endOfWeekUser by 1', function* () {
+        it('should have incremented week of smoker endOfWeekUser by 1 and decremented remainingDays by 1', function* () {
             const user = yield smoker.get(endOfWeekUser.phone);
             expect(user).toEqual({
                 ...endOfWeekUser,
                 week: 4,
+                remainingDays: 6,
             });
         });
 
