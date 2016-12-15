@@ -42,9 +42,9 @@ describe('getWeeklyMessageData', () => {
             newTarget: [2, 2, 0],
             remainingWeeks: [3, 2, 1],
             reportLink: [
-                'http://report?phone=%2B331',
-                'http://report?phone=%2B332',
-                'http://report?phone=%2B333',
+                'http://report/?phone=%2B331',
+                'http://report/?phone=%2B332',
+                'http://report/?phone=%2B333',
             ],
         });
     });

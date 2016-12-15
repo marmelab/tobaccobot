@@ -249,7 +249,7 @@ describe('dailyMessage', () => {
                 mode: octopushMock.constants.INSTANTANE,
                 sender: 'tobaccobot',
                 sms_fields_1: [
-                    `http://report?id=${user.id}`,
+                    `http://report/?id=${user.id}`,
                 ],
             });
         });
@@ -268,7 +268,7 @@ describe('dailyMessage', () => {
                 mode: octopushMock.constants.INSTANTANE,
                 sender: 'tobaccobot',
                 sms_fields_1: [
-                    `http://report?id=${user.id}`,
+                    `http://report/?id=${user.id}`,
                 ],
             });
         });
@@ -281,7 +281,7 @@ describe('dailyMessage', () => {
                 transactional: 1,
                 text: newTargetMessage(),
                 recipients: [endOfWeekUser.phone],
-                recipients_first_names: [`http://report?phone=${encodeURIComponent(endOfWeekUser.phone)}`],
+                recipients_first_names: [`http://report/?phone=${encodeURIComponent(endOfWeekUser.phone)}`],
                 type: octopushMock.constants.SMS_PREMIUM,
                 mode: octopushMock.constants.INSTANTANE,
                 sms_fields_1: [2],

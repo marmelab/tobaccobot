@@ -14,7 +14,7 @@ export const sendSuccessMessageFactory = send => (users) => {
     if (!users || !users.length) {
         return;
     }
-    send(users.map(u => u.phone), successMessage(), users.map(u => `${config.reportLink}?id=${encodeURIComponent(u.id)}`));
+    send(users.map(u => u.phone), successMessage(), users.map(u => `${config.reportLink}/?id=${encodeURIComponent(u.id)}`));
 };
 
 export default sendSuccessMessageFactory(sendSms);
